@@ -102,21 +102,6 @@ rcssmin = "1.1.1"
 rjsmin = "1.2.1"
 
 [[package]]
-name = "django-htmx"
-version = "1.17.3"
-description = "Extensions for using Django with htmx."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "django-htmx-1.17.3.tar.gz", hash = "sha256:a2069219920d7ef0883ddbf5e8d931069db145a0d4a8a032a2708f840c7a68a6"},
-    {file = "django_htmx-1.17.3-py3-none-any.whl", hash = "sha256:0de964ca257eda2a4ebeeaa8181320119378fa5f95a2fc2f2bfbdd35034ed424"},
-]
-
-[package.dependencies]
-asgiref = ">=3.6"
-Django = ">=3.2"
-
-[[package]]
 name = "django-sass-processor"
 version = "1.4"
 description = "SASS processor to compile SCSS files into *.css, while rendering, or offline."
@@ -445,4 +430,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "560309b1a8475de964e44cc630ba3281b766826b5ef089467cb3964a83ba351f"
+content-hash = "464983c7bfb250a8048d1559b81f0d3f2c74d7c9fd0ecb7eb2d5a6c06e903cdd"
