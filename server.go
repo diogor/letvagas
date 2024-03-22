@@ -2,6 +2,7 @@ package main
 
 import (
 	"letvagas/database"
+	"letvagas/entities/models"
 	"letvagas/web"
 	"letvagas/web/controllers"
 	"log"
@@ -24,6 +25,7 @@ func main() {
 
 	app.Static("/static", "./static")
 	app.Get("/", web.LoginRequired(controllers.Index))
+	app.Get("/admin", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.Admin)))
 	app.Get("/login", controllers.Login)
 	app.Post("/login", controllers.Login)
 	app.Get("/register", controllers.Register)

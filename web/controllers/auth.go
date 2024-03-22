@@ -25,7 +25,10 @@ func Login(c *fiber.Ctx) error {
 			return err
 		}
 
+		role_name, _ := user.Role.Value()
+
 		session.Set("user_id", hex.EncodeToString(user.ID[:]))
+		session.Set("user_role", role_name)
 
 		err = session.Save()
 		if err != nil {

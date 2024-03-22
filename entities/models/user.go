@@ -16,7 +16,7 @@ const (
 )
 
 func (ct *UserRole) Scan(value interface{}) error {
-	*ct = UserRole(value.([]byte))
+	*ct = UserRole(value.(string))
 	return nil
 }
 
