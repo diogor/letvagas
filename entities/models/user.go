@@ -30,5 +30,5 @@ type User struct {
 	Name     string    `json:"name" gorm:"type:varchar(255);not null"`
 	Password string    `json:"-" gorm:"type:varchar(255);not null"`
 	Email    string    `json:"email" gorm:"type:varchar(255);not null"`
-	Role     userRole  `json:"role" gorm:"type:enum('admin', 'client', 'applicant');not null;default:'applicant'"`
+	Role     userRole  `json:"role" gorm:"type:user_role('admin', 'client', 'applicant');not null;default:'applicant'"`
 }
