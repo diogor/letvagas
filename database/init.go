@@ -1,8 +1,8 @@
 package database
 
 import (
+	"letvagas/entities/models"
 	"os"
-	"rifa/entities/models"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"

@@ -1,11 +1,11 @@
 package main
 
 import (
+	"letvagas/database"
+	"letvagas/web"
+	"letvagas/web/controllers"
 	"log"
 	"os"
-	"rifa/database"
-	"rifa/web"
-	"rifa/web/controllers"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/django/v3"
