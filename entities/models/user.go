@@ -7,20 +7,20 @@ import (
 	"gorm.io/gorm"
 )
 
-type userRole string
+type UserRole string
 
 const (
-	ADMIN     userRole = "admin"
-	CLIENT    userRole = "client"
-	APPLICANT userRole = "applicant"
+	ADMIN     UserRole = "admin"
+	CLIENT    UserRole = "client"
+	APPLICANT UserRole = "applicant"
 )
 
-func (ct *userRole) Scan(value interface{}) error {
-	*ct = userRole(value.([]byte))
+func (ct *UserRole) Scan(value interface{}) error {
+	*ct = UserRole(value.([]byte))
 	return nil
 }
 
-func (ct userRole) Value() (driver.Value, error) {
+func (ct UserRole) Value() (driver.Value, error) {
 	return string(ct), nil
 }
 
@@ -30,5 +30,5 @@ type User struct {
 	Name     string    `json:"name" gorm:"type:varchar(255);not null"`
 	Password string    `json:"-" gorm:"type:varchar(255);not null"`
 	Email    string    `json:"email" gorm:"type:varchar(255);not null"`
-	Role     userRole  `json:"role" sql:"type:user_role('admin', 'client', 'applicant');not null;default:'applicant'"`
+	Role     UserRole  `json:"role" sql:"type:user_role('admin', 'client', 'applicant');not null;default:'applicant'"`
 }
