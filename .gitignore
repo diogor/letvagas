@@ -1,7 +1,2 @@
-*.py[cod]
-__pycache__/
 .env
-staticfiles/
-media/
-*.sqlite*
-.ruff_cache/
+build/

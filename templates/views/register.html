@@ -1,0 +1,23 @@
+{% extends "layouts/main.html" %}
+{% block title %}Registro{% endblock %}
+{% block content %}
+    <main class="container">
+        <h1>Cadastro</h1>
+        {% if errors %}
+            <div class="pico-background-red-600" style="padding: 10px">
+                {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
+            </div>
+        {% endif %}
+        <form method="post">
+            <fieldset>
+                <label for="name">Nome</label>
+                <input type="text" name="name" id="name" required>
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" required>
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password" required>
+            </fieldset>
+            <input type="submit" value="Registrar">
+        </form>
+    </main>
+{% endblock %}
