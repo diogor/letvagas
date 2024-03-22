@@ -30,7 +30,7 @@ func CreateUser(user *dto.CreateUserRequest) error {
 		Name:     user.Name,
 		Password: password,
 		Email:    user.Email,
-		Role:     user.Role,
+		Role:     *user.Role,
 	}
 
 	result := database.DB.Create(&new_user)
