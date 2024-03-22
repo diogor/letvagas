@@ -57,7 +57,7 @@ func Register(c *fiber.Ctx) error {
 			Email:    c.FormValue("email"),
 		}
 
-		if err := c.BodyParser(user); err != nil {
+		if err := c.BodyParser(&user); err != nil {
 			return err
 		}
 
