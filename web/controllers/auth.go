@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/hex"
 	"letvagas/entities/dto"
+	"letvagas/entities/models"
 	"letvagas/services"
 	"letvagas/web"
 
@@ -55,16 +56,30 @@ func Logout(c *fiber.Ctx) error {
 func Register(c *fiber.Ctx) error {
 	if c.Method() == "POST" {
 		user := dto.CreateUserRequest{
-			Name:     c.FormValue("name"),
-			Password: c.FormValue("password"),
-			Email:    c.FormValue("email"),
+			Name:       c.FormValue("name"),
+			SocialName: c.FormValue("social_name"),
+			Password:   c.FormValue("password"),
+			Email:      c.FormValue("email"),
+			Cpf:        c.FormValue("cpf"),
+			Role:       models.APPLICANT,
+			BirthDate:  c.FormValue("birth_date"),
+			Phone:      c.FormValue("phone"),
+			Linkedin:   c.FormValue("linkedin"),
+			City:       c.FormValue("city"),
+			State:      c.FormValue("state"),
+			Address:    c.FormValue("address"),
+			Cep:        c.FormValue("cep"),
 		}
 
 		if err := c.BodyParser(&user); err != nil {
 			return err
 		}
 
-		go services.CreateUser(&user)
+		err := services.CreateUser(&user)
+
+		if err != nil {
+			return err
+		}
 
 		return c.Redirect("/login")
 	}

@@ -27,10 +27,19 @@ func CreateUser(user *dto.CreateUserRequest) error {
 	}
 
 	new_user := models.User{
-		Name:     user.Name,
-		Password: password,
-		Email:    user.Email,
-		Role:     models.APPLICANT,
+		Name:       user.Name,
+		SocialName: &user.SocialName,
+		Password:   password,
+		Email:      user.Email,
+		Role:       models.APPLICANT,
+		Cpf:        user.Cpf,
+		BirthDate:  user.BirthDate,
+		Phone:      user.Phone,
+		City:       &user.City,
+		State:      &user.State,
+		Address:    &user.Address,
+		Cep:        &user.Cep,
+		Linkedin:   &user.Linkedin,
 	}
 
 	result := database.DB.Create(&new_user)
