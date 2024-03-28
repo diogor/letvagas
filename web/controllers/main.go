@@ -8,12 +8,6 @@ import (
 )
 
 func Index(c *fiber.Ctx) error {
-	_, error := web.GetUserID(c)
-
-	if error != nil {
-		return error
-	}
-
 	return c.Render("views/index", fiber.Map{
 		"title": "Index",
 	})
