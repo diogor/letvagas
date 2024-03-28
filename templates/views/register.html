@@ -1,23 +1,83 @@
 {% extends "layouts/main.html" %}
 {% block title %}Registro{% endblock %}
+{% block js %}
+    <script>
+        let args = {
+            "wz_class": ".wizard",
+            "wz_button_style": ".outline",
+            "wz_nav_style": "progress",
+            "wz_ori": "horizontal",
+            "buttons": true,
+            "navigation": 'buttons',
+            "finish": "Registrar",
+            "steps": 3,
+            "next": "Próximo",
+            "prev": "Anterior"
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const wizard = new Wizard(args);
+            wizard.init();
+
+            let wz_class = ".wizard";
+            let $wz_doc = document.querySelector(wz_class)
+            
+            $wz_doc.addEventListener("wz.form.submit", function (e) {
+	            alert("Form Submit");
+            });
+        });
+    </script>
+{% endblock %}
 {% block content %}
     <main class="container">
-        <h1>Cadastro</h1>
-        {% if errors %}
-            <div class="pico-background-red-600" style="padding: 10px">
-                {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
-            </div>
-        {% endif %}
-        <form method="post">
-            <fieldset>
-                <label for="name">Nome</label>
-                <input type="text" name="name" id="name" required>
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email" required>
-                <label for="password">Senha</label>
-                <input type="password" name="password" id="password" required>
-            </fieldset>
-            <input type="submit" value="Registrar">
-        </form>
+        <section>
+            <h1>Cadastro</h1>
+            {% if errors %}
+                <div class="pico-background-red-600" style="padding: 10px">
+                    {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
+                </div>
+            {% endif %}
+        </section>
+        <section>
+            <form method="post" class="wizard" action="/register">
+                <aside class="wizard-content container">
+                    <div class="wizard-step" data-title="Informações pessoais">
+                        <label for="name">Nome</label>
+                        <input type="text" name="name" id="name" required>
+                        <label for="social_name">Nome social (opcional)</label>
+                        <input type="text" name="social_name" id="social_name">
+                        <label for="cpf">CPF</label>
+                        <input type="text" name="cpf" id="cpf" required>
+                        <label for="birth_date">Data de nascimento</label>
+                        <input type="date" name="birth_date" id="birth_date" required>
+                    </div>
+                    <div class="wizard-step" data-title="Informações de contato">
+                        <label for="phone">Telefone</label>
+                        <input type="text" name="phone" id="phone" required>
+                        <label for="linkedin">Linkedin (opcional)</label>
+                        <input type="text" name="linkedin" id="linkedin">
+                        <label for="cep">CEP</label>
+                        <input type="text" name="cep" id="cep" required>
+                        <label for="address">Endereço</label>
+                        <input type="text" name="address" id="address" required>
+                        <label for="city">Cidade</label>
+                        <input type="text" name="city" id="city" required>
+                        <label for="state">Estado</label>
+                        <input type="text" name="state" id="state" required>
+                    </div>
+                    <div class="wizard-step" data-title="Informações de acesso">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" required>
+                        <label for="password">Senha</label>
+                        <input type="password" name="password" id="password" required>
+                        <label for="password_confirm">Confirme a senha</label>
+                        <input type="password"
+                               name="password_confirm"
+                               id="password_confirm"
+                               required>
+                    </div>
+                </aside>
+            </form>
+        </section>
     </main>
 {% endblock %}

@@ -7,8 +7,10 @@
         <link rel="stylesheet" href="/static/css/pico.min.css">
         <link rel="stylesheet" href="/static/css/pico.colors.min.css">
         <link rel="stylesheet" href="/static/css/wizard.min.css">
+        <link rel="stylesheet" href="/static/css/base.css">
         <script src="/static/js/htmx.min.js"></script>
         <script src="/static/js/wizard.min.js"></script>
+        {% block js %}{% endblock %}
     </head>
     <body>
         {% block content %}{% endblock %}
