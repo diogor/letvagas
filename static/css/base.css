@@ -1,3 +1,12 @@
 section {
   margin-bottom: 20px;
 }
+.wizard .wizard-nav.progress .wizard-step.active ~ .wizard-step {
+  background-color: var(--pico-background-color);
+  color: var(--pico-form-element-placeholder-color);
+}
+.wizard .wizard-nav.progress .wizard-step {
+  border: 1px solid var(--pico-form-element-border-color);
+  color: var(--pico-form-element-color);
+  background-color: var(--pico-form-element-background-color);
+}
