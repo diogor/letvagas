@@ -4,3 +4,11 @@ CREATE TYPE user_role AS ENUM (
     'client',
     'applicant'
 );
+CREATE TYPE education_type AS ENUM (
+    'fundamental',
+    'medio',
+    'superior',
+    'pos',
+    'mba',
+    'outros'
+);
