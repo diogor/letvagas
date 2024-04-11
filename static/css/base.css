@@ -10,3 +10,6 @@ section {
   color: var(--pico-form-element-color);
   background-color: var(--pico-form-element-background-color);
 }
+.wizard .wizard-nav.dots .wizard-step:before {
+  background: var(--pico-primary);
+}
