@@ -27,19 +27,25 @@ func CreateUser(user *dto.CreateUserRequest) error {
 	}
 
 	new_user := models.User{
-		Name:       user.Name,
-		SocialName: &user.SocialName,
-		Password:   password,
-		Email:      user.Email,
-		Role:       models.APPLICANT,
-		Cpf:        user.Cpf,
-		BirthDate:  user.BirthDate,
-		Phone:      user.Phone,
-		City:       &user.City,
-		State:      &user.State,
-		Address:    &user.Address,
-		Cep:        &user.Cep,
-		Linkedin:   &user.Linkedin,
+		Name:         user.Name,
+		SocialName:   &user.SocialName,
+		Password:     password,
+		Email:        user.Email,
+		Role:         models.APPLICANT,
+		Cpf:          user.Cpf,
+		BirthDate:    user.BirthDate,
+		City:         &user.City,
+		State:        &user.State,
+		Cep:          &user.Cep,
+		Street:       &user.Street,
+		Neighborhood: &user.Neighborhood,
+		Number:       &user.Number,
+		Complement:   &user.Complement,
+		Phone1:       user.Phone1,
+		AreaCode1:    user.AreaCode1,
+		Phone2:       &user.Phone2,
+		AreaCode2:    &user.AreaCode2,
+		Linkedin:     &user.Linkedin,
 	}
 
 	result := database.DB.Create(&new_user)
