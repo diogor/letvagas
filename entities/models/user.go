@@ -27,6 +27,8 @@ func (ct UserRole) Value() (driver.Value, error) {
 type User struct {
 	gorm.Model
 	ID           uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	ProfileID    uuid.UUID `json:"profile_id" gorm:"type:uuid;not null"`
+	Profile      Profile   `json:"profile" gorm:"foreignKey:ProfileID"`
 	Cpf          string    `json:"cpf" gorm:"type:varchar(15);not null"`
 	Name         string    `json:"name" gorm:"type:varchar(255);not null"`
 	BirthDate    string    `json:"birth_date" gorm:"type:date;not null"`
@@ -46,4 +48,5 @@ type User struct {
 	Number       *string   `json:"number" gorm:"type:varchar(255)"`
 	Complement   *string   `json:"complement" gorm:"type:varchar(255)"`
 	Cep          *string   `json:"cep" gorm:"type:varchar(255)"`
+	PCD          bool      `json:"pcd" gorm:"not null;default:false"`
 }

@@ -49,14 +49,20 @@
                         <input type="text" name="cpf" id="cpf" required>
                         <label for="birth_date">Data de nascimento</label>
                         <input type="date" name="birth_date" id="birth_date" required>
+                        <label for="pcd">PCD</label>
+                        <input type="checkbox" name="pcd" id="pcd">
                     </div>
                     <div class="wizard-step" data-title="2. Informações de contato">
                         <label for="phone">Telefone</label>
-                        <input type="text" name="area_code" id="area_code" required>
-                        <input type="text" name="phone" id="phone" required>
+                        <fieldset role="group">
+                            <input type="text" name="area_code" id="area_code" required maxlength="2">
+                            <input type="text" name="phone" id="phone" required>
+                        </fieldset>
                         <label for="phone2">Celular</label>
-                        <input type="text" name="area_code2" id="area_code2">
-                        <input type="text" name="phone2" id="phone2">
+                        <fieldset role="group">
+                            <input type="text" name="area_code2" id="area_code2">
+                            <input type="text" name="phone2" id="phone2">
+                        </fieldset>
                         <label for="linkedin">Linkedin (opcional)</label>
                         <input type="text" name="linkedin" id="linkedin">
                         <label for="neighborhood">Bairro</label>

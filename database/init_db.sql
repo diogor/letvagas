@@ -12,3 +12,14 @@ CREATE TYPE education_type AS ENUM (
     'mba',
     'outros'
 );
+CREATE TYPE skill_level AS ENUM (
+    'basic',
+    'intermediate',
+    'advanced',
+);
+CREATE TYPE intensity AS ENUM (
+    'none',
+    'low',
+    'medium',
+    'high',
+);

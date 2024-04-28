@@ -75,7 +75,10 @@ func Register(c *fiber.Ctx) error {
 			Number:       c.FormValue("number"),
 			Complement:   c.FormValue("complement"),
 			Cep:          c.FormValue("cep"),
+			PCD:          c.FormValue("pcd") == "on",
 		}
+
+		println(c.FormValue("pcd"))
 
 		if err := c.BodyParser(&user); err != nil {
 			return err

@@ -19,5 +19,11 @@ func InitDB() {
 		panic(err)
 	}
 
-	DB.AutoMigrate(&models.User{}, &models.Profile{}, &models.Education{}, &models.Course{})
+	DB.AutoMigrate(
+		&models.User{}, &models.Profile{}, &models.Education{},
+		&models.Course{}, &models.ComputingSkill{}, &models.ComputingSkillAnswer{},
+		&models.ComputingQuestion{}, &models.ComputingAnswer{},
+		&models.LanguageQuestion{}, &models.LanguageAnswer{}, &models.Course{},
+		&models.Experience{},
+	)
 }

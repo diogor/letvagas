@@ -22,4 +22,5 @@ type CreateUserRequest struct {
 	Street       string          `json:"street"`
 	Number       string          `json:"number"`
 	Complement   string          `json:"complement"`
+	PCD          bool            `json:"pcd"`
 }

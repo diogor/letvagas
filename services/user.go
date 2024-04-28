@@ -26,7 +26,7 @@ func CreateUser(user *dto.CreateUserRequest) error {
 		return err
 	}
 
-	new_user := models.User{
+	new_user := &models.User{
 		Name:         user.Name,
 		SocialName:   &user.SocialName,
 		Password:     password,
@@ -46,11 +46,20 @@ func CreateUser(user *dto.CreateUserRequest) error {
 		Phone2:       &user.Phone2,
 		AreaCode2:    &user.AreaCode2,
 		Linkedin:     &user.Linkedin,
+		PCD:          user.PCD,
+		Profile:      models.Profile{ID: uuid.New()},
 	}
 
-	result := database.DB.Create(&new_user)
+	result := database.DB.Create(new_user)
 
 	return result.Error
+}
+
+func GetProfile(user_id uuid.UUID) *models.Profile {
+	user := models.User{ID: user_id}
+	profile := models.Profile{}
+	database.DB.Model(&user).Association("Profile").Find(&profile)
+	return &profile
 }
 
 func GetUser(id string) *models.User {
