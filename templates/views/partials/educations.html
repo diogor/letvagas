@@ -1,0 +1,21 @@
+{% for f in educations %}
+<div>
+  <p>
+    <b>{{ f.Graduation }} - {{ f.Institution }}</b>
+  </p>
+  {% if f.OnGoing %}
+  <p>
+    <i>{{ f.StartMonth }}/{{ f.StartYear }} - Em andamento</i>
+  </p>
+  {% else %}
+  <p>
+    <i>
+      {{ f.StartMonth }}/{{ f.StartYear }} - {{ f.EndMonth }}/{{ f.EndYear }}
+    </i>
+  </p>
+  {% endif %}
+  <p>{{ f.Description }}</p>
+</div>
+{% empty %}
+<p>Sem formação informada</p>
+{% endfor %}

@@ -15,27 +15,89 @@
                 <header>
                     Formacão:
                 </header>
-                {% for f in educations %}
-                    <div>
-                        <p>
-                            <b>{{ f.Graduation }} - {{ f.Institution }}</b>
-                        </p>
-                        {% if f.OnGoing %}
-                            <p>
-                                <i>{{ f.StartMonth }}/{{ f.StartYear }} - Em andamento</i>
-                            </p>
-                        {% else %}
-                            <p>
-                                <i>{{ f.StartMonth }}/{{ f.StartYear }} - {{ f.EndMonth }}/{{ f.EndYear }}</i>
-                            </p>
-                        {% endif %}
-                        <p>{{ f.Description }}</p>
-                    </div>
-                {% endfor %}
+                <div id="educations">{% include "views/partials/educations.html" %}</div>
                 <footer>
                     <button class="outline">Adicionar formação</button>
                 </footer>
             </article>
         </section>
     </main>
+    <dialog open>
+        <article>
+            <header>
+                <h2>Adicionar formação</h2>
+            </header>
+            <form>
+                <label for="education_type">Tipo de formação</label>
+                <select name="education_type" id="education_type">
+                    <option value="fundamental">Ensino Fundamental</option>
+                    <option value="medio">Ensino Médio</option>
+                    <option value="superior">Ensino Superior</option>
+                    <option value="pos">Pós-Graduação</option>
+                    <option value="mba">MBA</option>
+                    <option value="outros">Outros</option>
+                </select>
+                <label for="institution">Instituição</label>
+                <input type="text" name="institution" id="institution">
+                <label for="course">Curso</label>
+                <input type="text" name="graduation" id="graduation">
+                <fieldset class="grid">
+                    <div>
+                        <label for="start_month">Mês de início</label>
+                        <select name="start_month" id="start_month">
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="start_year">Ano de início</label>
+                        <input type="number" name="start_year" id="start_year">
+                    </div>
+                </fieldset>
+                <fieldset class="grid">
+                    <div>
+                        <label for="end_month">Mês de término / Previsão</label>
+                        <select name="end_month" id="end_month">
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="end_year">Ano de término</label>
+                        <input type="number" name="end_year" id="end_year">
+                    </div>
+                </fieldset>
+                <label for="ongoing">
+                    <input type="checkbox" name="ongoing" id="ongoing">
+                    Em andamento
+                </label>
+                <label for="description">Descricão</label>
+                <textarea name="description" id="description"></textarea>
+            </form>
+            <footer>
+                <button class="secondary">Cancelar</button>
+                <button>Adicionar</button>
+            </footer>
+        </article>
+    </dialog>
 {% endblock %}
