@@ -13,6 +13,32 @@
         {% block js %}{% endblock %}
     </head>
     <body>
+        <header>
+            <nav class="container">
+                <ul>
+                    <li>
+                        <img src="/static/img/let.png" alt="Logo" style="height: 70px">
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="/">Início</a>
+                    </li>
+                    {% if logged_in %}
+                        <li>
+                            <a href="/profile">Meus dados</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="/login">Entrar</a>
+                        </li>
+                        <li>
+                            <a href="/register">Cadastre-se</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
         {% block content %}{% endblock %}
     </body>
 </html>

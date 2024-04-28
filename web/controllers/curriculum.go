@@ -9,6 +9,20 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+func Curriculum(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	return c.Render("views/curriculum", fiber.Map{
+		"educations": profile.Educations,
+		"logged_in":  true,
+	})
+}
 func CreateEducation(c *fiber.Ctx) error {
 	user_id, err := web.GetUserID(c)
 

@@ -8,8 +8,10 @@ import (
 )
 
 func Index(c *fiber.Ctx) error {
+	_, error := web.GetUserID(c)
 	return c.Render("views/index", fiber.Map{
-		"title": "Index",
+		"title":     "Index",
+		"logged_in": error == nil,
 	})
 }
 

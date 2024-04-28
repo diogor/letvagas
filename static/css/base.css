@@ -1,6 +1,9 @@
 section {
   margin-bottom: 20px;
 }
+header {
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
 .wizard .wizard-nav.progress .wizard-step.active ~ .wizard-step {
   background-color: var(--pico-background-color);
   color: var(--pico-form-element-placeholder-color);

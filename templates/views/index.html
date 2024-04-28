@@ -2,13 +2,18 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
     <main class="container">
-        <article>
-            <p>Ainda não é cadastrado(a)?</p>
-            <a role="button" class="button" href="/register">Cadastre-se</a>
-        </article>
-        <article>
-            <p>Já é cadastrado(a)?</p>
-            <a role="button" class="button secondary" href="/login">Veja seu currículo</a>
-        </article>
+        {% if logged_in %}
+            <h3>Vagas</h3>
+            <article></article>
+        {% else %}
+            <article>
+                <p>Ainda não é cadastrado(a)?</p>
+                <a role="button" class="button" href="/register">Cadastre-se</a>
+            </article>
+            <article>
+                <p>Já é cadastrado(a)?</p>
+                <a role="button" class="button secondary" href="/login">Veja seu currículo</a>
+            </article>
+        {% endif %}
     </main>
 {% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+{% block title %}Meus dados{% endblock %}
+{% block content %}
+    <main class="container">
+        <section>
+            <h3>Cadastro</h3>
+            {% if errors %}
+                <div class="pico-background-red-600" style="padding: 10px">
+                    {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
+                </div>
+            {% endif %}
+        </section>
+        <section>
+            <article>
+                <header>
+                    Formacão:
+                </header>
+                {% for f in educations %}
+                    <div>
+                        <p>
+                            <b>{{ f.Graduation }} - {{ f.Institution }}</b>
+                        </p>
+                        {% if f.OnGoing %}
+                            <p>
+                                <i>{{ f.StartMonth }}/{{ f.StartYear }} - Em andamento</i>
+                            </p>
+                        {% else %}
+                            <p>
+                                <i>{{ f.StartMonth }}/{{ f.StartYear }} - {{ f.EndMonth }}/{{ f.EndYear }}</i>
+                            </p>
+                        {% endif %}
+                        <p>{{ f.Description }}</p>
+                    </div>
+                {% endfor %}
+                <footer>
+                    <button class="outline">Adicionar formação</button>
+                </footer>
+            </article>
+        </section>
+    </main>
+{% endblock %}

@@ -5,7 +5,7 @@
         let args = {
             "wz_class": ".wizard",
             "wz_button_style": ".outline",
-            "wz_ori": "horizontal",
+            "wz_ori": "vertical",
             "buttons": true,
             "navigation": 'buttons',
             "finish": "Registrar",
@@ -30,7 +30,7 @@
 {% block content %}
     <main class="container">
         <section>
-            <h1>Cadastro</h1>
+            <h3>Cadastro</h3>
             {% if errors %}
                 <div class="pico-background-red-600" style="padding: 10px">
                     {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
@@ -40,22 +40,38 @@
         <section>
             <form method="post" class="wizard" action="/register" id="myForm">
                 <aside class="wizard-content container">
-                    <div class="wizard-step" data-title="1. Informações pessoais">
+                    <div class="wizard-step" data-title="1. Pessoal">
                         <label for="name">Nome</label>
                         <input type="text" name="name" id="name" required>
                         <label for="social_name">Nome social (opcional)</label>
                         <input type="text" name="social_name" id="social_name">
-                        <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf" required>
-                        <label for="birth_date">Data de nascimento</label>
-                        <input type="date" name="birth_date" id="birth_date" required>
-                        <label for="pcd">PCD</label>
-                        <input type="checkbox" name="pcd" id="pcd">
+                        <fieldset class="grid">
+                            <div>
+                                <label for="cpf">CPF</label>
+                                <input type="text" name="cpf" id="cpf" required>
+                            </div>
+                            <div>
+                                <label for="birth_date">Data de nascimento</label>
+                                <input type="date" name="birth_date" id="birth_date" required>
+                            </div>
+                            <div style="align-content: center">
+                                <label for="pcd">
+                                    <input type="checkbox" name="pcd" id="pcd">
+                                    <img src="/static/img/pcd.png" alt="pcd" style="height: 25px">
+                                    PCD
+                                </label>
+                            </div>
+                        </fieldset>
                     </div>
-                    <div class="wizard-step" data-title="2. Informações de contato">
+                    <div class="wizard-step" data-title="2. Contato">
                         <label for="phone">Telefone</label>
                         <fieldset role="group">
-                            <input type="text" name="area_code" id="area_code" required maxlength="2">
+                            <input type="text"
+                                   name="area_code"
+                                   id="area_code"
+                                   required
+                                   maxlength="2"
+                                   rows="2">
                             <input type="text" name="phone" id="phone" required>
                         </fieldset>
                         <label for="phone2">Celular</label>
@@ -80,7 +96,7 @@
                         <label for="state">Estado</label>
                         <input type="text" name="state" id="state" required>
                     </div>
-                    <div class="wizard-step" data-title="3. Informações de acesso">
+                    <div class="wizard-step" data-title="3. Acesso">
                         <label for="email">Email</label>
                         <input type="text" name="email" id="email" required>
                         <label for="password">Senha</label>
