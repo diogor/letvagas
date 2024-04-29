@@ -65,36 +65,69 @@
                     </div>
                     <div class="wizard-step" data-title="2. Contato">
                         <label for="phone">Telefone</label>
-                        <fieldset role="group">
+                        <fieldset class="grid" style="grid-template-columns: 20% auto;">
                             <input type="text"
                                    name="area_code"
                                    id="area_code"
                                    required
-                                   maxlength="2"
-                                   rows="2">
-                            <input type="text" name="phone" id="phone" required>
+                                   pattern="\d*"
+                                   placeholder="DDD"
+                                   maxlength="2">
+                            <input type="text"
+                                   name="phone"
+                                   id="phone"
+                                   required
+                                   pattern="\d*"
+                                   placeholder="Número">
                         </fieldset>
                         <label for="phone2">Celular</label>
-                        <fieldset role="group">
-                            <input type="text" name="area_code2" id="area_code2">
-                            <input type="text" name="phone2" id="phone2">
+                        <fieldset class="grid" style="grid-template-columns: 20% auto;">
+                            <input type="text"
+                                   name="area_code2"
+                                   pattern="\d*"
+                                   id="area_code2"
+                                   maxlength="2"
+                                   placeholder="DDD">
+                            <input type="text"
+                                   name="phone2"
+                                   pattern="\d*"
+                                   id="phone2"
+                                   placeholder="Número">
                         </fieldset>
                         <label for="linkedin">Linkedin (opcional)</label>
                         <input type="text" name="linkedin" id="linkedin">
-                        <label for="neighborhood">Bairro</label>
-                        <input type="text" name="neighborhood" id="neighborhood" required>
-                        <label for="cep">CEP</label>
-                        <input type="text" name="cep" id="cep" required>
-                        <label for="street">Rua</label>
-                        <input type="text" name="street" id="street" required>
-                        <label for="number">Número</label>
-                        <input type="text" name="number" id="number">
+                        <fieldset class="grid" style="grid-template-columns: auto 30%;">
+                            <div>
+                                <label for="neighborhood">Bairro</label>
+                                <input type="text" name="neighborhood" id="neighborhood" required>
+                            </div>
+                            <div>
+                                <label for="cep">CEP</label>
+                                <input type="text" name="cep" id="cep" required>
+                            </div>
+                        </fieldset>
+                        <fieldset class="grid" style="grid-template-columns: auto 30%;">
+                            <div>
+                                <label for="street">Rua</label>
+                                <input type="text" name="street" id="street" required>
+                            </div>
+                            <div>
+                                <label for="number">Número</label>
+                                <input type="text" name="number" id="number">
+                            </div>
+                        </fieldset>
                         <label for="complement">Complemento</label>
                         <input type="text" name="complement" id="complement">
-                        <label for="city">Cidade</label>
-                        <input type="text" name="city" id="city" required>
-                        <label for="state">Estado</label>
-                        <input type="text" name="state" id="state" required>
+                        <fieldset class="grid" style="grid-template-columns: auto 30%;">
+                            <div>
+                                <label for="city">Cidade</label>
+                                <input type="text" name="city" id="city" required>
+                            </div>
+                            <div>
+                                <label for="state">Estado</label>
+                                <input type="text" name="state" id="state" required>
+                            </div>
+                        </fieldset>
                     </div>
                     <div class="wizard-step" data-title="3. Acesso">
                         <label for="email">Email</label>
