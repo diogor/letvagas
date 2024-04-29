@@ -1,0 +1,19 @@
+{% for f in courses %}
+<div>
+  <p>
+    <b>{{ f.Name }}</b>
+  </p>
+  {% if f.OnGoing %}
+  <p>
+    <i>{{ f.Month }}/{{ f.Year }} - Em andamento</i>
+  </p>
+  {% else %}
+  <p>
+    <i> {{ f.Month }}/{{ f.Year }} </i>
+  </p>
+  {% endif %}
+  <p>{{ f.Description }}</p>
+</div>
+{% empty %}
+<p>Sem cursos informados</p>
+{% endfor %}

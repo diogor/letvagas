@@ -18,9 +18,11 @@ func Curriculum(c *fiber.Ctx) error {
 
 	profile := services.GetProfile(user_id)
 	educations := services.ListEducations(profile.ID)
+	courses := services.ListCourses(profile.ID)
 
 	return c.Render("views/curriculum", fiber.Map{
 		"educations": educations,
+		"courses":    courses,
 		"logged_in":  true,
 	})
 }
@@ -67,5 +69,45 @@ func ListEducations(c *fiber.Ctx) error {
 
 	return c.Render("views/partials/educations", fiber.Map{
 		"educations": educations,
+	})
+}
+
+func CreateCourse(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	new_course := dto.CreateCourseRequest{
+		Name:        c.FormValue("name"),
+		Year:        c.FormValue("year"),
+		Month:       c.FormValue("month"),
+		Description: c.FormValue("description"),
+		Ongoing:     c.FormValue("ongoing") == "on",
+	}
+
+	services.CreateCourse(profile.ID, &new_course)
+
+	return c.Render("views/partials/courses", fiber.Map{
+		"courses": services.ListCourses(profile.ID),
+	})
+}
+
+func ListCourses(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	courses := services.ListCourses(profile.ID)
+
+	return c.Render("views/partials/courses", fiber.Map{
+		"courses": courses,
 	})
 }

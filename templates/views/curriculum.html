@@ -23,6 +23,17 @@
                             onclick="toggleModal(event)">Adicionar formação</button>
                 </footer>
             </article>
+            <article>
+                <header>
+                    Cursos técnicos:
+                </header>
+                <div id="courses">{% include "views/partials/courses.html" %}</div>
+                <footer>
+                    <button class="outline"
+                            data-target="modal-course"
+                            onclick="toggleModal(event)">Adicionar curso</button>
+                </footer>
+            </article>
         </section>
     </main>
     <dialog id="modal-education">
@@ -98,10 +109,60 @@
                 <textarea name="description" id="description"></textarea>
             </form>
             <footer>
-                <button class="secondary">Cancelar</button>
+                <button class="outline"
+                        hx-on:click="document.getElementById('form-education').reset();closeModal(visibleModal)">
+                    Cancelar
+                </button>
                 <button hx-post="/formation"
                         hx-include="#form-education"
-                        hx-target="#educations">Adicionar</button>
+                        hx-target="#educations"
+                        hx-on:click="document.getElementById('form-education').reset()"
+                        hx-on::after-request="closeModal(visibleModal)">Adicionar</button>
+            </footer>
+        </article>
+    </dialog>
+    <dialog id="modal-course">
+        <article>
+            <header>
+                <h2>Adicionar curso técnico</h2>
+            </header>
+            <form id="form-course">
+                <label for="name">Nome do curso</label>
+                <input type="text" name="name" id="name">
+                <label for="year">Ano de conclusão</label>
+                <input type="number" name="year" id="year">
+                <label for="month">Mês de conclusão</label>
+                <select name="month" id="month">
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+                <label for="ongoing">
+                    <input type="checkbox" name="ongoing" id="ongoing">
+                    Em andamento
+                </label>
+                <label for="description">Descricão</label>
+                <textarea name="description" id="description"></textarea>
+            </form>
+            <footer>
+                <button class="outline"
+                        hx-on:click="document.getElementById('form-course').reset();closeModal(visibleModal)">
+                    Cancelar
+                </button>
+                <button hx-post="/course"
+                        hx-include="#form-course"
+                        hx-target="#courses"
+                        hx-on:click="document.getElementById('form-course').reset()"
+                        hx-on::after-request="closeModal(visibleModal)">Adicionar</button>
             </footer>
         </article>
     </dialog>
