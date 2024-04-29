@@ -15,11 +15,11 @@ CREATE TYPE education_type AS ENUM (
 CREATE TYPE skill_level AS ENUM (
     'basic',
     'intermediate',
-    'advanced',
+    'advanced'
 );
 CREATE TYPE intensity AS ENUM (
     'none',
     'low',
     'medium',
-    'high',
+    'high'
 );
