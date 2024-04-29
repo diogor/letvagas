@@ -32,6 +32,9 @@ func main() {
 	app.Post("/register", controllers.Register)
 	app.Get("/profile", web.LoginRequired(controllers.Curriculum))
 	app.Get("/logout", controllers.Logout)
+	app.Post("/formation", web.LoginRequired(controllers.CreateEducation))
+
+	app.Get("/partials/educations", web.LoginRequired(controllers.ListEducations))
 
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }

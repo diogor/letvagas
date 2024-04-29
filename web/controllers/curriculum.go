@@ -17,9 +17,10 @@ func Curriculum(c *fiber.Ctx) error {
 	}
 
 	profile := services.GetProfile(user_id)
+	educations := services.ListEducations(profile.ID)
 
 	return c.Render("views/curriculum", fiber.Map{
-		"educations": profile.Educations,
+		"educations": educations,
 		"logged_in":  true,
 	})
 }
@@ -45,7 +46,12 @@ func CreateEducation(c *fiber.Ctx) error {
 		Ongoing:       c.FormValue("ongoing") == "on",
 	}
 
-	return services.CreateEducation(profile.ID, &new_education)
+	services.CreateEducation(profile.ID, &new_education)
+
+	return c.Render("views/partials/educations", fiber.Map{
+		"educations": services.ListEducations(profile.ID),
+	})
+
 }
 
 func ListEducations(c *fiber.Ctx) error {
@@ -57,7 +63,9 @@ func ListEducations(c *fiber.Ctx) error {
 
 	profile := services.GetProfile(user_id)
 
+	educations := services.ListEducations(profile.ID)
+
 	return c.Render("views/partials/educations", fiber.Map{
-		"educations": profile.Educations,
+		"educations": educations,
 	})
 }

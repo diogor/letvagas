@@ -1,5 +1,6 @@
 {% extends "layouts/main.html" %}
 {% block title %}Meus dados{% endblock %}
+{% block js %}<script src="/static/js/modal.js"></script>{% endblock %}
 {% block content %}
     <main class="container">
         <section>
@@ -17,17 +18,19 @@
                 </header>
                 <div id="educations">{% include "views/partials/educations.html" %}</div>
                 <footer>
-                    <button class="outline">Adicionar formação</button>
+                    <button class="outline"
+                            data-target="modal-education"
+                            onclick="toggleModal(event)">Adicionar formação</button>
                 </footer>
             </article>
         </section>
     </main>
-    <dialog open>
+    <dialog id="modal-education">
         <article>
             <header>
                 <h2>Adicionar formação</h2>
             </header>
-            <form>
+            <form id="form-education">
                 <label for="education_type">Tipo de formação</label>
                 <select name="education_type" id="education_type">
                     <option value="fundamental">Ensino Fundamental</option>
@@ -96,7 +99,9 @@
             </form>
             <footer>
                 <button class="secondary">Cancelar</button>
-                <button>Adicionar</button>
+                <button hx-post="/formation"
+                        hx-include="#form-education"
+                        hx-target="#educations">Adicionar</button>
             </footer>
         </article>
     </dialog>
