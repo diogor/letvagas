@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql/driver"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -41,6 +42,24 @@ func (ct QuestionType) Value() (driver.Value, error) {
 	return string(ct), nil
 }
 
+type QuestionOptions []string
+
+func (o *QuestionOptions) Scan(value interface{}) error {
+	if value == nil {
+		*o = []string{}
+		return nil
+	}
+	*o = strings.Split(value.(string), ",")
+	return nil
+}
+
+func (o QuestionOptions) Value() (driver.Value, error) {
+	if len(o) == 0 {
+		return nil, nil
+	}
+	return strings.Join(o, ","), nil
+}
+
 type Profile struct {
 	gorm.Model
 	ID          uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
@@ -62,10 +81,10 @@ type Answer struct {
 
 type Question struct {
 	gorm.Model
-	ID       uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Question string       `json:"question" gorm:"type:varchar(255);not null"`
-	Type     QuestionType `json:"type" sql:"type:question_type('computing', 'language');not null"`
-	Options  []string     `json:"options" gorm:"type:varchar(255)[]"`
+	ID       uuid.UUID       `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	Question string          `json:"question" gorm:"type:varchar(255);not null"`
+	Type     QuestionType    `json:"type" sql:"type:question_type('computing', 'language');not null"`
+	Options  QuestionOptions `json:"options" gorm:"type:varchar(255)"`
 }
 
 type Education struct {

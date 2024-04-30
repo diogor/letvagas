@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"letvagas/entities/models"
 	"letvagas/services"
 	"letvagas/web"
 
@@ -24,5 +25,6 @@ func Curriculum(c *fiber.Ctx) error {
 		"courses":     courses,
 		"experiences": experiences,
 		"logged_in":   true,
+		"is_admin":    web.GetRole(c) == models.ADMIN,
 	})
 }

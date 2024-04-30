@@ -1,0 +1,12 @@
+{% for q in questions %}
+<article>
+  <header>{{ q.Question }}</header>
+  <ul>
+    {% for o in q.Options %}
+    <li>{{ o }}</li>
+    {% endfor %}
+  </ul>
+</article>
+{% empty %}
+<p>Sem questões criadas</p>
+{% endfor %}

@@ -1,0 +1,27 @@
+{% extends "layouts/main.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <main class="container">
+        <section id="questions">
+            {% include "views/partials/admin/questions.html" %}
+        </section>
+        <section>
+            <form id="question-form">
+                <label for="question">Pergunta</label>
+                <input type="text" name="question" id="question">
+                <label for="options">Opções (separadas por virgula)</label>
+                <input type="text" name="options" id="options">
+                <label for="question_type">Tipo de pergunta</label>
+                <select name="question_type" id="question_type">
+                    <option value="computing">Informática</option>
+                    <option value="language">Idiomas</option>
+                </select>
+            </form>
+            <button class="outline"
+                    hx-post="/question"
+                    hx-trigger="click"
+                    hx-target="#questions"
+                    hx-include="#question-form">Criar pergunta</button>
+        </section>
+    </main>
+{% endblock %}
