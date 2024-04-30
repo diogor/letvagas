@@ -79,5 +79,11 @@ func DeleteEducation(c *fiber.Ctx) error {
 	return c.Render("views/partials/educations", fiber.Map{
 		"educations": services.ListEducations(profile.ID),
 	})
+}
 
+func ListQuestions(c *fiber.Ctx) error {
+	question_type := c.Params("question_type")
+	return c.Render("views/partials/questions", fiber.Map{
+		"questions": services.ListQuestions(models.QuestionType(question_type)),
+	})
 }

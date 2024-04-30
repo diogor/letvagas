@@ -1,0 +1,18 @@
+{% for f in questions%}
+<form>
+  <fieldset>
+    <legend>{{ f.Question }}</legend>
+    {% for o in f.Options %}
+    <input
+      type="radio"
+      id="{{ f.QuestionId }}-{{ o }}"
+      name="{{ f.QuestionId }}"
+      value="{{ o }}"
+    />
+    <label for="{{ f.QuestionId }}">{{ o }}</label>
+    {% endfor %}
+  </fieldset>
+</form>
+{% empty %}
+<p>Sem questões informadas</p>
+{% endfor %}

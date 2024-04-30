@@ -49,3 +49,36 @@ func DeleteEducation(education_id uuid.UUID) error {
 
 	return result.Error
 }
+
+func CreateAnswer(profile_id uuid.UUID, answer *dto.CreateAnswerRequest) error {
+	profile := models.Profile{ID: profile_id}
+	database.DB.First(&profile)
+
+	new_answer := models.Answer{
+		QuestionId: answer.QuestionId,
+		Answer:     answer.Answer,
+	}
+
+	result := database.DB.Model(&profile).
+		Association("Answers").
+		Append(&new_answer)
+
+	return result
+}
+
+func ListQuestions(question_type models.QuestionType) []dto.Question {
+	questions := []models.Question{}
+	result := []dto.Question{}
+
+	database.DB.Find(&questions).Where("type = ?", question_type)
+
+	for _, question := range questions {
+		result = append(result, dto.Question{
+			QuestionId: question.ID,
+			Question:   question.Question,
+			Options:    question.Options,
+		})
+	}
+
+	return result
+}

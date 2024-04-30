@@ -39,6 +39,7 @@ func main() {
 	app.Get("/partials/educations", web.LoginRequired(controllers.ListEducations))
 	app.Get("/partials/courses", web.LoginRequired(controllers.ListCourses))
 	app.Get("/partials/experiences", web.LoginRequired(controllers.ListExperiences))
+	app.Get("/partials/questions/:question_type", web.LoginRequired(controllers.ListQuestions))
 
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }

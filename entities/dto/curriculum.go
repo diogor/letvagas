@@ -36,17 +36,13 @@ type CreateExperienceRequest struct {
 	Reference  string `json:"reference_contacts"`
 }
 
-type CreateLanguageAnswerRequest struct {
-	QuestionId uuid.UUID        `json:"question_id" binding:"required"`
-	Answer     models.Intensity `json:"level" binding:"required"`
+type CreateAnswerRequest struct {
+	QuestionId uuid.UUID `json:"question_id" binding:"required"`
+	Answer     string    `json:"answer" binding:"required"`
 }
 
-type CreateComputingAnswerRequest struct {
-	QuestionId uuid.UUID        `json:"question_id" binding:"required"`
-	Answer     models.Intensity `json:"level" binding:"required"`
-}
-
-type CreateComputingSkillAnswerRequest struct {
-	QuestionId uuid.UUID         `json:"question_id" binding:"required"`
-	Answer     models.SkillLevel `json:"level" binding:"required"`
+type Question struct {
+	QuestionId uuid.UUID `json:"question_id" binding:"required"`
+	Question   string    `json:"question" binding:"required"`
+	Options    []string  `json:"options" binding:"required"`
 }

@@ -10,23 +10,17 @@ import (
 )
 
 type EducationType string
-type SkillLevel string
-type Intensity string
+type QuestionType string
 
 const (
-	FUNDAMENTAL  EducationType = "fundamental"
-	MEDIO        EducationType = "medio"
-	SUPERIOR     EducationType = "superior"
-	POS          EducationType = "pos"
-	MBA          EducationType = "mba"
-	OUTROS       EducationType = "outros"
-	BASIC        SkillLevel    = "basic"
-	INTERMEDIATE SkillLevel    = "intermediate"
-	ADVANCED     SkillLevel    = "advanced"
-	NONE         Intensity     = "none"
-	LOW          Intensity     = "low"
-	MEDIUM       Intensity     = "medium"
-	HIGH         Intensity     = "high"
+	FUNDAMENTAL EducationType = "fundamental"
+	MEDIO       EducationType = "medio"
+	SUPERIOR    EducationType = "superior"
+	POS         EducationType = "pos"
+	MBA         EducationType = "mba"
+	OUTROS      EducationType = "outros"
+	COMPUTING   QuestionType  = "computing"
+	LANGUAGE    QuestionType  = "language"
 )
 
 func (ct *EducationType) Scan(value interface{}) error {
@@ -38,81 +32,40 @@ func (ct EducationType) Value() (driver.Value, error) {
 	return string(ct), nil
 }
 
-func (ct *SkillLevel) Scan(value interface{}) error {
-	*ct = SkillLevel(value.(string))
+func (ct *QuestionType) Scan(value interface{}) error {
+	*ct = QuestionType(value.(string))
 	return nil
 }
 
-func (ct SkillLevel) Value() (driver.Value, error) {
-	return string(ct), nil
-}
-
-func (ct *Intensity) Scan(value interface{}) error {
-	*ct = Intensity(value.(string))
-	return nil
-}
-
-func (ct Intensity) Value() (driver.Value, error) {
+func (ct QuestionType) Value() (driver.Value, error) {
 	return string(ct), nil
 }
 
 type Profile struct {
 	gorm.Model
-	ID                 uuid.UUID              `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	ComputingSkills    []ComputingSkillAnswer `json:"computing_skills" gorm:"foreignKey:ProfileId"`
-	ComputingQuestions []ComputingAnswer      `json:"computing_questions" gorm:"foreignKey:ProfileId"`
-	Educations         []Education            `json:"educations" gorm:"foreignKey:ProfileId"`
-	Courses            []Course               `json:"courses" gorm:"foreignKey:ProfileId"`
-	Languages          []LanguageAnswer       `json:"languages" gorm:"foreignKey:ProfileId"`
-	Experiences        []Experience           `json:"experiences" gorm:"foreignKey:ProfileId"`
+	ID          uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	Answers     []Answer     `json:"answers" gorm:"foreignKey:ProfileId"`
+	Educations  []Education  `json:"educations" gorm:"foreignKey:ProfileId"`
+	Courses     []Course     `json:"courses" gorm:"foreignKey:ProfileId"`
+	Experiences []Experience `json:"experiences" gorm:"foreignKey:ProfileId"`
 }
 
-type ComputingSkill struct {
+type Answer struct {
 	gorm.Model
-	ID   uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Name string    `json:"name" gorm:"type:varchar(255);not null"`
+	ID         uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	ProfileId  uuid.UUID `json:"profile_id" gorm:"type:uuid;not null"`
+	Profile    Profile   `json:"profile" gorm:"foreignKey:ProfileId"`
+	Question   Question  `json:"question"`
+	QuestionId uuid.UUID `json:"question_id" gorm:"type:uuid;not null"`
+	Answer     string    `json:"answer"`
 }
 
-type ComputingSkillAnswer struct {
+type Question struct {
 	gorm.Model
-	ID        uuid.UUID      `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	ProfileId uuid.UUID      `json:"profile_id" gorm:"type:uuid;not null"`
-	Profile   Profile        `json:"profile" gorm:"foreignKey:ProfileId"`
-	Skill     ComputingSkill `json:"skill"`
-	SkillId   uuid.UUID      `json:"skill_id" gorm:"type:uuid;not null"`
-	Answer    SkillLevel     `json:"level" sql:"type:skill_level('basic', 'intermediate', 'advanced');not null"`
-}
-
-type ComputingQuestion struct {
-	gorm.Model
-	ID       uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Question string    `json:"question" gorm:"type:varchar(255);not null"`
-}
-
-type ComputingAnswer struct {
-	gorm.Model
-	ID         uuid.UUID         `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	ProfileId  uuid.UUID         `json:"profile_id" gorm:"type:uuid;not null"`
-	Profile    Profile           `json:"profile" gorm:"foreignKey:ProfileId"`
-	Question   ComputingQuestion `json:"question"`
-	QuestionId uuid.UUID         `json:"question_id" gorm:"type:uuid;not null"`
-	Answer     Intensity         `json:"level" sql:"type:intensity('none', 'low', 'medium', 'high');not null"`
-}
-
-type LanguageQuestion struct {
-	gorm.Model
-	ID       uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Question string    `json:"question" gorm:"type:varchar(255);not null"`
-}
-
-type LanguageAnswer struct {
-	gorm.Model
-	ID         uuid.UUID        `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	ProfileId  uuid.UUID        `json:"profile_id" gorm:"type:uuid;not null"`
-	Profile    Profile          `json:"profile" gorm:"foreignKey:ProfileId"`
-	Question   LanguageQuestion `json:"question"`
-	QuestionId uuid.UUID        `json:"question_id" gorm:"type:uuid;not null"`
-	Answer     Intensity        `json:"level" sql:"type:intensity('none', 'low', 'medium', 'high');not null"`
+	ID       uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	Question string       `json:"question" gorm:"type:varchar(255);not null"`
+	Type     QuestionType `json:"type" sql:"type:question_type('computing', 'language');not null"`
+	Options  []string     `json:"options" gorm:"type:varchar(255)[]"`
 }
 
 type Education struct {

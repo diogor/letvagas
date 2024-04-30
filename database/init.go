@@ -21,9 +21,7 @@ func InitDB() {
 
 	DB.AutoMigrate(
 		&models.User{}, &models.Profile{}, &models.Education{},
-		&models.Course{}, &models.ComputingSkill{}, &models.ComputingSkillAnswer{},
-		&models.ComputingQuestion{}, &models.ComputingAnswer{},
-		&models.LanguageQuestion{}, &models.LanguageAnswer{}, &models.Course{},
-		&models.Experience{},
+		&models.Course{}, &models.Answer{},
+		&models.Course{}, &models.Experience{},
 	)
 }

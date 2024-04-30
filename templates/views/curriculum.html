@@ -48,6 +48,14 @@
                             onclick="toggleModal(event)">Adicionar experiência</button>
                 </footer>
             </article>
+            <article>
+                <header>
+                    Informática:
+                </header>
+                <div id="computing_questions"
+                     hx-get="/partials/questions/computing"
+                     hx-trigger="load"></div>
+            </article>
         </section>
     </main>
     <dialog id="modal-education">
