@@ -33,7 +33,7 @@ type User struct {
 	Name         string    `json:"name" gorm:"type:varchar(255);not null"`
 	BirthDate    string    `json:"birth_date" gorm:"type:date;not null"`
 	Password     string    `json:"-" gorm:"type:varchar(255);not null"`
-	Email        string    `json:"email" gorm:"type:varchar(255);not null"`
+	Email        string    `json:"email" gorm:"type:varchar(255);not null;unique"`
 	AreaCode1    string    `json:"area_code" gorm:"type:varchar(255);not null"`
 	Phone1       string    `json:"phone" gorm:"type:varchar(255);not null"`
 	Phone2       *string   `json:"phone2" gorm:"type:varchar(255)"`
