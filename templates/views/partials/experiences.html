@@ -1,0 +1,19 @@
+{% for f in experiences %}
+<div>
+  <p>
+    <b>{{ f.Role }} em {{ f.Company }}</b>
+  </p>
+  {% if f.EndDate %}
+  <p>
+    <i>{{ f.GetStartDate }} - {{ f.GetEndDate }}</i>
+  </p>
+  {% else %}
+  <p>
+    <i> {{ f.GetStartDate }} - Atualmente </i>
+  </p>
+  {% endif %}
+  <p>{{ f.Activities }}</p>
+</div>
+{% empty %}
+<p>Sem experiências informadas</p>
+{% endfor %}

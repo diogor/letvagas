@@ -19,6 +19,7 @@
                 <div id="educations">{% include "views/partials/educations.html" %}</div>
                 <footer>
                     <button class="outline"
+                            style="padding: 0.5rem 0.75rem"
                             data-target="modal-education"
                             onclick="toggleModal(event)">Adicionar formação</button>
                 </footer>
@@ -30,8 +31,21 @@
                 <div id="courses">{% include "views/partials/courses.html" %}</div>
                 <footer>
                     <button class="outline"
+                            style="padding: 0.5rem 0.75rem"
                             data-target="modal-course"
                             onclick="toggleModal(event)">Adicionar curso</button>
+                </footer>
+            </article>
+            <article>
+                <header>
+                    Experiências profissionais:
+                </header>
+                <div id="experiences">{% include "views/partials/experiences.html" %}</div>
+                <footer>
+                    <button class="outline"
+                            style="padding: 0.5rem 0.75rem"
+                            data-target="modal-experience"
+                            onclick="toggleModal(event)">Adicionar experiência</button>
                 </footer>
             </article>
         </section>
@@ -54,7 +68,7 @@
                 </select>
                 <label for="institution">Instituição</label>
                 <input type="text" name="institution" id="institution">
-                <label for="course">Curso</label>
+                <label for="graduation">Curso</label>
                 <input type="text" name="graduation" id="graduation">
                 <fieldset class="grid">
                     <div>
@@ -117,6 +131,7 @@
                 <button hx-post="/formation"
                         hx-include="#form-education"
                         hx-target="#educations"
+                        hx-disabled-elt="this"
                         hx-on:click="document.getElementById('form-education').reset()"
                         hx-on::after-request="closeModal(visibleModal)">Adicionar</button>
             </footer>
@@ -162,8 +177,45 @@
                 </button>
                 <button hx-post="/course"
                         hx-include="#form-course"
+                        hx-disabled-elt="this"
                         hx-target="#courses"
                         hx-on:click="document.getElementById('form-course').reset()"
+                        hx-on::after-request="closeModal(visibleModal)">Adicionar</button>
+            </footer>
+        </article>
+    </dialog>
+    <dialog id="modal-experience">
+        <article>
+            <header>
+                <button rel="prev" onclick="closeModal(visibleModal)"></button>
+                <h2>Adicionar experiência profissional</h2>
+            </header>
+            <form id="form-experience">
+                <label for="company">Nome da instituição</label>
+                <input type="text" name="company" id="company">
+                <label for="start_date">Data de inicio</label>
+                <input type="date" name="start_date" id="start_date">
+                <label for="end_date">Data de término</label>
+                <input type="date" name="end_date" id="end_date">
+                <label for="last_wage">Último salário</label>
+                <input type="text" name="last_wage" id="last_wage">
+                <label for="role">Cargo</label>
+                <input type="text" name="role" id="role">
+                <label for="activities">Atividades</label>
+                <textarea name="activities" id="activities"></textarea>
+                <label for="reference_contacts">Contatos de referência</label>
+                <textarea name="reference_contacts" id="reference_contacts"></textarea>
+            </form>
+            <footer>
+                <button class="outline"
+                        hx-on:click="document.getElementById('form-experience').reset();closeModal(visibleModal)">
+                    Cancelar
+                </button>
+                <button hx-post="/experience"
+                        hx-include="#form-experience"
+                        hx-disabled-elt="this"
+                        hx-target="#experiences"
+                        hx-on:click="document.getElementById('form-experience').reset()"
                         hx-on::after-request="closeModal(visibleModal)">Adicionar</button>
             </footer>
         </article>

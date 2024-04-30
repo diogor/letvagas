@@ -42,32 +42,10 @@ func ListEducations(profile_id uuid.UUID) []models.Education {
 	return educations
 }
 
-func CreateCourse(profile_id uuid.UUID, course *dto.CreateCourseRequest) error {
-	profile := models.Profile{ID: profile_id}
-	database.DB.First(&profile)
+func DeleteEducation(education_id uuid.UUID) error {
+	education := models.Education{ID: education_id}
 
-	new_course := models.Course{
-		Name:        course.Name,
-		Year:        &course.Year,
-		Month:       &course.Month,
-		Description: &course.Description,
-		Ongoing:     course.Ongoing,
-	}
+	result := database.DB.Delete(&education)
 
-	result := database.DB.Model(&profile).
-		Association("Courses").
-		Append(&new_course)
-
-	return result
-}
-
-func ListCourses(profile_id uuid.UUID) []models.Course {
-	courses := []models.Course{}
-
-	profile := models.Profile{ID: profile_id}
-	database.DB.First(&profile)
-
-	database.DB.Model(&profile).Association("Courses").Find(&courses)
-
-	return courses
+	return result.Error
 }

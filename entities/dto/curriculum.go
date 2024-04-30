@@ -27,6 +27,7 @@ type CreateCourseRequest struct {
 }
 
 type CreateExperienceRequest struct {
+	Company    string `json:"company" binding:"required"`
 	StartDate  string `json:"start_date" binding:"required"`
 	EndDate    string `json:"end_date"`
 	LastWage   string `json:"last_wage"`

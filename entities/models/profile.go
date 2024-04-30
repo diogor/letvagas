@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql/driver"
+	"time"
 
 	"github.com/google/uuid"
 	"gorm.io/datatypes"
@@ -63,7 +64,7 @@ type Profile struct {
 	Educations         []Education            `json:"educations" gorm:"foreignKey:ProfileId"`
 	Courses            []Course               `json:"courses" gorm:"foreignKey:ProfileId"`
 	Languages          []LanguageAnswer       `json:"languages" gorm:"foreignKey:ProfileId"`
-	Experience         []Experience           `json:"experiences" gorm:"foreignKey:ProfileId"`
+	Experiences        []Experience           `json:"experiences" gorm:"foreignKey:ProfileId"`
 }
 
 type ComputingSkill struct {
@@ -144,13 +145,24 @@ type Course struct {
 
 type Experience struct {
 	gorm.Model
-	ID                uuid.UUID       `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	ProfileId         uuid.UUID       `json:"profile_id" gorm:"type:uuid;not null"`
-	Profile           Profile         `json:"profile" gorm:"foreignKey:ProfileId"`
-	StartDate         datatypes.Date  `json:"start_date" gorm:"type:varchar(255)"`
-	EndDate           *datatypes.Date `json:"end_date" gorm:"type:varchar(255)"`
-	LastWage          *string         `json:"last_wage" gorm:"type:varchar(255)"`
-	Role              *string         `json:"role" gorm:"type:varchar(255)"`
-	Activities        *string         `json:"activities" gorm:"type:varchar(512)"`
-	ReferenceContacts *string         `json:"reference_contacts" gorm:"type:varchar(512)"`
+	ID                uuid.UUID      `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	ProfileId         uuid.UUID      `json:"profile_id" gorm:"type:uuid;not null"`
+	Profile           Profile        `json:"profile" gorm:"foreignKey:ProfileId"`
+	Company           string         `json:"company" gorm:"type:varchar(255);not null"`
+	StartDate         datatypes.Date `json:"start_date"`
+	EndDate           datatypes.Date `json:"end_date"`
+	LastWage          *string        `json:"last_wage" gorm:"type:varchar(255)"`
+	Role              *string        `json:"role" gorm:"type:varchar(255)"`
+	Activities        *string        `json:"activities" gorm:"type:varchar(512)"`
+	ReferenceContacts *string        `json:"reference_contacts" gorm:"type:varchar(512)"`
+}
+
+func (e Experience) GetStartDate() string {
+	start_date, _ := e.StartDate.Value()
+	return start_date.(time.Time).Format("02/01/2006")
+}
+
+func (e Experience) GetEndDate() string {
+	end_date, _ := e.EndDate.Value()
+	return end_date.(time.Time).Format("02/01/2006")
 }

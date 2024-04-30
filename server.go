@@ -34,9 +34,11 @@ func main() {
 	app.Get("/logout", controllers.Logout)
 	app.Post("/formation", web.LoginRequired(controllers.CreateEducation))
 	app.Post("/course", web.LoginRequired(controllers.CreateCourse))
+	app.Post("/experience", web.LoginRequired(controllers.CreateExperience))
 
 	app.Get("/partials/educations", web.LoginRequired(controllers.ListEducations))
 	app.Get("/partials/courses", web.LoginRequired(controllers.ListCourses))
+	app.Get("/partials/experiences", web.LoginRequired(controllers.ListExperiences))
 
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }
