@@ -35,6 +35,7 @@ func main() {
 	app.Post("/formation", web.LoginRequired(controllers.CreateEducation))
 	app.Post("/course", web.LoginRequired(controllers.CreateCourse))
 	app.Post("/experience", web.LoginRequired(controllers.CreateExperience))
+	app.Post("/answers", web.LoginRequired(controllers.CreateAnswer))
 
 	app.Post("/question", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.CreateQuestion)))
 

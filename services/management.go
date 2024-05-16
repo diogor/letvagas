@@ -19,14 +19,14 @@ func CreateQuestion(question string, options []string, question_type models.Ques
 	return result.Error
 }
 
-func ListAllQuestions() []dto.Question {
+func ListAllQuestions() []dto.QuestionList {
 	questions := []models.Question{}
-	result := []dto.Question{}
+	result := []dto.QuestionList{}
 
 	database.DB.Find(&questions)
 
 	for _, question := range questions {
-		result = append(result, dto.Question{
+		result = append(result, dto.QuestionList{
 			QuestionId: question.ID,
 			Question:   question.Question,
 			Options:    question.Options,

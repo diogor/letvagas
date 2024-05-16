@@ -41,7 +41,18 @@ type CreateAnswerRequest struct {
 	Answer     string    `json:"answer" binding:"required"`
 }
 
+type Options struct {
+	Option  string `json:"option" binding:"required"`
+	Checked bool   `json:"checked" binding:"required"`
+}
+
 type Question struct {
+	QuestionId uuid.UUID `json:"question_id" binding:"required"`
+	Question   string    `json:"question" binding:"required"`
+	Options    []Options `json:"options" binding:"required"`
+}
+
+type QuestionList struct {
 	QuestionId uuid.UUID `json:"question_id" binding:"required"`
 	Question   string    `json:"question" binding:"required"`
 	Options    []string  `json:"options" binding:"required"`

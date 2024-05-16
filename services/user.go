@@ -57,8 +57,10 @@ func CreateUser(user *dto.CreateUserRequest) error {
 
 func GetProfile(user_id uuid.UUID) *models.Profile {
 	user := models.User{ID: user_id}
-	profile := models.Profile{}
-	database.DB.Model(&user).Association("Profile").Find(&profile)
+	database.DB.First(&user).Association("Profile")
+	profile := models.Profile{ID: user.ProfileID}
+	database.DB.First(&profile)
+
 	return &profile
 }
 

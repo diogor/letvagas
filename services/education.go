@@ -6,6 +6,7 @@ import (
 	"letvagas/entities/models"
 
 	"github.com/google/uuid"
+	"gorm.io/gorm/clause"
 )
 
 func CreateEducation(profile_id uuid.UUID, education *dto.CreateEducationRequest) error {
@@ -57,26 +58,51 @@ func CreateAnswer(profile_id uuid.UUID, answer *dto.CreateAnswerRequest) error {
 	new_answer := models.Answer{
 		QuestionId: answer.QuestionId,
 		Answer:     answer.Answer,
+		ProfileId:  profile.ID,
 	}
 
-	result := database.DB.Model(&profile).
-		Association("Answers").
-		Append(&new_answer)
+	result := database.DB.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "question_id"}, {Name: "profile_id"}},
+		DoUpdates: clause.AssignmentColumns([]string{"answer"}),
+	}).Create(&new_answer)
 
-	return result
+	return result.Error
 }
 
-func ListQuestions(question_type models.QuestionType) []dto.Question {
+func ListAnswers(profile_id uuid.UUID) []models.Answer {
+	answers := []models.Answer{}
+
+	profile := models.Profile{ID: profile_id}
+	database.DB.First(&profile)
+
+	database.DB.Model(&profile).Association("Answers").Find(&answers)
+
+	return answers
+}
+
+func ListQuestions(question_type models.QuestionType, profile_id uuid.UUID) []dto.Question {
 	questions := []models.Question{}
 	result := []dto.Question{}
 
-	database.DB.Find(&questions).Where("type = ?", question_type)
+	database.DB.Find(&questions, "type = ?", question_type)
 
 	for _, question := range questions {
+		options := []dto.Options{}
+		answer := models.Answer{}
+		database.DB.First(&answer, "question_id = ? AND profile_id = ?", question.ID, profile_id)
+
+		for _, option := range question.Options {
+
+			options = append(options, dto.Options{
+				Option:  option,
+				Checked: answer.Answer == option,
+			})
+		}
+
 		result = append(result, dto.Question{
 			QuestionId: question.ID,
 			Question:   question.Question,
-			Options:    question.Options,
+			Options:    options,
 		})
 	}
 

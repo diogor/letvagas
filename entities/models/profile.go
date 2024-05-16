@@ -72,10 +72,10 @@ type Profile struct {
 type Answer struct {
 	gorm.Model
 	ID         uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	ProfileId  uuid.UUID `json:"profile_id" gorm:"type:uuid;not null"`
+	ProfileId  uuid.UUID `json:"profile_id" gorm:"type:uuid;not null;uniqueIndex:answer_question_id"`
 	Profile    Profile   `json:"profile" gorm:"foreignKey:ProfileId"`
 	Question   Question  `json:"question"`
-	QuestionId uuid.UUID `json:"question_id" gorm:"type:uuid;not null"`
+	QuestionId uuid.UUID `json:"question_id" gorm:"type:uuid;not null;uniqueIndex:answer_question_id"`
 	Answer     string    `json:"answer"`
 }
 

@@ -82,8 +82,17 @@ func DeleteEducation(c *fiber.Ctx) error {
 }
 
 func ListQuestions(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
 	question_type := c.Params("question_type")
 	return c.Render("views/partials/questions", fiber.Map{
-		"questions": services.ListQuestions(models.QuestionType(question_type)),
+		"questions": services.ListQuestions(models.QuestionType(question_type), profile.ID),
+		"answers":   services.ListAnswers(profile.ID),
 	})
 }

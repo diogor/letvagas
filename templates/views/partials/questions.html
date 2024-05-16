@@ -1,3 +1,8 @@
+<script>
+  function getAnswer(id) {
+	  return document.getElementById(id).value
+  }
+</script>
 {% for f in questions%}
 <form>
   <fieldset>
@@ -5,11 +10,20 @@
     {% for o in f.Options %}
     <input
       type="radio"
-      id="{{ f.QuestionId }}-{{ o }}"
+      id="{{ f.QuestionId }}-{{ o.Option }}"
       name="{{ f.QuestionId }}"
-      value="{{ o }}"
+      value="{{ o.Option }}"
+      {% if o.Checked %}checked{% endif %}
+      hx-post="/answers"
+      hx-vals='{ "question_id": "{{ f.QuestionId }}", "answer": "{{ o.Option }}" }'
     />
-    <label for="{{ f.QuestionId }}-{{ o }}">{{ o }}</label>
+    <label for="{{ f.QuestionId }}-{{ o.Option }}">{{ o.Option }}</label>
+    {% empty %}
+    <textarea
+      id="{{ f.QuestionId }}-other"
+      hx-post="/answers"
+      hx-vals='js:{ "question_id": "{{ f.QuestionId }}", answer: getAnswer("{{ f.QuestionId }}-other") }'
+    >{% for a in answers %}{% if a.QuestionId == f.QuestionId %}{{a.Answer}}{% endif %}{% endfor %}</textarea>
     {% endfor %}
   </fieldset>
 </form>
