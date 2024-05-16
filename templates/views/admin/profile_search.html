@@ -1,0 +1,26 @@
+{% extends "layouts/main.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <main class="container">
+        <section id="filter">
+            <form id="filter-form"
+                  hx-target="#results"
+                  hx-post="/partials/admin/search-results">
+                <fieldset role="group">
+                    <select name="state" hx-target="#city" hx-get="/partials/admin/cities">
+                        <option value="">Todos os estados</option>
+                        {% for state in states %}<option value="{{ state }}">{{ state }}</option>{% endfor %}
+                    </select>
+                    <select name="city" id="city">
+                        <option value="">Todas as cidades</option>
+                    </select>
+                    <input type="text" name="q" placeholder="Termo de busca" />
+                    <input type="submit" value="Buscar" />
+                </fieldset>
+            </form>
+        </section>
+        <section id="results">
+            {% include "views/partials/admin/search_results.html" %}
+        </section>
+    </main>
+{% endblock %}

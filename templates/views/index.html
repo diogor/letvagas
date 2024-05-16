@@ -4,7 +4,7 @@
     <main class="container">
         {% if logged_in %}
             <h3>Vagas</h3>
-            <article></article>
+        {% include "views/partials/jobs.html" %}
         {% else %}
             <article>
                 <p>Ainda não é cadastrado(a)?</p>

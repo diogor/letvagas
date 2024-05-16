@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">E-Mail</th>
+      <th scope="col">Tel</th>
+      <th scope="col">Cel</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <th scope="row">{{ user.Name }}</th>
+      <td>{{ user.Email }}</td>
+      <td>{{ user.AreaCode1 }} {{ user.Phone1 }}</td>
+      <td>{{ user.AreaCode2 }} {{ user.Phone2 }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

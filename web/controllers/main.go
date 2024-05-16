@@ -32,6 +32,50 @@ func Admin(c *fiber.Ctx) error {
 	})
 }
 
+func SearchProfiles(c *fiber.Ctx) error {
+	_, error := web.GetUserID(c)
+	role := web.GetRole(c)
+
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	city := c.Query("city")
+	state := c.Query("state")
+
+	q := c.Query("q")
+
+	profiles := services.SearchProfiles(q, city, state)
+
+	return c.Render("views/admin/profile_search", fiber.Map{
+		"title":     "Busca de Perfis",
+		"logged_in": error == nil,
+		"is_admin":  web.GetRole(c) == models.ADMIN,
+		"states":    services.ListUserStates(),
+		"users":     profiles,
+	})
+}
+
+func SearchResults(c *fiber.Ctx) error {
+	_, error := web.GetUserID(c)
+	role := web.GetRole(c)
+
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	city := c.FormValue("city")
+	state := c.FormValue("state")
+
+	q := c.FormValue("q")
+
+	profiles := services.SearchProfiles(q, city, state)
+
+	return c.Render("views/partials/admin/search_results", fiber.Map{
+		"users": profiles,
+	})
+}
+
 func CreateQuestion(c *fiber.Ctx) error {
 	_, error := web.GetUserID(c)
 	role := web.GetRole(c)

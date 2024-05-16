@@ -26,6 +26,7 @@ func main() {
 	app.Static("/static", "./static")
 	app.Get("/", controllers.Index)
 	app.Get("/admin", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.Admin)))
+	app.Get("/admin/profile-search", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchProfiles)))
 	app.Get("/login", controllers.Login)
 	app.Post("/login", controllers.Login)
 	app.Get("/register", controllers.Register)
@@ -43,6 +44,9 @@ func main() {
 	app.Get("/partials/courses", web.LoginRequired(controllers.ListCourses))
 	app.Get("/partials/experiences", web.LoginRequired(controllers.ListExperiences))
 	app.Get("/partials/questions/:question_type", web.LoginRequired(controllers.ListQuestions))
+
+	app.Get("/partials/admin/cities", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.ListCitiesByState)))
+	app.Post("/partials/admin/search-results", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchResults)))
 
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }

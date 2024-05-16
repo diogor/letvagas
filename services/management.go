@@ -35,3 +35,41 @@ func ListAllQuestions() []dto.QuestionList {
 
 	return result
 }
+
+func ListUserStates() []string {
+	states := []string{}
+
+	database.DB.Model(&models.User{}).Distinct().Pluck("state", &states)
+
+	return states
+}
+
+func ListUserCities(state string) []string {
+	cities := []string{}
+
+	database.DB.Model(&models.User{}).Where("state = ?", state).Distinct().Pluck("city", &cities)
+
+	return cities
+}
+
+func SearchProfiles(q string, city string, state string) []models.User {
+	var profiles []models.User
+
+	query := database.DB
+
+	if city != "" {
+		query = query.Where("city = ?", city)
+	}
+
+	if state != "" {
+		query = query.Where("state = ?", state)
+	}
+
+	if q != "" {
+		query = query.Where("name LIKE ?", "%"+q+"%")
+	}
+
+	query.Find(&profiles)
+
+	return profiles
+}
