@@ -1,12 +1,18 @@
-{% for q in questions %}
-<article>
-  <header>{{ q.Question }}</header>
-  <ul>
-    {% for o in q.Options %}
-    <li>{{ o }}</li>
+<table class="stripped">
+  <thead>
+    <tr>
+      <th scope="col">Pergunta</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Respostas</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for q in questions %}
+    <tr>
+      <th scope="row">{{ q.Question }}</th>
+      <td>{{ q.QuestionType }}</td>
+      <td>{% for o in q.Options %} {{ o }}, {% endfor %}</td>
+    </tr>
     {% endfor %}
-  </ul>
-</article>
-{% empty %}
-<p>Sem questões criadas</p>
-{% endfor %}
+  </tbody>
+</table>
