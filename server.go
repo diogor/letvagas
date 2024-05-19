@@ -38,7 +38,8 @@ func main() {
 	app.Post("/experience", web.LoginRequired(controllers.CreateExperience))
 	app.Post("/answers", web.LoginRequired(controllers.CreateAnswer))
 
-	app.Post("/question", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.CreateQuestion)))
+	app.Post("/questions", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.CreateQuestion)))
+	app.Delete("/questions/:question_id", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.DeleteQuestion)))
 
 	app.Get("/partials/educations", web.LoginRequired(controllers.ListEducations))
 	app.Get("/partials/courses", web.LoginRequired(controllers.ListCourses))

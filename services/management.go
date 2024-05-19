@@ -4,6 +4,8 @@ import (
 	"letvagas/database"
 	"letvagas/entities/dto"
 	"letvagas/entities/models"
+
+	"github.com/google/uuid"
 )
 
 func CreateQuestion(question string, options []string, question_type models.QuestionType) error {
@@ -19,6 +21,14 @@ func CreateQuestion(question string, options []string, question_type models.Ques
 	return result.Error
 }
 
+func DeleteQuestion(question_id uuid.UUID) error {
+	question := models.Question{ID: question_id}
+
+	result := database.DB.Delete(&question)
+
+	return result.Error
+}
+
 func ListAllQuestions() []dto.QuestionList {
 	questions := []models.Question{}
 	result := []dto.QuestionList{}
@@ -29,6 +39,7 @@ func ListAllQuestions() []dto.QuestionList {
 		result = append(result, dto.QuestionList{
 			QuestionId: question.ID,
 			Question:   question.Question,
+			Type:       question.Type,
 			Options:    question.Options,
 		})
 	}

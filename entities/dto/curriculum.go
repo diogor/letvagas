@@ -53,7 +53,8 @@ type Question struct {
 }
 
 type QuestionList struct {
-	QuestionId uuid.UUID `json:"question_id" binding:"required"`
-	Question   string    `json:"question" binding:"required"`
-	Options    []string  `json:"options" binding:"required"`
+	QuestionId uuid.UUID           `json:"question_id" binding:"required"`
+	Question   string              `json:"question" binding:"required"`
+	Type       models.QuestionType `json:"type" binding:"required"`
+	Options    []string            `json:"options" binding:"required"`
 }

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func Index(c *fiber.Ctx) error {
@@ -94,6 +95,21 @@ func CreateQuestion(c *fiber.Ctx) error {
 	if err != nil {
 		return c.SendStatus(500)
 	}
+
+	return c.Render("views/partials/admin/questions", fiber.Map{
+		"questions": services.ListAllQuestions(),
+	})
+}
+
+func DeleteQuestion(c *fiber.Ctx) error {
+	_, error := web.GetUserID(c)
+	role := web.GetRole(c)
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	question_id := uuid.MustParse(c.Params("question_id"))
+	services.DeleteQuestion(question_id)
 
 	return c.Render("views/partials/admin/questions", fiber.Map{
 		"questions": services.ListAllQuestions(),
