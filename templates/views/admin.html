@@ -2,26 +2,75 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
     <main class="container">
-        <section id="questions">
-            {% include "views/partials/admin/questions.html" %}
-        </section>
+        <nav class="tablist">
+            <ul>
+                <li>
+                    <a href="#" role="tab" style="text-decoration: none">Questionário</a>
+                </li>
+                <li>
+                    <a href="#" role="tab" style="text-decoration: none">Usuários</a>
+                </li>
+            </ul>
+        </nav>
         <section>
-            <form id="question-form">
-                <label for="question">Pergunta</label>
-                <input type="text" name="question" id="question">
-                <label for="options">Opções (separadas por virgula)</label>
-                <input type="text" name="options" id="options">
-                <label for="question_type">Tipo de pergunta</label>
-                <select name="question_type" id="question_type">
-                    <option value="computing">Informática</option>
-                    <option value="language">Idiomas</option>
-                </select>
-            </form>
-            <button class="outline"
-                    hx-post="/question"
-                    hx-trigger="click"
-                    hx-target="#questions"
-                    hx-include="#question-form">Criar pergunta</button>
+            <div role="tabpanel">
+                <section id="questions">
+                    {% include "views/partials/admin/questions.html" %}
+                </section>
+                <section>
+                    <article>
+                        <form id="question-form">
+                            <label for="question">Pergunta</label>
+                            <input type="text" name="question" id="question">
+                            <label for="options">Opções (separadas por virgula)</label>
+                            <input type="text" name="options" id="options">
+                            <label for="question_type">Tipo de pergunta</label>
+                            <select name="question_type" id="question_type">
+                                <option value="computing">Informática</option>
+                                <option value="language">Idiomas</option>
+                            </select>
+                        </form>
+                        <button class="outline"
+                                hx-post="/question"
+                                hx-trigger="click"
+                                hx-target="#questions"
+                                hx-include="#question-form">Criar pergunta</button>
+                    </article>
+                </section>
+            </div>
+            <div role="tabpanel" hidden>
+                <section>
+                    {% include "views/partials/admin/users.html" %}
+                </section>
+            </div>
         </section>
+        <script>
+    const _ = el => [...document.querySelectorAll(el)];
+    _('[role=tab]')[0].setAttribute('aria-current', true);
+
+    _('[role=tab]').forEach(tab=> {
+      tab.addEventListener('click', (e) => {
+        
+            e.preventDefault();
+
+            !e.target.hasAttribute('aria-current') ?
+            e.target.setAttribute('aria-current', true) :
+            null;
+            
+            _('[role=tab]').forEach(t=> {
+              t.hasAttribute('aria-current') && t != e.target ?
+              t.removeAttribute('aria-current') :
+              null;
+            });
+            
+            _('[role=tabpanel]').forEach(tp=> {
+              _('[role=tabpanel]').indexOf(tp) == _('[role=tab]').indexOf(e.target) ? 
+              tp.removeAttribute('hidden') : 
+              tp.setAttribute('hidden', true);
+            });
+            
+      });
+    });
+        </script>
     </main>
 {% endblock %}

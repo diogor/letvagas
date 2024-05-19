@@ -16,3 +16,51 @@ header {
 .wizard .wizard-nav.dots .wizard-step:before {
   background: var(--pico-primary);
 }
+nav details.dropdown {
+  margin: inherit;
+}
+section[aria-label="breadcrumb"] ul {
+  width: 100%;
+}
+section[aria-label="breadcrumb"] ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section[aria-label="breadcrumb"] ul li:not(:last-child) ::after {
+  content: "";
+}
+[role="tab"] {
+  border-bottom: 2px solid transparent;
+  user-select: none;
+  color: var(--secondary);
+  border-radius: 0;
+  background: transparent;
+  transition: all 0.25s;
+}
+[role="tab"][aria-current] {
+  color: var(--contrast) !important;
+  border-color: var(--contrast);
+}
+section {
+  margin: calc(var(--block-spacing-vertical) * 0.5) 0;
+}
+section [role="tabpanel"] {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-name: slideIn;
+}
+@keyframes slideIn {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+}
