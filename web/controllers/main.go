@@ -83,7 +83,13 @@ func CreateQuestion(c *fiber.Ctx) error {
 		return c.Redirect("/login")
 	}
 
-	err := services.CreateQuestion(c.FormValue("question"), strings.Split(c.FormValue("options"), ","), models.QuestionType(c.FormValue("question_type")))
+	options := []string{}
+
+	if c.FormValue("options") != "" {
+		options = strings.Split(c.FormValue("options"), ",")
+	}
+
+	err := services.CreateQuestion(c.FormValue("question"), options, models.QuestionType(c.FormValue("question_type")))
 
 	if err != nil {
 		return c.SendStatus(500)
