@@ -47,6 +47,19 @@ func ListAllQuestions() []dto.QuestionList {
 	return result
 }
 
+func ListAllUsers() []models.User {
+	users := []models.User{}
+
+	database.DB.Find(&users)
+
+	return users
+
+}
+
+func ChangeUserRole(user_id uuid.UUID, role models.UserRole) {
+	database.DB.Model(&models.User{}).Where("id = ?", user_id).Update("role", role)
+}
+
 func ListUserStates() []string {
 	states := []string{}
 

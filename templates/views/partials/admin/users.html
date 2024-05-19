@@ -3,6 +3,7 @@
     <tr>
       <th scope="col">Nome</th>
       <th scope="col">Email</th>
+      <th scope="col">Papel</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -11,6 +12,13 @@
     <tr>
       <th scope="row">{{ u.Name }}</th>
       <td>{{ u.Email }}</td>
+      <td>
+        <select name="role" hx-put="/users/{{ u.ID }}" style="margin-bottom: inherit;">
+          <option value="admin" {% if u.Role.Value == 'admin' %}selected{% endif %}>Administrador</option>
+          <option value="applicant" {% if u.Role.Value == 'applicant' %}selected{% endif %}>Candidato</option>
+          <option value="client" {% if u.Role.Value == 'client' %}selected{% endif %}>Cliente</option>
+        </select>
+      </td>
       <td></td>
     </tr>
     {% endfor %}

@@ -40,6 +40,7 @@ func main() {
 
 	app.Post("/questions", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.CreateQuestion)))
 	app.Delete("/questions/:question_id", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.DeleteQuestion)))
+	app.Put("/users/:user_id", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.ChangeUserRole)))
 
 	app.Get("/partials/educations", web.LoginRequired(controllers.ListEducations))
 	app.Get("/partials/courses", web.LoginRequired(controllers.ListCourses))
