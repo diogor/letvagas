@@ -3,7 +3,7 @@
     <tr>
       <th scope="col">Nome</th>
       <th scope="col">Email</th>
-      <th scope="col">Papel</th>
+      <th scope="col">Perfil</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -24,3 +24,35 @@
     {% endfor %}
   </tbody>
 </table>
+<div id="pagination" class="grid">
+    <div style="justify-self: start">
+        <select 
+            name="page_size"
+            hx-get="/partials/admin/users?page={{ page }}"
+            hx-target="#users"
+        >
+            <option value="10" {% if page_size == 10 %}selected{% endif %}>10</option>
+            <option value="20" {% if page_size == 20 %}selected{% endif %}>20</option>
+            <option value="50" {% if page_size == 50 %}selected{% endif %}>50</option>
+            <option value="100" {% if page_size == 100 %}selected{% endif %}>100</option>
+        </select>
+    </div>
+    <div style="justify-self: end">
+        {% if total >= page_size %}
+        <small>Página {{ page }} de {{ total/page_size }}</small>
+        {% if page != 1 %}
+            <a style="cursor: pointer" hx-get="/partials/admin/users?page={{ page-1 }}&page_size={{ page_size }}" hx-target="#users">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevrons-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 7l-5 5l5 5" /><path d="M17 7l-5 5l5 5" /></svg>
+            </a>
+        {% endif %}
+        {% for p in page_range %}
+        <button {% if page == p+1 %} class="outline primary" {% else %} class="outline secondary" {% endif %} style="cursor: pointer" hx-get="/partials/admin/users?page={{ p+1 }}&page_size={{ page_size }}" hx-target="#users">{{ p+1 }}</button>
+        {% endfor %}
+        {% if page != total/page_size %}
+            <a style="cursor: pointer" hx-get="/partials/admin/users?page={{ page+1 }}&page_size={{ page_size }}" hx-target="#users">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevrons-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7l5 5l-5 5" /><path d="M13 7l5 5l-5 5" /></svg>
+            </a>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>

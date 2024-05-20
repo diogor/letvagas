@@ -5,7 +5,7 @@
         <section id="filter">
             <form id="filter-form"
                   hx-target="#results"
-                  hx-post="/partials/admin/search-results">
+                  hx-get="/partials/admin/search-results">
                 <fieldset role="group">
                     <select name="state" hx-target="#city" hx-get="/partials/admin/cities">
                         <option value="">Todos os estados</option>

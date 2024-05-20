@@ -47,12 +47,14 @@ func ListAllQuestions() []dto.QuestionList {
 	return result
 }
 
-func ListAllUsers() []models.User {
+func ListAllUsers(page, pageSize int) ([]models.User, int) {
 	users := []models.User{}
+	var total int64
 
-	database.DB.Find(&users)
+	database.DB.Model(&models.User{}).Count(&total)
+	database.DB.Scopes(Paginate(page, pageSize)).Find(&users)
 
-	return users
+	return users, int(total)
 
 }
 
@@ -76,8 +78,9 @@ func ListUserCities(state string) []string {
 	return cities
 }
 
-func SearchProfiles(q string, city string, state string) []models.User {
+func SearchProfiles(page int, pageSize int, q string, city string, state string) ([]models.User, int) {
 	var profiles []models.User
+	var total int64
 
 	query := database.DB
 
@@ -95,5 +98,7 @@ func SearchProfiles(q string, city string, state string) []models.User {
 
 	query.Find(&profiles)
 
-	return profiles
+	query.Model(&models.User{}).Count(&total)
+	query.Scopes(Paginate(page, pageSize)).Find(&profiles)
+	return profiles, int(total)
 }

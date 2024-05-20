@@ -4,6 +4,7 @@ import (
 	"letvagas/entities/models"
 	"letvagas/services"
 	"letvagas/web"
+	"strconv"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,13 +17,28 @@ func Admin(c *fiber.Ctx) error {
 	if error != nil || role != models.ADMIN {
 		return c.Redirect("/login")
 	}
+
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
+
+	users, total := services.ListAllUsers(page, pageSize)
+
+	var pageRange []int
+	for i := 0; i < (total / pageSize); i++ {
+		pageRange = append(pageRange, i)
+	}
+
 	return c.Render("views/admin", fiber.Map{
-		"title":     "Admin",
-		"questions": services.ListAllQuestions(),
-		"users":     services.ListAllUsers(),
-		"logged_in": error == nil,
-		"is_admin":  web.GetRole(c) == models.ADMIN,
-		"user_id":   userId,
+		"title":            "Admin",
+		"questions":        services.ListAllQuestions(),
+		"users":            users,
+		"users_total":      total,
+		"users_page":       page,
+		"users_page_size":  pageSize,
+		"users_page_range": pageRange,
+		"logged_in":        error == nil,
+		"is_admin":         web.GetRole(c) == models.ADMIN,
+		"user_id":          userId,
 	})
 }
 
@@ -38,15 +54,26 @@ func SearchProfiles(c *fiber.Ctx) error {
 	state := c.Query("state")
 
 	q := c.Query("q")
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
 
-	profiles := services.SearchProfiles(q, city, state)
+	profiles, total := services.SearchProfiles(page, pageSize, q, city, state)
+
+	var pageRange []int
+	for i := 0; i < (total / pageSize); i++ {
+		pageRange = append(pageRange, i)
+	}
 
 	return c.Render("views/admin/profile_search", fiber.Map{
-		"title":     "Busca de Perfis",
-		"logged_in": error == nil,
-		"is_admin":  web.GetRole(c) == models.ADMIN,
-		"states":    services.ListUserStates(),
-		"users":     profiles,
+		"title":      "Busca de Perfis",
+		"logged_in":  error == nil,
+		"is_admin":   web.GetRole(c) == models.ADMIN,
+		"states":     services.ListUserStates(),
+		"users":      profiles,
+		"total":      total,
+		"page":       page,
+		"page_size":  pageSize,
+		"page_range": pageRange,
 	})
 }
 
@@ -58,15 +85,30 @@ func SearchResults(c *fiber.Ctx) error {
 		return c.Redirect("/login")
 	}
 
-	city := c.FormValue("city")
-	state := c.FormValue("state")
+	city := c.Query("city")
+	state := c.Query("state")
 
-	q := c.FormValue("q")
+	q := c.Query("q")
 
-	profiles := services.SearchProfiles(q, city, state)
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
+
+	profiles, total := services.SearchProfiles(page, pageSize, q, city, state)
+
+	var pageRange []int
+	for i := 0; i < (total / pageSize); i++ {
+		pageRange = append(pageRange, i)
+	}
 
 	return c.Render("views/partials/admin/search_results", fiber.Map{
-		"users": profiles,
+		"users":      profiles,
+		"total":      total,
+		"page":       page,
+		"page_size":  pageSize,
+		"page_range": pageRange,
+		"q":          q,
+		"city":       city,
+		"state":      state,
 	})
 }
 
@@ -126,5 +168,27 @@ func ListCitiesByState(c *fiber.Ctx) error {
 	state := c.Query("state")
 	return c.Render("views/partials/admin/cities", fiber.Map{
 		"cities": services.ListUserCities(state),
+	})
+}
+
+func ListAllUsers(c *fiber.Ctx) error {
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
+	users, total := services.ListAllUsers(page, pageSize)
+	var pageRange []int
+
+	for i := 0; i < (total / pageSize); i++ {
+		pageRange = append(pageRange, i)
+	}
+
+	userId, _ := web.GetUserID(c)
+
+	return c.Render("views/partials/admin/users", fiber.Map{
+		"users":      users,
+		"user_id":    userId,
+		"total":      total,
+		"page":       page,
+		"page_size":  pageSize,
+		"page_range": pageRange,
 	})
 }

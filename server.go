@@ -48,7 +48,8 @@ func main() {
 	app.Get("/partials/questions/:question_type", web.LoginRequired(controllers.ListQuestions))
 
 	app.Get("/partials/admin/cities", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.ListCitiesByState)))
-	app.Post("/partials/admin/search-results", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchResults)))
+	app.Get("/partials/admin/users", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.ListAllUsers)))
+	app.Get("/partials/admin/search-results", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchResults)))
 
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }
