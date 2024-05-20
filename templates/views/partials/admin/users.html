@@ -13,7 +13,7 @@
       <th scope="row">{{ u.Name }}</th>
       <td>{{ u.Email }}</td>
       <td>
-        <select name="role" hx-put="/users/{{ u.ID }}" style="margin-bottom: inherit;" {% if u..ID == user_id %}disabled{% endif %}>
+        <select name="role" hx-put="/users/{{ u.ID }}" style="margin-bottom: inherit;" {% if u.ID == user_id %}disabled{% endif %}>
           <option value="admin" {% if u.Role.Value == 'admin' %}selected{% endif %}>Administrador</option>
           <option value="applicant" {% if u.Role.Value == 'applicant' %}selected{% endif %}>Candidato</option>
           <option value="client" {% if u.Role.Value == 'client' %}selected{% endif %}>Cliente</option>
