@@ -11,7 +11,7 @@ import (
 )
 
 func Admin(c *fiber.Ctx) error {
-	_, error := web.GetUserID(c)
+	userId, error := web.GetUserID(c)
 	role := web.GetRole(c)
 	if error != nil || role != models.ADMIN {
 		return c.Redirect("/login")
@@ -22,6 +22,7 @@ func Admin(c *fiber.Ctx) error {
 		"users":     services.ListAllUsers(),
 		"logged_in": error == nil,
 		"is_admin":  web.GetRole(c) == models.ADMIN,
+		"user_id":   userId,
 	})
 }
 
