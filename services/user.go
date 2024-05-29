@@ -64,6 +64,10 @@ func GetProfile(user_id uuid.UUID) *models.Profile {
 	return &profile
 }
 
+func UpdateProfileGoal(profile_id uuid.UUID, goal string) {
+	database.DB.Model(&models.Profile{}).Where("id = ?", profile_id).Update("goal", goal)
+}
+
 func GetUser(id string) *models.User {
 	user := models.User{ID: uuid.MustParse(id)}
 	database.DB.First(&user)

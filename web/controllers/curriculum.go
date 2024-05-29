@@ -26,6 +26,7 @@ func Curriculum(c *fiber.Ctx) error {
 		"educations":  educations,
 		"courses":     courses,
 		"experiences": experiences,
+		"goal":        profile.Goal,
 		"logged_in":   true,
 		"is_admin":    web.GetRole(c) == models.ADMIN,
 	})
@@ -50,6 +51,20 @@ func CreateAnswer(c *fiber.Ctx) error {
 	if err != nil {
 		return c.SendStatus(500)
 	}
-	return c.SendStatus(200)
+	return c.SendStatus(204)
+
+}
+
+func UpdateProfileGoal(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	services.UpdateProfileGoal(profile.ID, c.FormValue("goal"))
+	return c.SendStatus(204)
 
 }

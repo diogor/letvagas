@@ -14,6 +14,12 @@
         <section>
             <article>
                 <header>
+                    Objetivo profissional:
+                </header>
+                <textarea id="goal" name="goal" hx-post="/profile">{{ goal }}</textarea>
+            </article>
+            <article>
+                <header>
                     Formacão:
                 </header>
                 <div id="educations">{% include "views/partials/educations.html" %}</div>

@@ -67,6 +67,7 @@ type Profile struct {
 	Educations  []Education  `json:"educations" gorm:"foreignKey:ProfileId"`
 	Courses     []Course     `json:"courses" gorm:"foreignKey:ProfileId"`
 	Experiences []Experience `json:"experiences" gorm:"foreignKey:ProfileId"`
+	Goal        *string      `json:"goal" gorm:"type:varchar(255)"`
 }
 
 type Answer struct {

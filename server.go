@@ -51,5 +51,7 @@ func main() {
 	app.Get("/partials/admin/users", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.ListAllUsers)))
 	app.Get("/partials/admin/search-results", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchResults)))
 
+	app.Post("/profile", web.LoginRequired(controllers.UpdateProfileGoal))
+
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }
