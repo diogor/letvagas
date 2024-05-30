@@ -20,8 +20,11 @@ func main() {
 	template_engine := django.New("./templates", ".html")
 
 	app := fiber.New(fiber.Config{
-		Views: template_engine,
-	})
+			Views:        template_engine,
+			Network:      fiber.NetworkTCP,
+			AppName:      "Let vagas 0.1.0",
+			ServerHeader: "Let vagas",
+	})	
 
 	app.Static("/static", "./static")
 	app.Get("/", controllers.Index)
