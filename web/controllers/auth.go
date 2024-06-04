@@ -95,13 +95,27 @@ func Register(c *fiber.Ctx) error {
 			return err
 		}
 
-		err := services.CreateUser(&user)
+		uid, err := services.CreateUser(&user)
 
 		if err != nil {
 			return err
 		}
 
-		return c.Redirect("/login")
+		session, err := web.GetSession(c)
+		if err != nil {
+			return err
+		}
+
+		role_name, _ := user.Role.Value()
+
+		session.Set("user_id", hex.EncodeToString(uid[:]))
+		session.Set("user_role", role_name)
+
+		err = session.Save()
+		if err != nil {
+			return err
+		}
+		return c.Redirect("/")
 	}
 	return c.Render("views/register", fiber.Map{})
 }

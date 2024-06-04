@@ -19,11 +19,11 @@ func CheckPasswordHash(password, hash string) bool {
 	return err == nil
 }
 
-func CreateUser(user *dto.CreateUserRequest) error {
+func CreateUser(user *dto.CreateUserRequest) (uuid.UUID, error) {
 	password, err := hashPassword(user.Password)
 
 	if err != nil {
-		return err
+		return uuid.Nil, err
 	}
 
 	new_user := &models.User{
@@ -54,7 +54,7 @@ func CreateUser(user *dto.CreateUserRequest) error {
 
 	result := database.DB.Create(new_user)
 
-	return result.Error
+	return new_user.ID, result.Error
 }
 
 func GetProfile(user_id uuid.UUID) *models.Profile {
