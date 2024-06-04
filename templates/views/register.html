@@ -15,6 +15,16 @@
             "prev": "Anterior"
         };
 
+        function togglePcdInfo() {
+            const pcdInfo = document.getElementById("pcd_info");
+
+            if (document.getElementById("pcd").checked) {
+                pcdInfo.style.display = "block";
+            } else {
+                pcdInfo.style.display = "none";
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const wizard = new Wizard(args);
             wizard.init();
@@ -74,11 +84,15 @@
                             </div>
                             <div style="align-content: center">
                                 <label for="pcd">
-                                    <input type="checkbox" name="pcd" id="pcd">
+                                    <input type="checkbox" name="pcd" id="pcd" onchange="togglePcdInfo()">
                                     <img src="/static/img/pcd.png" alt="pcd" style="height: 25px">
                                     PCD
                                 </label>
                             </div>
+                        </fieldset>
+                        <fieldset id="pcd_info" style="display: none">
+                            <label for="pcdInfo">Informações adicionais (PCD)</label>
+                            <textarea name="pcd_info" id="pcdInfo" value="{{ user.PCDInfo }}"></textarea>
                         </fieldset>
                     </div>
                     <div class="wizard-step" data-title="2. Contato">

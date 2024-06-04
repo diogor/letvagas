@@ -25,4 +25,5 @@ type CreateUserRequest struct {
 	Number       string          `json:"number"`
 	Complement   string          `json:"complement"`
 	PCD          bool            `json:"pcd"`
+	PCDInfo      string          `json:"pcd_info"`
 }

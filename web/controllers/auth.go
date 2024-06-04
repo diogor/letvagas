@@ -82,6 +82,7 @@ func Register(c *fiber.Ctx) error {
 			Complement:   c.FormValue("complement"),
 			Cep:          c.FormValue("cep"),
 			PCD:          c.FormValue("pcd") == "on",
+			PCDInfo:      c.FormValue("pcd_info"),
 		}
 
 		if phone1 == "" && phone2 == "" && phone3 == "" {

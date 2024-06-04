@@ -51,4 +51,5 @@ type User struct {
 	Complement   *string   `json:"complement" gorm:"type:varchar(255)"`
 	Cep          *string   `json:"cep" gorm:"type:varchar(255)"`
 	PCD          bool      `json:"pcd" gorm:"not null;default:false"`
+	PCDInfo      *string   `json:"pcd_info" gorm:"type:varchar(255)"`
 }

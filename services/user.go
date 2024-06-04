@@ -49,6 +49,7 @@ func CreateUser(user *dto.CreateUserRequest) (uuid.UUID, error) {
 		AreaCode3:    &user.AreaCode3,
 		Linkedin:     &user.Linkedin,
 		PCD:          user.PCD,
+		PCDInfo:      &user.PCDInfo,
 		Profile:      models.Profile{ID: uuid.New()},
 	}
 
