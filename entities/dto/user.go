@@ -14,6 +14,8 @@ type CreateUserRequest struct {
 	AreaCode1    string          `json:"area_code1" binding:"required"`
 	Phone2       string          `json:"phone2"`
 	AreaCode2    string          `json:"area_code2"`
+	Phone3       string          `json:"phone3"`
+	AreaCode3    string          `json:"area_code3"`
 	Linkedin     string          `json:"linkedin"`
 	City         string          `json:"city"`
 	Neighborhood string          `json:"neighborhood"`

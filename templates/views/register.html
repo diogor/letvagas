@@ -1,6 +1,7 @@
 {% extends "layouts/main.html" %}
 {% block title %}Registro{% endblock %}
 {% block js %}
+    <script src="/static/js/wizard.min.js"></script>
     <script>
         let args = {
             "wz_class": ".wizard",
@@ -20,6 +21,14 @@
 
             let wz_class = ".wizard";
             let $wz_doc = document.querySelector(wz_class)
+
+            const phone1 = document.getElementById("phone");
+            const phone2 = document.getElementById("phone2");
+            const phone3 = document.getElementById("phone3");
+
+            if (!phone1 || !phone2 || !phone3) {
+                return;
+            }
             
             $wz_doc.addEventListener("wz.form.submit", function (e) {
                 document.getElementById("myForm").submit();
@@ -32,7 +41,9 @@
         <section>
             <h3>Cadastro</h3>
             {% if errors %}
-                <div class="pico-background-red-600" style="padding: 10px">
+                <div class="pico-background-red-600"
+                     style="padding: 10px;
+                            margin-bottom: 20px">
                     {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
                 </div>
             {% endif %}
@@ -42,17 +53,24 @@
                 <aside class="wizard-content container">
                     <div class="wizard-step" data-title="1. Pessoal">
                         <label for="name">Nome</label>
-                        <input type="text" name="name" id="name" required>
+                        <input type="text" name="name" id="name" required value="{{ user.Name }}">
                         <label for="social_name">Nome social (opcional)</label>
-                        <input type="text" name="social_name" id="social_name">
+                        <input type="text"
+                               name="social_name"
+                               id="social_name"
+                               value="{{ user.SocialName }}">
                         <fieldset class="grid">
                             <div>
                                 <label for="cpf">CPF</label>
-                                <input type="text" name="cpf" id="cpf" required>
+                                <input type="text" name="cpf" id="cpf" required value="{{ user.Cpf }}">
                             </div>
                             <div>
                                 <label for="birth_date">Data de nascimento</label>
-                                <input type="date" name="birth_date" id="birth_date" required>
+                                <input type="date"
+                                       name="birth_date"
+                                       id="birth_date"
+                                       required
+                                       value="{{ user.BirthDate }}">
                             </div>
                             <div style="align-content: center">
                                 <label for="pcd">
@@ -69,14 +87,14 @@
                             <input type="text"
                                    name="area_code"
                                    id="area_code"
-                                   required
                                    pattern="\d*"
                                    placeholder="DDD"
-                                   maxlength="2">
+                                   maxlength="2"
+                                   value="{{ user.AreaCode1 }}">
                             <input type="text"
                                    name="phone"
                                    id="phone"
-                                   required
+                                   value="{{ user.Phone1 }}"
                                    pattern="\d*"
                                    placeholder="Número">
                         </fieldset>
@@ -86,52 +104,81 @@
                                    name="area_code2"
                                    pattern="\d*"
                                    id="area_code2"
+                                   value="{{ user.AreaCode2 }}"
                                    maxlength="2"
                                    placeholder="DDD">
                             <input type="text"
                                    name="phone2"
                                    pattern="\d*"
                                    id="phone2"
+                                   value="{{ user.Phone2 }}"
+                                   placeholder="Número">
+                        </fieldset>
+                        <label for="phone3">WhatsApp</label>
+                        <fieldset class="grid" style="grid-template-columns: 20% auto;">
+                            <input type="text"
+                                   name="area_code3"
+                                   pattern="\d*"
+                                   id="area_code3"
+                                   value="{{ user.AreaCode3 }}"
+                                   maxlength="2"
+                                   placeholder="DDD">
+                            <input type="text"
+                                   name="phone3"
+                                   pattern="\d*"
+                                   id="phone3"
+                                   value="{{ user.Phone3 }}"
                                    placeholder="Número">
                         </fieldset>
                         <label for="linkedin">Linkedin (opcional)</label>
-                        <input type="text" name="linkedin" id="linkedin">
+                        <input type="text" name="linkedin" id="linkedin" value="{{ user.Linkedin }}">
                         <fieldset class="grid" style="grid-template-columns: auto 30%;">
                             <div>
                                 <label for="neighborhood">Bairro</label>
-                                <input type="text" name="neighborhood" id="neighborhood" required>
+                                <input type="text"
+                                       name="neighborhood"
+                                       id="neighborhood"
+                                       value="{{ user.Neighborhood }}"
+                                       required>
                             </div>
                             <div>
                                 <label for="cep">CEP</label>
-                                <input type="text" name="cep" id="cep" required>
+                                <input type="text" name="cep" id="cep" value="{{ user.Cep }}" required>
                             </div>
                         </fieldset>
                         <fieldset class="grid" style="grid-template-columns: auto 30%;">
                             <div>
                                 <label for="street">Rua</label>
-                                <input type="text" name="street" id="street" required>
+                                <input type="text"
+                                       name="street"
+                                       id="street"
+                                       value="{{ user.Street }}"
+                                       required>
                             </div>
                             <div>
                                 <label for="number">Número</label>
-                                <input type="text" name="number" id="number">
+                                <input type="text" name="number" id="number" value="{{ user.Number }}">
                             </div>
                         </fieldset>
                         <label for="complement">Complemento</label>
-                        <input type="text" name="complement" id="complement">
+                        <input type="text"
+                               name="complement"
+                               id="complement"
+                               value="{{ user.Complement }}">
                         <fieldset class="grid" style="grid-template-columns: auto 30%;">
                             <div>
                                 <label for="city">Cidade</label>
-                                <input type="text" name="city" id="city" required>
+                                <input type="text" name="city" id="city" required value="{{ user.City }}">
                             </div>
                             <div>
                                 <label for="state">Estado</label>
-                                <input type="text" name="state" id="state" required>
+                                <input type="text" name="state" id="state" value="{{ user.State }}" required>
                             </div>
                         </fieldset>
                     </div>
                     <div class="wizard-step" data-title="3. Acesso">
                         <label for="email">Email</label>
-                        <input type="text" name="email" id="email" required>
+                        <input type="text" name="email" id="email" value="{{ user.Email }}" required>
                         <label for="password">Senha</label>
                         <input type="password" name="password" id="password" required>
                         <label for="password_confirm">Confirme a senha</label>

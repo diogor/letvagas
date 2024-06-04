@@ -55,6 +55,10 @@ func Logout(c *fiber.Ctx) error {
 
 func Register(c *fiber.Ctx) error {
 	if c.Method() == "POST" {
+		phone1 := c.FormValue("phone")
+		phone2 := c.FormValue("phone2")
+		phone3 := c.FormValue("phone3")
+
 		user := dto.CreateUserRequest{
 			Name:         c.FormValue("name"),
 			SocialName:   c.FormValue("social_name"),
@@ -63,10 +67,12 @@ func Register(c *fiber.Ctx) error {
 			Cpf:          c.FormValue("cpf"),
 			Role:         models.APPLICANT,
 			BirthDate:    c.FormValue("birth_date"),
-			Phone1:       c.FormValue("phone"),
+			Phone1:       phone1,
 			AreaCode1:    c.FormValue("area_code"),
-			Phone2:       c.FormValue("phone2"),
+			Phone2:       phone2,
 			AreaCode2:    c.FormValue("area_code2"),
+			Phone3:       phone3,
+			AreaCode3:    c.FormValue("area_code3"),
 			Linkedin:     c.FormValue("linkedin"),
 			City:         c.FormValue("city"),
 			Neighborhood: c.FormValue("neighborhood"),
@@ -76,6 +82,13 @@ func Register(c *fiber.Ctx) error {
 			Complement:   c.FormValue("complement"),
 			Cep:          c.FormValue("cep"),
 			PCD:          c.FormValue("pcd") == "on",
+		}
+
+		if phone1 == "" && phone2 == "" && phone3 == "" {
+			return c.Render("views/register", fiber.Map{
+				"errors": []string{"Pelo menos um telefone deve ser informado."},
+				"user":   user,
+			})
 		}
 
 		if err := c.BodyParser(&user); err != nil {

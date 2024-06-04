@@ -36,8 +36,10 @@ type User struct {
 	Email        string    `json:"email" gorm:"type:varchar(255);not null;unique"`
 	AreaCode1    string    `json:"area_code" gorm:"type:varchar(255);not null"`
 	Phone1       string    `json:"phone" gorm:"type:varchar(255);not null"`
-	Phone2       *string   `json:"phone2" gorm:"type:varchar(255)"`
 	AreaCode2    *string   `json:"area_code2" gorm:"type:varchar(255)"`
+	Phone2       *string   `json:"phone2" gorm:"type:varchar(255)"`
+	AreaCode3    *string   `json:"area_code3" gorm:"type:varchar(255)"`
+	Phone3       *string   `json:"phone3" gorm:"type:varchar(255)"`
 	Role         UserRole  `json:"role" sql:"type:user_role('admin', 'client', 'applicant');not null;default:'applicant'"`
 	SocialName   *string   `json:"social_name" gorm:"type:varchar(255)"`
 	Linkedin     *string   `json:"linkedin" gorm:"type:varchar(255)"`
