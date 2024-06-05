@@ -1,10 +1,14 @@
 {% extends "layouts/main.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
+    <section>
+        <img src="/static/img/jumbo0.png"
+             alt="Grupo LET"
+             width="100%; max-height: 600px">
+    </section>
     <main class="container">
         {% if logged_in %}
-            <h3>Vagas</h3>
-        {% include "views/partials/jobs.html" %}
+            {% include "views/partials/jobs.html" %}
         {% else %}
             <article>
                 <p>Ainda não é cadastrado(a)?</p>

@@ -1,8 +1,43 @@
+body,
+h1,
+h2,
+h3,
+h4,
+p {
+  color: white;
+}
+table {
+  background-color: white;
+}
+label {
+  color: #f4f0ff;
+}
+article label,
+article p {
+  color: black;
+}
 section {
   margin-bottom: 20px;
 }
-header {
-  border-bottom: 1px solid var(--pico-muted-border-color);
+body,
+header,
+footer {
+  background-color: #423958;
+}
+header a,
+footer a {
+  color: white;
+  text-decoration: none;
+}
+article {
+  background-color: white;
+}
+footer {
+  text-align: center;
+  font-size: 0.7rem;
+}
+footer p {
+  color: white;
 }
 .wizard .wizard-nav.progress .wizard-step.active ~ .wizard-step {
   background-color: var(--pico-background-color);
@@ -65,8 +100,8 @@ section [role="tabpanel"] {
   }
 }
 #pagination > div > button {
-    padding: 0.3rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-    margin-left: 0.2rem;
+  padding: 0.3rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  margin-left: 0.2rem;
 }
