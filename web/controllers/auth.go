@@ -85,9 +85,21 @@ func Register(c *fiber.Ctx) error {
 			PCDInfo:      c.FormValue("pcd_info"),
 		}
 
+		var errors []string
+
+		existing_user := services.GetUserByEmail(user.Email)
+
+		if existing_user != nil {
+			errors = append(errors, "O email informado já está em uso")
+		}
+
 		if phone1 == "" && phone2 == "" && phone3 == "" {
+			errors = append(errors, "Preencha pelo menos um telefone")
+		}
+
+		if len(errors) > 0 {
 			return c.Render("views/register", fiber.Map{
-				"errors": []string{"Pelo menos um telefone deve ser informado."},
+				"errors": errors,
 				"user":   user,
 			})
 		}
