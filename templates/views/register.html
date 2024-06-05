@@ -15,6 +15,24 @@
             "prev": "Anterior"
         };
 
+        function verifyPassword() {
+            const password = document.getElementById("password");
+            const password_confirm = document.getElementById("password_confirm");
+            const passwordError = document.getElementById("passwordError");
+            const finish_button = document.getElementsByClassName("finish")[0];
+
+            if (password.value !== password_confirm.value) {
+                password_confirm.setCustomValidity("As senhas devem ser iguais");
+                passwordError.style.display = "block";
+                finish_button.disabled = true;
+            } else {
+                password_confirm.setCustomValidity("");
+                passwordError.style.display = "none";
+                finish_button.disabled = false;
+            }
+
+        }
+
         function togglePcdInfo() {
             const pcdInfo = document.getElementById("pcd_info");
 
@@ -194,12 +212,24 @@
                         <label for="email">Email</label>
                         <input type="text" name="email" id="email" value="{{ user.Email }}" required>
                         <label for="password">Senha</label>
-                        <input type="password" name="password" id="password" required>
+                        <input type="password"
+                               name="password"
+                               id="password"
+                               required
+                               onkeyup="verifyPassword()">
                         <label for="password_confirm">Confirme a senha</label>
                         <input type="password"
                                name="password_confirm"
                                id="password_confirm"
+                               onkeyup="verifyPassword()"
                                required>
+                        <div class="pico-background-yellow-600"
+                             id="passwordError"
+                             style="padding: 10px;
+                                    margin-bottom: 20px;
+                                    display: none">
+                            <p style="margin-bottom: 0px">As senhas devem ser iguais</p>
+                        </div>
                     </div>
                 </aside>
             </form>
