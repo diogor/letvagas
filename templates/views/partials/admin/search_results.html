@@ -18,12 +18,11 @@
     {% endfor %}
   </tbody>
 </table>
-{% with filter_query=f"&q={query_params.Query}&state={query_params.State}&city={query_params.City} %}
 <div id="pagination" class="grid">
     <div style="justify-self: start">
         <select 
             name="page_size"
-            hx-get="/partials/admin/search-results?page={{ page }}{{filter_query}}"
+            hx-get="/partials/admin/search-results?page={{ page }}{{query_string}}"
             hx-target="#results"
         >
             <option value="1" {% if page_size == 1 %}selected{% endif %}>1</option>
@@ -39,7 +38,7 @@
         {% if page != 1 %}
             <a 
                 style="cursor: pointer"
-                hx-get="/partials/admin/search-results?page={{ page-1 }}&page_size={{ page_size }}&q={{ query_params.Query }}&state={{ query_params.State }}&city={{ query_params.City }}" 
+                hx-get="/partials/admin/search-results?page={{ page-1 }}&page_size={{ page_size }}{{ query_string }}" 
                 hx-target="#results"
             >
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevrons-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 7l-5 5l5 5" /><path d="M17 7l-5 5l5 5" /></svg>
@@ -47,15 +46,14 @@
         {% endif %}
         {% for p in page_range %}
         <button {% if page == p+1 %} class="outline primary" {% else %} class="outline secondary" {% endif %} style="cursor: pointer" 
-            hx-get="/partials/admin/search-results?page={{ p+1 }}&page_size={{ page_size }}&q={{ query_params.Query }}&state={{ query_params.State }}&city={{ query_params.City }}" 
+            hx-get="/partials/admin/search-results?page={{ p+1 }}&page_size={{ page_size }}{{ query_string }}" 
             hx-target="#results">{{ p+1 }}</button>
         {% endfor %}
         {% if page != total/page_size %}
-            <a style="cursor: pointer" hx-get="/partials/admin/search-results?page={{ page+1 }}&page_size={{ page_size }}&q={{ query_params.Query }}&state={{ query_params.State }}&city={{ query_params.City }}" hx-target="#results">
+            <a style="cursor: pointer" hx-get="/partials/admin/search-results?page={{ page+1 }}&page_size={{ page_size }}{{ query_string }}" hx-target="#results">
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevrons-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7l5 5l-5 5" /><path d="M13 7l5 5l-5 5" /></svg>
             </a>
         {% endif %}
         {% endif %}
     </div>
 </div>
-{% endwith %}

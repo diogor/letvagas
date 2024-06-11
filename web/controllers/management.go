@@ -43,7 +43,8 @@ func Admin(c *fiber.Ctx) error {
 	})
 }
 
-func searchProfilesService(c *fiber.Ctx) ([]models.User, int, dto.SearchParams) {
+func searchProfilesService(c *fiber.Ctx) ([]models.User, int, dto.SearchParams, string) {
+
 	city := c.Query("city")
 	state := c.Query("state")
 
@@ -59,7 +60,9 @@ func searchProfilesService(c *fiber.Ctx) ([]models.User, int, dto.SearchParams) 
 
 	profiles, total := services.SearchProfiles(page, pageSize, params)
 
-	return profiles, total, params
+	querySttring := "&q=" + params.Query + "&state=" + params.State + "&city=" + params.City
+
+	return profiles, total, params, querySttring
 }
 
 func SearchProfiles(c *fiber.Ctx) error {
@@ -70,7 +73,7 @@ func SearchProfiles(c *fiber.Ctx) error {
 		return c.Redirect("/login")
 	}
 
-	profiles, total, _ := searchProfilesService(c)
+	profiles, total, _, querySttring := searchProfilesService(c)
 
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
@@ -81,15 +84,16 @@ func SearchProfiles(c *fiber.Ctx) error {
 	}
 
 	return c.Render("views/admin/profile_search", fiber.Map{
-		"title":      "Busca de Perfis",
-		"logged_in":  error == nil,
-		"is_admin":   web.GetRole(c) == models.ADMIN,
-		"states":     services.ListUserStates(),
-		"users":      profiles,
-		"total":      total,
-		"page":       page,
-		"page_size":  pageSize,
-		"page_range": pageRange,
+		"title":        "Busca de Perfis",
+		"logged_in":    error == nil,
+		"is_admin":     web.GetRole(c) == models.ADMIN,
+		"states":       services.ListUserStates(),
+		"users":        profiles,
+		"total":        total,
+		"page":         page,
+		"page_size":    pageSize,
+		"page_range":   pageRange,
+		"query_string": querySttring,
 	})
 }
 
@@ -101,7 +105,7 @@ func SearchResults(c *fiber.Ctx) error {
 		return c.Redirect("/login")
 	}
 
-	profiles, total, params := searchProfilesService(c)
+	profiles, total, params, querySttring := searchProfilesService(c)
 
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
@@ -118,6 +122,7 @@ func SearchResults(c *fiber.Ctx) error {
 		"page_size":    pageSize,
 		"page_range":   pageRange,
 		"query_params": params,
+		"query_string": querySttring,
 	})
 }
 
