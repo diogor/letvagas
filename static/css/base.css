@@ -34,11 +34,12 @@ article {
   background-color: white;
 }
 footer {
+  color: #e0dde7;
   text-align: center;
   font-size: 0.7rem;
 }
 footer p, footer address {
-  color: white;
+  color: #e0dde7;
 }
 footer h7 {
     font-weight: bold;
