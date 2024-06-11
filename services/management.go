@@ -93,7 +93,13 @@ func SearchProfiles(page int, pageSize int, searchParams dto.SearchParams) ([]mo
 	}
 
 	if searchParams.Query != "" {
-		query = query.Where("name LIKE ?", "%"+searchParams.Query+"%")
+		query = query.Where(
+			"name LIKE ?", "%"+searchParams.Query+"%").Or(
+			"profile.goal LIKE ?", "%"+searchParams.Query+"%")
+	}
+
+	if searchParams.Neighborhood != "" {
+		query = query.Where("neighborhood = ?", searchParams.Neighborhood)
 	}
 
 	query.Find(&profiles)

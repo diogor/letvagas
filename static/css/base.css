@@ -118,3 +118,6 @@ section [role="tabpanel"] {
   padding-bottom: 0.1rem;
   margin-left: 0.2rem;
 }
+#pagination a {
+    text-decoration: none;
+}

@@ -47,15 +47,17 @@ func searchProfilesService(c *fiber.Ctx) ([]models.User, int, dto.SearchParams, 
 
 	city := c.Query("city")
 	state := c.Query("state")
+	neighborhood := c.Query("neighborhood")
 
 	q := c.Query("q")
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
 
 	params := dto.SearchParams{
-		Query: q,
-		City:  city,
-		State: state,
+		Query:        q,
+		City:         city,
+		State:        state,
+		Neighborhood: neighborhood,
 	}
 
 	profiles, total := services.SearchProfiles(page, pageSize, params)
