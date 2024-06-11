@@ -18,7 +18,7 @@
     {% endfor %}
   </tbody>
 </table>
-{% with filter_query="&q={{ query_params.Query }}&state={{ query_params.State }}&city={{ query_params.City }}" %}
+{% with filter_query=f"&q={query_params.Query}&state={query_params.State}&city={query_params.City} %}
 <div id="pagination" class="grid">
     <div style="justify-self: start">
         <select 
