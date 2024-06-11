@@ -20,10 +20,11 @@ article > header {
 section {
   margin-bottom: 20px;
 }
-body,
+body {
+  background-color: #3d3551;
+}
 header {
   background-color: #423958;
-}
 header a,
 footer a {
   color: white;
