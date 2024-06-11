@@ -1,6 +1,18 @@
 {% extends "layouts/main.html" %}
 {% block title %}Meus dados{% endblock %}
-{% block js %}<script src="/static/js/modal.js"></script>{% endblock %}
+{% block js %}
+<script src="/static/js/modal.js"></script>
+<script>
+function toggleEndDate() {
+    const endDate = document.getElementById("end_date");
+    const endDateLabel = document.getElementById("end_date_label");
+    if (endDate) {
+        endDate.disabled = !endDate.disabled;
+        endDateLabel.disabled = !endDateLabel.disabled;
+    }
+}
+</script>
+{% endblock %}
 {% block content %}
     <main class="container">
         <section>
@@ -221,7 +233,11 @@
                 <input type="text" name="company" id="company">
                 <label for="start_date">Data de inicio</label>
                 <input type="date" name="start_date" id="start_date">
-                <label for="end_date">Data de término</label>
+                <label for="ongoing">
+                    <input type="checkbox" name="ongoing" id="ongoing" onclick="toggleEndDate()">
+                    Em andamento
+                </label>
+                <label for="end_date" id="end_date_label">Data de término</label>
                 <input type="date" name="end_date" id="end_date">
                 <label for="last_wage">Último salário</label>
                 <input type="text" name="last_wage" id="last_wage">
