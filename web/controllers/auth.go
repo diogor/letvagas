@@ -128,7 +128,7 @@ func Register(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/")
+		return c.Redirect("/profile")
 	}
 	return c.Render("views/register", fiber.Map{})
 }
