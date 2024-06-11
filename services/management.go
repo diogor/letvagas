@@ -78,22 +78,22 @@ func ListUserCities(state string) []string {
 	return cities
 }
 
-func SearchProfiles(page int, pageSize int, q string, city string, state string) ([]models.User, int) {
+func SearchProfiles(page int, pageSize int, searchParams dto.SearchParams) ([]models.User, int) {
 	var profiles []models.User
 	var total int64
 
 	query := database.DB
 
-	if city != "" {
-		query = query.Where("city = ?", city)
+	if searchParams.City != "" {
+		query = query.Where("city = ?", searchParams.City)
 	}
 
-	if state != "" {
-		query = query.Where("state = ?", state)
+	if searchParams.State != "" {
+		query = query.Where("state = ?", searchParams.State)
 	}
 
-	if q != "" {
-		query = query.Where("name LIKE ?", "%"+q+"%")
+	if searchParams.Query != "" {
+		query = query.Where("name LIKE ?", "%"+searchParams.Query+"%")
 	}
 
 	query.Find(&profiles)

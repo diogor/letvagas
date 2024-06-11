@@ -30,6 +30,8 @@ func CreateExperience(c *fiber.Ctx) error {
 
 	if end_date != "" {
 		new_experience.EndDate = end_date
+	} else {
+		new_experience.EndDate = new_experience.StartDate
 	}
 
 	err = services.CreateExperience(profile.ID, &new_experience)

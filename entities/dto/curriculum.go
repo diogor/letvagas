@@ -58,3 +58,10 @@ type QuestionList struct {
 	Type       models.QuestionType `json:"type" binding:"required"`
 	Options    []string            `json:"options" binding:"required"`
 }
+
+type SearchParams struct {
+	Query        string
+	City         string
+	State        string
+	Neighborhood string
+}

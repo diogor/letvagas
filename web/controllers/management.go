@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"letvagas/entities/dto"
 	"letvagas/entities/models"
 	"letvagas/services"
 	"letvagas/web"
@@ -42,6 +43,25 @@ func Admin(c *fiber.Ctx) error {
 	})
 }
 
+func searchProfilesService(c *fiber.Ctx) ([]models.User, int, dto.SearchParams) {
+	city := c.Query("city")
+	state := c.Query("state")
+
+	q := c.Query("q")
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
+
+	params := dto.SearchParams{
+		Query: q,
+		City:  city,
+		State: state,
+	}
+
+	profiles, total := services.SearchProfiles(page, pageSize, params)
+
+	return profiles, total, params
+}
+
 func SearchProfiles(c *fiber.Ctx) error {
 	_, error := web.GetUserID(c)
 	role := web.GetRole(c)
@@ -50,14 +70,10 @@ func SearchProfiles(c *fiber.Ctx) error {
 		return c.Redirect("/login")
 	}
 
-	city := c.Query("city")
-	state := c.Query("state")
+	profiles, total, _ := searchProfilesService(c)
 
-	q := c.Query("q")
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
-
-	profiles, total := services.SearchProfiles(page, pageSize, q, city, state)
 
 	var pageRange []int
 	for i := 0; i < (total / pageSize); i++ {
@@ -85,15 +101,10 @@ func SearchResults(c *fiber.Ctx) error {
 		return c.Redirect("/login")
 	}
 
-	city := c.Query("city")
-	state := c.Query("state")
-
-	q := c.Query("q")
+	profiles, total, params := searchProfilesService(c)
 
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
-
-	profiles, total := services.SearchProfiles(page, pageSize, q, city, state)
 
 	var pageRange []int
 	for i := 0; i < (total / pageSize); i++ {
@@ -101,14 +112,12 @@ func SearchResults(c *fiber.Ctx) error {
 	}
 
 	return c.Render("views/partials/admin/search_results", fiber.Map{
-		"users":      profiles,
-		"total":      total,
-		"page":       page,
-		"page_size":  pageSize,
-		"page_range": pageRange,
-		"q":          q,
-		"city":       city,
-		"state":      state,
+		"users":        profiles,
+		"total":        total,
+		"page":         page,
+		"page_size":    pageSize,
+		"page_range":   pageRange,
+		"query_params": params,
 	})
 }
 

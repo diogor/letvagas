@@ -3,7 +3,7 @@
   <p>
     <b>{{ f.Role }} em {{ f.Company }}</b>
   </p>
-  {% if f.EndDate %}
+  {% if f.EndDate != f.StartDate %}
   <p>
     <i>{{ f.GetStartDate }} - {{ f.GetEndDate }}</i>
   </p>
