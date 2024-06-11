@@ -17,14 +17,19 @@ func CreateExperience(c *fiber.Ctx) error {
 
 	profile := services.GetProfile(user_id)
 
+	end_date := c.FormValue("end_date")
+
 	new_experience := dto.CreateExperienceRequest{
 		Company:    c.FormValue("company"),
 		StartDate:  c.FormValue("start_date"),
-		EndDate:    c.FormValue("end_date"),
 		LastWage:   c.FormValue("last_wage"),
 		Role:       c.FormValue("role"),
 		Activities: c.FormValue("activities"),
 		Reference:  c.FormValue("reference_contacts"),
+	}
+
+	if end_date != "" {
+		new_experience.EndDate = end_date
 	}
 
 	err = services.CreateExperience(profile.ID, &new_experience)
