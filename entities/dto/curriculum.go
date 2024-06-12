@@ -60,8 +60,9 @@ type QuestionList struct {
 }
 
 type SearchParams struct {
-	Query        string
-	City         string
-	State        string
-	Neighborhood string
+	Query         string
+	City          string
+	State         string
+	Neighborhood  string
+	EducationType string
 }

@@ -84,6 +84,23 @@ func SearchProfiles(page int, pageSize int, searchParams dto.SearchParams) ([]mo
 
 	query := database.DB
 
+	if searchParams.Query != "" {
+		query = query.Joins(
+			"left join profiles p on users.profile_id = p.id").Joins(
+			"left join experiences e on p.id = e.profile_id").Joins(
+			"left join educations ed on e.profile_id = ed.profile_id").Joins(
+			"left join courses c on ed.profile_id = c.profile_id").Where(
+			"users.name LIKE ?", "%"+searchParams.Query+"%").Or(
+			"p.goal LIKE ?", "%"+searchParams.Query+"%").Or(
+			"users.social_name LIKE ?", "%"+searchParams.Query+"%").Or(
+			"e.activities LIKE ?", "%"+searchParams.Query+"%").Or(
+			"ed.institution LIKE ?", "%"+searchParams.Query+"%").Or(
+			"ed.graduation LIKE ?", "%"+searchParams.Query+"%").Or(
+			"ed.description LIKE ?", "%"+searchParams.Query+"%").Or(
+			"c.name LIKE ?", "%"+searchParams.Query+"%").Or(
+			"c.description LIKE ?", "%"+searchParams.Query+"%")
+	}
+
 	if searchParams.City != "" {
 		query = query.Where("city = ?", searchParams.City)
 	}
@@ -92,10 +109,8 @@ func SearchProfiles(page int, pageSize int, searchParams dto.SearchParams) ([]mo
 		query = query.Where("state = ?", searchParams.State)
 	}
 
-	if searchParams.Query != "" {
-		query = query.Where(
-			"name LIKE ?", "%"+searchParams.Query+"%").Or(
-			"profile.goal LIKE ?", "%"+searchParams.Query+"%")
+	if searchParams.EducationType != "" {
+		query = query.Where("education_type = ?", searchParams.EducationType)
 	}
 
 	if searchParams.Neighborhood != "" {
