@@ -180,6 +180,37 @@ func ChangeUserRole(c *fiber.Ctx) error {
 	return c.SendStatus(204)
 }
 
+func CreatePosition(c *fiber.Ctx) error {
+	user_id, error := web.GetUserID(c)
+	role := web.GetRole(c)
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	if c.Method() == "GET" {
+		return c.Render("views/admin/add_position", fiber.Map{
+			"errors": nil,
+		})
+	}
+
+	created_by_id := user_id
+	position := dto.CreatePositionRequest{
+		Company:     c.FormValue("company"),
+		Title:       c.FormValue("title"),
+		Type:        models.PositionType(c.FormValue("type")),
+		Allocation:  models.Allocation(c.FormValue("allocation")),
+		Wage:        c.FormValue("wage"),
+		Contract:    models.ContractType(c.FormValue("contract")),
+		Location:    c.FormValue("location"),
+		Description: c.FormValue("description"),
+		PCD:         c.FormValue("pcd") == "on",
+	}
+
+	services.CreatePosition(position, created_by_id)
+
+	return c.SendStatus(201)
+}
+
 func ListCitiesByState(c *fiber.Ctx) error {
 	state := c.Query("state")
 	return c.Render("views/partials/admin/cities", fiber.Map{

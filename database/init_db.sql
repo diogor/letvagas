@@ -16,3 +16,20 @@ CREATE TYPE question_type AS ENUM (
     'computing',
     'language'
 );
+CREATE TYPE position_type AS ENUM (
+    'temporary',
+    'contract',
+    'long_term'
+);
+CREATE TYPE allocation AS ENUM (
+    'remote',
+    'on_site',
+    'hybrid'
+);
+CREATE TYPE level AS ENUM (
+    'internship',
+    'junior',
+    'mid',
+    'senior',
+    'specialist'
+);

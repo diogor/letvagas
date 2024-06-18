@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="/static/css/pico.colors.min.css">
         <link rel="stylesheet" href="/static/css/wizard.min.css">
         <link rel="stylesheet" href="/static/css/base.css">
+        {% block css %}{% endblock %}
         <script src="/static/js/htmx.min.js"></script>
         {% block js %}{% endblock %}
     </head>
@@ -34,6 +35,9 @@
                                         </li>
                                         <li>
                                             <a href="/admin/profile-search">Buscar Pessoas</a>
+                                        </li>
+                                        <li>
+                                            <a href="/positions">Adicionar Vaga</a>
                                         </li>
                                     </ul>
                                 </details>
@@ -64,25 +68,33 @@
             </p>
             <div id="enderecos" class="container grid">
                 <div>
-                    <h7>Matriz Rio</h7>
-                    <address> 
-                        Av. das Américas, 4200 - Bloco 9 - Salas 302A e 313A<br>
-                        Centro Empresarial Barrashopping - Edifício Paris<br>
-                        Barra da Tijuca - CEP: 22631-003 - Rio de Janeiro<br>
+                    <h7>
+                    Matriz Rio
+                    </h7>
+                    <address>
+                        Av. das Américas, 4200 - Bloco 9 - Salas 302A e 313A
+                        <br>
+                        Centro Empresarial Barrashopping - Edifício Paris
+                        <br>
+                        Barra da Tijuca - CEP: 22631-003 - Rio de Janeiro
+                        <br>
                         RJ - Brasil
                     </address>
                     <p>Tel: (21) 3416-9190</p>
                 </div>
                 <div>
-                    <h7>Filial São Paulo</h7>
+                    <h7>
+                    Filial São Paulo
+                    </h7>
                     <address>
-                        Rua 7 de Abril, 127 - Conj. 42 - Centro<br> 
-                        CEP: 01043-000 - São Paulo<br>
+                        Rua 7 de Abril, 127 - Conj. 42 - Centro
+                        <br>
+                        CEP: 01043-000 - São Paulo
+                        <br>
                         SP - Brasil
                     </address>
                     <p>Tel geral: (11) 2227-0907 / (11) 5506-0639 / RH: (11) 5506-4299</p>
                 </div>
-                
             </div>
         </footer>
     </body>

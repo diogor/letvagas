@@ -47,6 +47,29 @@ func ListAllQuestions() []dto.QuestionList {
 	return result
 }
 
+func CreatePosition(position dto.CreatePositionRequest, user_id uuid.UUID) error {
+
+	profile := GetProfile(user_id)
+
+	new_position := models.Position{
+		Company:     position.Company,
+		Title:       position.Title,
+		Level:       position.Level,
+		Type:        position.Type,
+		Allocation:  position.Allocation,
+		Wage:        &position.Wage,
+		Contract:    position.Contract,
+		Location:    position.Location,
+		Description: position.Description,
+		PCD:         position.PCD,
+		CreatedByID: profile.ID,
+	}
+
+	result := database.DB.Create(&new_position)
+
+	return result.Error
+}
+
 func ListAllUsers(page, pageSize int) ([]models.User, int) {
 	users := []models.User{}
 	var total int64

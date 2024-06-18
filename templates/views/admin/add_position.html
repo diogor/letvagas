@@ -1,0 +1,102 @@
+{% extends "layouts/main.html" %}
+{% block title %}Adicionar vaga{% endblock %}
+{% block js %}<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>{% endblock %}
+{% block css %}
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />
+{% endblock %}
+{% block content %}
+    <main class="container">
+        <section>
+            <h3>Adicionar vaga</h3>
+            {% if errors %}
+                <div class="pico-background-red-600"
+                     style="padding: 10px;
+                            margin-bottom: 20px">
+                    {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
+                </div>
+            {% endif %}
+        </section>
+        <section>
+            <form method="post">
+                <fieldset class="grid">
+                    <div>
+                        <label for="company">Nome da empresa</label>
+                        <input type="text" name="company" id="company">
+                    </div>
+                    <div>
+                        <label for="title">Nome da Vaga</label>
+                        <input type="text" name="title" id="title">
+                    </div>
+                </fieldset>
+                <fieldset class="grid">
+                    <div>
+                        <label for="level">Nível</label>
+                        <select name="level" id="level">
+                            <option value="internship">Estagiário</option>
+                            <option value="junior">Júnior</option>
+                            <option value="mid">Pleno</option>
+                            <option value="senior">Sênior</option>
+                            <option value="specialist">Especialista</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="type">Contratação</label>
+                        <select name="type" id="type">
+                            <option value="long_term">Efetiva</option>
+                            <option value="temporary">Temporária</option>
+                            <option value="contract">Prestação de serviço</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="allocation">Alocação</label>
+                        <select name="allocation" id="allocation">
+                            <option value="remote">Remoto</option>
+                            <option value="on_site">Presencial</option>
+                            <option value="hybrid">Híbrido</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div>
+                        <label for="location">Localidade</label>
+                        <input type="text" name="location" id="location">
+                    </div>
+                    <div>
+                        <label for="contract">Modalidade de contratação</label>
+                        <select name="contract" id="contract">
+                            <option value="clt">CLT</option>
+                            <option value="pj">PJ</option>
+                            <option value="service">Serviços</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <label for="description">Descricão da vaga</label>
+                <div style="background-color="#fff">
+                    <textarea name="description" id="description"></textarea>
+                    <script>
+                      const easymde = new EasyMDE({
+                        element: document.getElementById('description'),
+                        toolbar: [
+                              "bold", "italic", "unordered-list",
+                              "heading-1", "heading-2", "heading-3",
+                              "ordered-list", "link", "table", "guide", "preview"
+                          ],
+                        minHeight: "200px",
+                      });
+                    </script>
+                </div>
+                <div>
+                    <label for="pcd">
+                        <input type="checkbox" name="pcd" id="pcd">
+                        <img src="/static/img/pcd.png" alt="pcd" style="height: 25px">
+                        Disponível para PCD
+                    </label>
+                </div>
+                <fieldset>
+                    <input type="submit" value="Enviar">
+                </fieldset>
+            </form>
+        </section>
+    {% endblock %}
+</main>

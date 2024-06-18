@@ -20,11 +20,11 @@ func main() {
 	template_engine := django.New("./templates", ".html")
 
 	app := fiber.New(fiber.Config{
-			Views:        template_engine,
-			Network:      fiber.NetworkTCP,
-			AppName:      "Let vagas 0.1.0",
-			ServerHeader: "Let vagas",
-	})	
+		Views:        template_engine,
+		Network:      fiber.NetworkTCP,
+		AppName:      "Let vagas 0.1.0",
+		ServerHeader: "Let vagas",
+	})
 
 	app.Static("/static", "./static")
 	app.Get("/", controllers.Index)
@@ -55,6 +55,9 @@ func main() {
 	app.Get("/partials/admin/search-results", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchResults)))
 
 	app.Post("/profile", web.LoginRequired(controllers.UpdateProfileGoal))
+
+	app.Post("/positions", web.LoginRequired(controllers.CreatePosition))
+	app.Get("/positions", web.LoginRequired(controllers.CreatePosition))
 
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }

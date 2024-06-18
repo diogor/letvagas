@@ -40,17 +40,18 @@ footer {
   font-size: 0.7rem;
   background-color: #3d3551;
 }
-footer p, footer address {
+footer p,
+footer address {
   color: #e0dde7;
 }
 footer h7 {
-    font-weight: bold;
+  font-weight: bold;
 }
 footer address {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 footer a {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 .wizard .wizard-nav.progress .wizard-step.active ~ .wizard-step {
   background-color: var(--pico-background-color);
@@ -63,6 +64,13 @@ footer a {
 }
 .wizard .wizard-nav.dots .wizard-step:before {
   background: var(--pico-primary);
+}
+.editor-preview h1,
+.editor-preview h2,
+.editor-preview h3,
+.editor-preview h4,
+.editor-preview p {
+  color: black;
 }
 nav details.dropdown {
   margin: inherit;
@@ -119,5 +127,5 @@ section [role="tabpanel"] {
   margin-left: 0.2rem;
 }
 #pagination a {
-    text-decoration: none;
+  text-decoration: none;
 }
