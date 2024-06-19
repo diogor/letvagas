@@ -91,6 +91,62 @@ type Position struct {
 	CreatedByID uuid.UUID    `json:"created_by_id" gorm:"type:uuid;not null"`
 }
 
+func (p *Position) GetType() string {
+	switch p.Type {
+	case TEMPORARY:
+		return "Temporário"	
+	case CONTRACT:
+		return "Contrato"
+	case LONG_TERM:
+		return "Efetivo"
+	default:
+		return ""
+	}
+}
+
+func (p *Position) GetLevel() string {
+	switch p.Level {
+	case INTERNSHIP:
+		return "Estagiário"	
+	case JUNIOR:
+		return "Júnior"
+	case MID:
+		return "Pleno"
+	case SENIOR:
+		return "Sênior"
+	case SPECIALIST:
+		return "Especialista"
+	default:
+		return ""
+	}
+}
+
+func (p *Position) GetAllocation() string {
+	switch p.Allocation {
+	case REMOTE:
+		return "Remoto"
+	case ON_SITE:
+		return "Presencial"
+	case HYBRID:
+		return "Híbrido"
+	default:
+		return ""
+	}
+}
+
+func (p *Position) GetContract() string {
+	switch p.Contract {
+	case CLT:
+		return "CLT"
+	case PJ:
+		return "PJ"
+	case SERVICE:
+		return "Prestação de Serviço"
+	default:
+		return ""
+	}
+}
+
 type Application struct {
 	gorm.Model
 	ID         uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`

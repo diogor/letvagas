@@ -25,13 +25,14 @@ type PositionResponse struct {
 }
 
 type ListPositionResponse struct {
-	ID         uuid.UUID           `json:"id"`
-	Title      string              `json:"title"`
-	Company    string              `json:"company"`
-	Location   string              `json:"location"`
-	Type       models.PositionType `json:"type"`
-	Allocation models.Allocation   `json:"allocation"`
-	Contract   models.ContractType `json:"contract"`
-	Wage       string              `json:"wage"`
-	PCD        bool                `json:"pcd"`
+	ID         uuid.UUID `json:"id"`
+	Title      string    `json:"title"`
+	Company    string    `json:"company"`
+	Location   string    `json:"location"`
+	Level      string    `json:"level"`
+	Type       string    `json:"type"`
+	Allocation string    `json:"allocation"`
+	Contract   string    `json:"contract"`
+	Wage       string    `json:"wage"`
+	PCD        bool      `json:"pcd"`
 }

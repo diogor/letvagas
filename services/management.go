@@ -76,14 +76,29 @@ func GetPositionByID(position_id uuid.UUID) *models.Position {
 	return &position
 }
 
-func ListPositions(page, pageSize int) ([]models.Position, int) {
+func ListPositions(page, pageSize int) ([]dto.ListPositionResponse, int) {
+	var result []dto.ListPositionResponse
 	positions := []models.Position{}
 	var total int64
 
 	database.DB.Model(&models.Position{}).Count(&total)
 	database.DB.Scopes(Paginate(page, pageSize)).Find(&positions)
 
-	return positions, int(total)
+	for _, pos := range positions {
+		result = append(result, dto.ListPositionResponse{
+			ID:         pos.ID,
+			Title:      pos.Title,
+			Company:    pos.Company,
+			Level:      pos.GetLevel(),
+			Type:       pos.GetType(),
+			Allocation: pos.GetAllocation(),
+			Wage:       *pos.Wage,
+			Contract:   pos.GetContract(),
+			Location:   pos.Location,
+		})
+	}
+
+	return result, int(total)
 }
 
 func ListAllUsers(page, pageSize int) ([]models.User, int) {

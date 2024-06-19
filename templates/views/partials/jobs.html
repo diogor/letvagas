@@ -3,8 +3,8 @@
     <tr>
       <th scope="col">Cargo</th>
       <th scope="col">Empresa</th>
-      <th scope="col">Perfil</th>
       <th scope="col">Local</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -12,10 +12,13 @@
     <tr>
       <td>{{ u.Title }}</td>
       <td>{{ u.Company }}</td>
+      <td>{{ u.Location }}</td>
       <td>
-            {{ u.Level }} - {{ u.Type }} - {{ u.Allocation }} - {{ u.Contract }}
+            <mark>{{ u.Level }}</mark>
+            <mark>{{ u.Type }}</mark>
+            <mark>{{ u.Allocation }}</mark>
+            <mark>{{ u.Contract }}</mark>
       </td>
-            <td>{{ u.Location }}</td>
     </tr>
     {% endfor %}
   </tbody>
