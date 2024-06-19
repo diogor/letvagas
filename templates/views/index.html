@@ -7,17 +7,13 @@
              width="100%; max-height: 600px">
     </section>
     <main class="container">
-        {% if logged_in %}
-            {% include "views/partials/jobs.html" %}
-        {% else %}
-            <article>
-                <p>Ainda não é cadastrado(a)?</p>
-                <a role="button" class="button" href="/register">Cadastre-se</a>
-            </article>
-            <article>
-                <p>Já é cadastrado(a)?</p>
-                <a role="button" class="button secondary" href="/login">Veja seu currículo</a>
-            </article>
-        {% endif %}
+        <article>
+            <p>Ainda não é cadastrado(a)?</p>
+            <a role="button" class="button" href="/register">Cadastre-se</a>
+        </article>
+        <article>
+            <p>Já é cadastrado(a)?</p>
+            <a role="button" class="button secondary" href="/login">Veja seu currículo</a>
+        </article>
     </main>
 {% endblock %}

@@ -189,7 +189,9 @@ func CreatePosition(c *fiber.Ctx) error {
 
 	if c.Method() == "GET" {
 		return c.Render("views/admin/add_position", fiber.Map{
-			"errors": nil,
+			"errors":    nil,
+			"logged_in": user_id != uuid.UUID{},
+			"is_admin":  role == models.ADMIN,
 		})
 	}
 
@@ -199,6 +201,7 @@ func CreatePosition(c *fiber.Ctx) error {
 		Title:       c.FormValue("title"),
 		Type:        models.PositionType(c.FormValue("type")),
 		Allocation:  models.Allocation(c.FormValue("allocation")),
+		Level:       models.Level(c.FormValue("level")),
 		Wage:        c.FormValue("wage"),
 		Contract:    models.ContractType(c.FormValue("contract")),
 		Location:    c.FormValue("location"),
@@ -208,7 +211,63 @@ func CreatePosition(c *fiber.Ctx) error {
 
 	services.CreatePosition(position, created_by_id)
 
-	return c.SendStatus(201)
+	return c.Render("views/admin/add_position", fiber.Map{
+		"errors":    nil,
+		"message":   "Vaga criada!",
+		"logged_in": user_id != uuid.UUID{},
+		"is_admin":  role == models.ADMIN,
+	})
+}
+
+func GetPosition(c *fiber.Ctx) error {
+	position_id := uuid.MustParse(c.Params("position_id"))
+	position := services.GetPositionByID(position_id)
+
+	return c.Render("views/position", fiber.Map{
+		"position": position,
+	})
+}
+
+func ListPositions(c *fiber.Ctx) error {
+	user_id, _ := web.GetUserID(c)
+	role := web.GetRole(c)
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
+	positions, total := services.ListPositions(page, pageSize)
+	var pageRange []int
+
+	for i := 0; i < (total / pageSize); i++ {
+		pageRange = append(pageRange, i)
+	}
+
+	return c.Render("views/jobs", fiber.Map{
+		"positions":  positions,
+		"total":      total,
+		"page":       page,
+		"page_size":  pageSize,
+		"page_range": pageRange,
+		"logged_in":  user_id != uuid.UUID{},
+		"is_admin":   role == models.ADMIN,
+	})
+}
+
+func ListPositionsPartial(c *fiber.Ctx) error {
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
+	positions, total := services.ListPositions(page, pageSize)
+	var pageRange []int
+
+	for i := 0; i < (total / pageSize); i++ {
+		pageRange = append(pageRange, i)
+	}
+
+	return c.Render("views/partials/jobs", fiber.Map{
+		"positions":  positions,
+		"total":      total,
+		"page":       page,
+		"page_size":  pageSize,
+		"page_range": pageRange,
+	})
 }
 
 func ListCitiesByState(c *fiber.Ctx) error {

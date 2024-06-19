@@ -16,6 +16,13 @@
                     {% for error in errors %}<p style="margin-bottom: 0px">{{ error }}</p>{% endfor %}
                 </div>
             {% endif %}
+            {% if message %}
+                <div class="pico-background-azure-500"
+                     style="padding: 10px;
+                            margin-bottom: 20px">
+                    <p style="margin-bottom: 0px">{{ message }}</p>
+                </div>
+            {% endif %}
         </section>
         <section>
             <form method="post">

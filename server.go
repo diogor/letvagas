@@ -58,6 +58,9 @@ func main() {
 
 	app.Post("/positions", web.LoginRequired(controllers.CreatePosition))
 	app.Get("/positions", web.LoginRequired(controllers.CreatePosition))
+	app.Get("/position/:position_id", controllers.GetPosition)
+	app.Get("/partials/jobs", controllers.ListPositionsPartial)
+	app.Get("/jobs", controllers.ListPositions)
 
 	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 }

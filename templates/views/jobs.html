@@ -1,0 +1,19 @@
+{% extends "layouts/main.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <main class="container">
+        <section id="filter">
+            <form id="filter-form"
+                  hx-target="#results"
+                  hx-get="/partials/jobs">
+                <fieldset role="group">
+                    <input type="text" name="q" placeholder="Termo de busca" />
+                    <input type="submit" value="Buscar" />
+                </fieldset>
+            </form>
+        </section>
+        <section id="results">
+            {% include "views/partials/jobs.html" %}
+        </section>
+    </main>
+{% endblock %}

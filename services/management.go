@@ -70,6 +70,22 @@ func CreatePosition(position dto.CreatePositionRequest, user_id uuid.UUID) error
 	return result.Error
 }
 
+func GetPositionByID(position_id uuid.UUID) *models.Position {
+	position := models.Position{ID: position_id}
+	database.DB.First(&position)
+	return &position
+}
+
+func ListPositions(page, pageSize int) ([]models.Position, int) {
+	positions := []models.Position{}
+	var total int64
+
+	database.DB.Model(&models.Position{}).Count(&total)
+	database.DB.Scopes(Paginate(page, pageSize)).Find(&positions)
+
+	return positions, int(total)
+}
+
 func ListAllUsers(page, pageSize int) ([]models.User, int) {
 	users := []models.User{}
 	var total int64
