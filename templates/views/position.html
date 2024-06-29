@@ -1,0 +1,28 @@
+{% extends "layouts/main.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block js %} 
+    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script> 
+{% endblock %}
+{% block content %}
+    <main class="container">
+        <article>
+            <h2>{{ position.Title }}</h2>
+            <div id="description"></div>
+        </article>
+        {% if logged_in %}
+            {% if has_applied %}
+                <button disabled>Você já se candidatou.</button>
+            {% else %}
+                <button class="button" hx-disabled-elt="this" hx-swap="outerHTML" hx-put="/positions/{{ position.ID }}/apply">Candidatar-se</button>
+            {% endif %}
+        {% else %}
+            <a class="button" role="button" href="/login?next=/positions/{{ position.ID }}">Candidatar-se</a>
+        {% endif %}
+    <script>
+        var converter = new showdown.Converter();
+        text = `{{ position.Description }}`;
+        html = converter.makeHtml(text);
+        document.getElementById("description").innerHTML = html
+    </script>
+    </main>
+{% endblock %}

@@ -220,11 +220,21 @@ func CreatePosition(c *fiber.Ctx) error {
 }
 
 func GetPosition(c *fiber.Ctx) error {
+	uid, error := web.GetUserID(c)
+
 	position_id := uuid.MustParse(c.Params("position_id"))
 	position := services.GetPositionByID(position_id)
 
+	profile_id := services.GetProfile(uid).ID
+
+	has_applied := services.FindApplicationByProfileAndPosition(profile_id, position_id)
+
 	return c.Render("views/position", fiber.Map{
-		"position": position,
+		"title":       position.Title,
+		"logged_in":   error == nil,
+		"is_admin":    web.GetRole(c) == models.ADMIN,
+		"position":    position,
+		"has_applied": has_applied.ID != uuid.Nil,
 	})
 }
 

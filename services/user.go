@@ -87,3 +87,13 @@ func GetUserByEmail(email string) *models.User {
 
 	return &user
 }
+
+func CreateApplication(profile_id uuid.UUID, position_id uuid.UUID) (uid uuid.UUID, err error) {
+	new_application := &models.Application{
+		Profile:  models.Profile{ID: profile_id},
+		Position: models.Position{ID: position_id},
+	}
+	result := database.DB.Create(new_application)
+
+	return new_application.ID, result.Error
+}

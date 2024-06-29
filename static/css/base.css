@@ -89,13 +89,13 @@ section[aria-label="breadcrumb"] ul li:not(:last-child) ::after {
 [role="tab"] {
   border-bottom: 2px solid transparent;
   user-select: none;
-  color: var(--secondary);
+  color: white;
   border-radius: 0;
   background: transparent;
   transition: all 0.25s;
 }
 [role="tab"][aria-current] {
-  color: var(--contrast) !important;
+  color: white;
   border-color: var(--contrast);
 }
 section {
@@ -128,4 +128,14 @@ section [role="tabpanel"] {
 }
 #pagination a {
   text-decoration: none;
+}
+
+#description > h1,
+#description > h2,
+article > h2,
+#description > h3,
+#description > h4,
+#description > h5,
+#description > h6 {
+  color: black;
 }

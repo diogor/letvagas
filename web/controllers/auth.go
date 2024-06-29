@@ -36,6 +36,11 @@ func Login(c *fiber.Ctx) error {
 			return err
 		}
 
+		next := c.FormValue("next")
+		if next != "" {
+			return c.Redirect(next)
+		}
+
 		return c.Redirect("/")
 	}
 

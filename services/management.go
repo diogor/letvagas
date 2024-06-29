@@ -101,6 +101,13 @@ func ListPositions(page, pageSize int) ([]dto.ListPositionResponse, int) {
 	return result, int(total)
 }
 
+func FindApplicationByProfileAndPosition(profile_id, position_id uuid.UUID) *models.Application {
+	application := models.Application{}
+
+	database.DB.First(&application, "profile_id = ? AND position_id = ?", profile_id, position_id)
+	return &application
+}
+
 func ListAllUsers(page, pageSize int) ([]models.User, int) {
 	users := []models.User{}
 	var total int64
