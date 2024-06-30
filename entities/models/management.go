@@ -87,6 +87,7 @@ type Position struct {
 	Location    string       `json:"location" gorm:"type:varchar(255)"`
 	Description string       `json:"description" gorm:"type:text"`
 	PCD         bool         `json:"pcd" gorm:"not null;default:false"`
+	PCDOnly     bool         `json:"pcd_only" gorm:"not null;default:false"`
 	CreatedBy   Profile      `json:"created_by" gorm:"foreignKey:CreatedByID"`
 	CreatedByID uuid.UUID    `json:"created_by_id" gorm:"type:uuid;not null"`
 	IsActive    bool         `json:"is_active" gorm:"not null;default:true"`

@@ -62,6 +62,8 @@ func CreatePosition(position dto.CreatePositionRequest, user_id uuid.UUID) error
 		Location:    position.Location,
 		Description: position.Description,
 		PCD:         position.PCD,
+		PCDOnly:     position.PCDOnly,
+		IsActive:    true,
 		CreatedByID: profile.ID,
 	}
 

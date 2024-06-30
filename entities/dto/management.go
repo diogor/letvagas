@@ -17,6 +17,7 @@ type CreatePositionRequest struct {
 	Location    string              `json:"location"`
 	Description string              `json:"description"`
 	PCD         bool                `json:"pcd"`
+	PCDOnly     bool                `json:"pcd_only"`
 }
 
 type PositionResponse struct {
@@ -39,6 +40,7 @@ type ListPositionResponse struct {
 	Contract   string    `json:"contract"`
 	Wage       string    `json:"wage"`
 	PCD        bool      `json:"pcd"`
+	PCDOnly    bool      `json:"pcd_only"`
 	IsActive   bool      `json:"is_active"`
 }
 

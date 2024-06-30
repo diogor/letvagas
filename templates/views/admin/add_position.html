@@ -93,13 +93,22 @@
                       });
                     </script>
                 </div>
-                <div>
-                    <label for="pcd">
-                        <input type="checkbox" name="pcd" id="pcd">
-                        <img src="/static/img/pcd.png" alt="pcd" style="height: 25px">
-                        Disponível para PCD
-                    </label>
-                </div>
+                <fieldset class="grid">
+                    <div>
+                        <label for="pcd_only">
+                            <input type="checkbox" name="pcd_only" id="pcd_only" onclick="document.getElementById('pcd').checked = this.checked">
+                            <img src="/static/img/pcd.png" alt="pcd" style="height: 25px">
+                            Exclusiva para PCD
+                        </label>
+                    </div>
+                    <div>
+                        <label for="pcd">
+                            <input type="checkbox" name="pcd" id="pcd">
+                            <img src="/static/img/pcd.png" alt="pcd" style="height: 25px">
+                            Disponível para PCD
+                        </label>
+                    </div>
+                </fieldset>
                 <fieldset>
                     <input type="submit" value="Enviar">
                 </fieldset>

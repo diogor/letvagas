@@ -206,6 +206,7 @@ func CreatePosition(c *fiber.Ctx) error {
 		Location:    c.FormValue("location"),
 		Description: c.FormValue("description"),
 		PCD:         c.FormValue("pcd") == "on",
+		PCDOnly:     c.FormValue("pcd_only") == "on",
 	}
 
 	services.CreatePosition(position, created_by_id)

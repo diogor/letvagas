@@ -25,6 +25,7 @@ body {
 }
 header {
   background-color: #423958;
+  border-bottom: 1px #312a43 solid;
 }
 header a,
 footer a {
@@ -39,6 +40,7 @@ footer {
   text-align: center;
   font-size: 0.7rem;
   background-color: #3d3551;
+  border-top: 1px #312a43 solid;
 }
 footer p,
 footer address {
