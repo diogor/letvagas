@@ -89,6 +89,7 @@ type Position struct {
 	PCD         bool         `json:"pcd" gorm:"not null;default:false"`
 	CreatedBy   Profile      `json:"created_by" gorm:"foreignKey:CreatedByID"`
 	CreatedByID uuid.UUID    `json:"created_by_id" gorm:"type:uuid;not null"`
+	IsActive    bool         `json:"is_active" gorm:"not null;default:true"`
 }
 
 func (p *Position) GetType() string {

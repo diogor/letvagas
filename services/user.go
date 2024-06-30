@@ -1,6 +1,7 @@
 package services
 
 import (
+	"errors"
 	"letvagas/database"
 	"letvagas/entities/dto"
 	"letvagas/entities/models"
@@ -89,6 +90,13 @@ func GetUserByEmail(email string) *models.User {
 }
 
 func CreateApplication(profile_id uuid.UUID, position_id uuid.UUID) (uid uuid.UUID, err error) {
+	position := models.Position{ID: position_id}
+	database.DB.First(&position)
+
+	if position.IsActive == false {
+		return uuid.Nil, errors.New("Não aceita candidaturas no momento.")
+	}
+
 	new_application := &models.Application{
 		Profile:  models.Profile{ID: profile_id},
 		Position: models.Position{ID: position_id},

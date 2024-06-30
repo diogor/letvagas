@@ -39,6 +39,7 @@ type ListPositionResponse struct {
 	Contract   string    `json:"contract"`
 	Wage       string    `json:"wage"`
 	PCD        bool      `json:"pcd"`
+	IsActive   bool      `json:"is_active"`
 }
 
 type ApllicationListResponse struct {

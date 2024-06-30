@@ -76,6 +76,22 @@ func GetPositionByID(position_id uuid.UUID) *models.Position {
 	return &position
 }
 
+func GetPositionSummaryByID(position_id uuid.UUID) *dto.ListPositionResponse {
+	position := GetPositionByID(position_id)
+	return &dto.ListPositionResponse{
+		ID:         position.ID,
+		Title:      position.Title,
+		Company:    position.Company,
+		Level:      position.GetLevel(),
+		Type:       position.GetType(),
+		Allocation: position.GetAllocation(),
+		Wage:       *position.Wage,
+		Contract:   position.GetContract(),
+		Location:   position.Location,
+		IsActive:   position.IsActive,
+	}
+}
+
 func ListPositions(page, pageSize int) ([]dto.ListPositionResponse, int) {
 	var result []dto.ListPositionResponse
 	positions := []models.Position{}
@@ -95,6 +111,7 @@ func ListPositions(page, pageSize int) ([]dto.ListPositionResponse, int) {
 			Wage:       *pos.Wage,
 			Contract:   pos.GetContract(),
 			Location:   pos.Location,
+			IsActive:   pos.IsActive,
 		})
 	}
 
@@ -104,6 +121,13 @@ func ListPositions(page, pageSize int) ([]dto.ListPositionResponse, int) {
 func DeletePosition(position_id uuid.UUID) error {
 	position := models.Position{ID: position_id}
 	result := database.DB.Delete(&position)
+
+	return result.Error
+}
+
+func SetPositionStatus(position_id uuid.UUID, active bool) error {
+	position := models.Position{ID: position_id}
+	result := database.DB.Model(&position).Update("is_active", active)
 
 	return result.Error
 }

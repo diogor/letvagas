@@ -13,10 +13,18 @@
             {% if has_applied %}
                 <button disabled>Você já se candidatou.</button>
             {% else %}
-                <button class="button" hx-disabled-elt="this" hx-swap="outerHTML" hx-put="/positions/{{ position.ID }}/apply">Candidatar-se</button>
+                {% if not position.IsActive %}
+                   <mark>Esta vaga não está mais ativa.</mark>
+                {% else %}
+                    <button class="button" hx-disabled-elt="this" hx-swap="outerHTML" hx-put="/positions/{{ position.ID }}/apply">Candidatar-se</button>
+                {% endif %}
             {% endif %}
         {% else %}
-            <a class="button" role="button" href="/login?next=/positions/{{ position.ID }}">Candidatar-se</a>
+            {% if not position.IsActive %}
+               <mark>Esta vaga não está mais ativa.</mark>
+            {% else %}
+                <a class="button" role="button" href="/login?next=/positions/{{ position.ID }}">Candidatar-se</a>
+            {% endif %}
         {% endif %}
     <script>
         var converter = new showdown.Converter();

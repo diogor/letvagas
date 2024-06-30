@@ -245,7 +245,7 @@ func ListPositions(c *fiber.Ctx) error {
 	positions, total := services.ListPositions(page, pageSize)
 	var pageRange []int
 
-	for i := 0; i < (total / pageSize); i++ {
+	for i := 0; i <= (total / pageSize); i++ {
 		pageRange = append(pageRange, i)
 	}
 
@@ -268,7 +268,7 @@ func ListPositionsPartial(c *fiber.Ctx) error {
 	positions, total := services.ListPositions(page, pageSize)
 	var pageRange []int
 
-	for i := 0; i < (total / pageSize); i++ {
+	for i := 0; i <= (total / pageSize); i++ {
 		pageRange = append(pageRange, i)
 	}
 
@@ -295,6 +295,46 @@ func DeletePosition(c *fiber.Ctx) error {
 	services.DeletePosition(position_id)
 
 	return c.SendStatus(200)
+}
+
+func DeactivatePosition(c *fiber.Ctx) error {
+	_, error := web.GetUserID(c)
+	role := web.GetRole(c)
+
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	position_id := uuid.MustParse(c.Params("position_id"))
+	position := services.GetPositionSummaryByID(position_id)
+	services.SetPositionStatus(position_id, false)
+
+	position.IsActive = false
+
+	return c.Render("views/partials/job_single", fiber.Map{
+		"u":        position,
+		"is_admin": role == models.ADMIN,
+	})
+}
+
+func ActivatePosition(c *fiber.Ctx) error {
+	_, error := web.GetUserID(c)
+	role := web.GetRole(c)
+
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	position_id := uuid.MustParse(c.Params("position_id"))
+	position := services.GetPositionSummaryByID(position_id)
+	services.SetPositionStatus(position_id, true)
+
+	position.IsActive = true
+
+	return c.Render("views/partials/job_single", fiber.Map{
+		"u":        position,
+		"is_admin": role == models.ADMIN,
+	})
 }
 
 func ListCitiesByState(c *fiber.Ctx) error {
