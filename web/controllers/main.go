@@ -10,11 +10,16 @@ import (
 )
 
 func Index(c *fiber.Ctx) error {
-	_, error := web.GetUserID(c)
+	uid, error := web.GetUserID(c)
+
+	profile := services.GetProfile(uid)
+	applications := services.FindApplicationsByProfile(profile.ID)
+
 	return c.Render("views/index", fiber.Map{
-		"title":     "Index",
-		"logged_in": error == nil,
-		"is_admin":  web.GetRole(c) == models.ADMIN,
+		"title":        "Index",
+		"logged_in":    error == nil,
+		"is_admin":     web.GetRole(c) == models.ADMIN,
+		"applications": applications,
 	})
 }
 
@@ -43,4 +48,16 @@ func Apply(c *fiber.Ctx) error {
 					</div>`
 
 	return c.SendString(return_html)
+}
+
+func MyApplications(c *fiber.Ctx) error {
+	uid, error := web.GetUserID(c)
+	if err := error; err != nil {
+		return c.Redirect("/login")
+	}
+	profile := services.GetProfile(uid)
+	applications := services.FindApplicationsByProfile(profile.ID)
+	return c.Render("views/partials/my_applications", fiber.Map{
+		"applications": applications,
+	})
 }

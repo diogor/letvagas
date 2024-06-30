@@ -21,7 +21,11 @@ type CreatePositionRequest struct {
 
 type PositionResponse struct {
 	CreatePositionRequest
-	ID uuid.UUID `json:"id"`
+	Level      string    `json:"level"`
+	Type       string    `json:"type"`
+	Allocation string    `json:"allocation"`
+	Contract   string    `json:"contract"`
+	ID         uuid.UUID `json:"id"`
 }
 
 type ListPositionResponse struct {
@@ -35,4 +39,10 @@ type ListPositionResponse struct {
 	Contract   string    `json:"contract"`
 	Wage       string    `json:"wage"`
 	PCD        bool      `json:"pcd"`
+}
+
+type ApllicationListResponse struct {
+	ID        uuid.UUID        `json:"id"`
+	ProfileID uuid.UUID        `json:"profile_id"`
+	Position  PositionResponse `json:"position"`
 }

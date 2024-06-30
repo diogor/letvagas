@@ -8,6 +8,7 @@
     </section>
     <main class="container">
         {% if logged_in %}
+            {% include "views/partials/my_applications.html" %}
         {% else %}
         <article>
             <p>Ainda não é cadastrado(a)?</p>

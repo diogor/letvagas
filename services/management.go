@@ -108,6 +108,40 @@ func FindApplicationByProfileAndPosition(profile_id, position_id uuid.UUID) *mod
 	return &application
 }
 
+func FindApplicationsByProfile(profile_id uuid.UUID) []dto.ApllicationListResponse {
+	application := []models.Application{}
+	response := []dto.ApllicationListResponse{}
+	database.DB.Set("gorm:auto_preload", true).Where("profile_id = ?", profile_id).Find(&application).Association("Position")
+
+	for _, app := range application {
+
+		position := GetPositionByID(app.Position.ID)
+
+		position_dto := dto.PositionResponse{
+			ID: app.Position.ID,
+		}
+
+		position_dto.Title = position.Title
+		position_dto.Company = position.Company
+		position_dto.Location = position.Location
+		position_dto.Level = position.GetLevel()
+		position_dto.Type = position.GetType()
+		position_dto.Allocation = position.GetAllocation()
+		position_dto.Contract = position.GetContract()
+		position_dto.Wage = *position.Wage
+		position_dto.PCD = position.PCD
+
+		response = append(response, dto.ApllicationListResponse{
+			ID:        app.ID,
+			Position:  position_dto,
+			ProfileID: app.ProfileId,
+		})
+	}
+
+	return response
+
+}
+
 func ListAllUsers(page, pageSize int) ([]models.User, int) {
 	users := []models.User{}
 	var total int64

@@ -1,0 +1,25 @@
+<table class="striped">
+  <thead>
+    <tr>
+      <th scope="col">Cargo</th>
+      <th scope="col">Empresa</th>
+      <th scope="col">Local</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for u in applications %}
+    <tr>
+      <td>{{ u.Position.Title }}</td>
+      <td>{{ u.Position.Company }}</td>
+      <td>{{ u.Position.Location }}</td>
+      <td>
+            <mark>{{ u.Position.Level }}</mark>
+            <mark>{{ u.Position.Type }}</mark>
+            <mark>{{ u.Position.Allocation }}</mark>
+            <mark>{{ u.Position.Contract }}</mark>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
