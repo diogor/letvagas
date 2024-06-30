@@ -101,6 +101,13 @@ func ListPositions(page, pageSize int) ([]dto.ListPositionResponse, int) {
 	return result, int(total)
 }
 
+func DeletePosition(position_id uuid.UUID) error {
+	position := models.Position{ID: position_id}
+	result := database.DB.Delete(&position)
+
+	return result.Error
+}
+
 func FindApplicationByProfileAndPosition(profile_id, position_id uuid.UUID) *models.Application {
 	application := models.Application{}
 

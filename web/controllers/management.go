@@ -44,7 +44,6 @@ func Admin(c *fiber.Ctx) error {
 }
 
 func searchProfilesService(c *fiber.Ctx) ([]models.User, int, dto.SearchParams, string) {
-
 	city := c.Query("city")
 	state := c.Query("state")
 	neighborhood := c.Query("neighborhood")
@@ -262,6 +261,8 @@ func ListPositions(c *fiber.Ctx) error {
 }
 
 func ListPositionsPartial(c *fiber.Ctx) error {
+	user_id, _ := web.GetUserID(c)
+	role := web.GetRole(c)
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
 	positions, total := services.ListPositions(page, pageSize)
@@ -277,7 +278,23 @@ func ListPositionsPartial(c *fiber.Ctx) error {
 		"page":       page,
 		"page_size":  pageSize,
 		"page_range": pageRange,
+		"logged_in":  user_id != uuid.UUID{},
+		"is_admin":   role == models.ADMIN,
 	})
+}
+
+func DeletePosition(c *fiber.Ctx) error {
+	_, error := web.GetUserID(c)
+	role := web.GetRole(c)
+
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	position_id := uuid.MustParse(c.Params("position_id"))
+	services.DeletePosition(position_id)
+
+	return c.SendStatus(200)
 }
 
 func ListCitiesByState(c *fiber.Ctx) error {

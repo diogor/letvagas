@@ -10,6 +10,9 @@
                 <li>
                     <a href="#" role="tab" style="text-decoration: none">Usuários</a>
                 </li>
+                <li>
+                    <a href="#" role="tab" style="text-decoration: none">Vagas</a>
+                </li>
             </ul>
         </nav>
         <section>
@@ -41,6 +44,11 @@
             <div role="tabpanel" hidden>
                 <section id="users">
                     {% include "views/partials/admin/users.html" with page_size=users_page_size total=users_total page=users_page page_range=users_page_range %}
+                </section>
+            </div>
+            <div role="tabpanel" hidden>
+                <section id="positions">
+                    {% include "views/partials/jobs.html" %}
                 </section>
             </div>
         </section>

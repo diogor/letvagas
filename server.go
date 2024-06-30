@@ -59,6 +59,7 @@ func main() {
 	app.Post("/positions", web.LoginRequired(controllers.CreatePosition))
 	app.Get("/positions", web.LoginRequired(controllers.CreatePosition))
 	app.Get("/positions/:position_id", controllers.GetPosition)
+	app.Delete("/positions/:position_id", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.DeletePosition)))
 	app.Put("/positions/:position_id/apply", controllers.Apply)
 	app.Get("/partials/jobs", controllers.ListPositionsPartial)
 	app.Get("/jobs", controllers.ListPositions)
