@@ -47,3 +47,7 @@ type ApllicationListResponse struct {
 	ProfileID uuid.UUID        `json:"profile_id"`
 	Position  PositionResponse `json:"position"`
 }
+
+type PositionSearchParams struct {
+	Query string
+}

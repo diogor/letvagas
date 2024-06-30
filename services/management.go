@@ -92,30 +92,43 @@ func GetPositionSummaryByID(position_id uuid.UUID) *dto.ListPositionResponse {
 	}
 }
 
-func ListPositions(page, pageSize int) ([]dto.ListPositionResponse, int) {
-	var result []dto.ListPositionResponse
-	positions := []models.Position{}
+func ListPositions(page, pageSize int, searchParams dto.PositionSearchParams) ([]dto.ListPositionResponse, int) {
 	var total int64
+	var positions []models.Position
+	var response []dto.ListPositionResponse
 
-	database.DB.Model(&models.Position{}).Count(&total)
-	database.DB.Scopes(Paginate(page, pageSize)).Find(&positions)
+	query := database.DB
 
-	for _, pos := range positions {
-		result = append(result, dto.ListPositionResponse{
-			ID:         pos.ID,
-			Title:      pos.Title,
-			Company:    pos.Company,
-			Level:      pos.GetLevel(),
-			Type:       pos.GetType(),
-			Allocation: pos.GetAllocation(),
-			Wage:       *pos.Wage,
-			Contract:   pos.GetContract(),
-			Location:   pos.Location,
-			IsActive:   pos.IsActive,
+	if searchParams.Query != "" {
+		query = query.Where(
+			"title LIKE ?", "%"+searchParams.Query+"%").Or(
+			"company LIKE ?", "%"+searchParams.Query+"%").Or(
+			"location LIKE ?", "%"+searchParams.Query+"%").Or(
+			"description LIKE ?", "%"+searchParams.Query+"%")
+	}
+
+	query.Find(&positions)
+
+	query.Model(&models.Position{}).Count(&total)
+	query.Scopes(Paginate(page, pageSize)).Find(&positions)
+
+	for i := 0; i < len(positions); i++ {
+		response = append(response, dto.ListPositionResponse{
+			ID:         positions[i].ID,
+			Title:      positions[i].Title,
+			Company:    positions[i].Company,
+			Location:   positions[i].Location,
+			Level:      positions[i].GetLevel(),
+			Type:       positions[i].GetType(),
+			Allocation: positions[i].GetAllocation(),
+			Contract:   positions[i].GetContract(),
+			Wage:       *positions[i].Wage,
+			PCD:        positions[i].PCD,
+			IsActive:   positions[i].IsActive,
 		})
 	}
 
-	return result, int(total)
+	return response, int(total)
 }
 
 func DeletePosition(position_id uuid.UUID) error {

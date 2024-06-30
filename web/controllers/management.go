@@ -242,7 +242,12 @@ func ListPositions(c *fiber.Ctx) error {
 	role := web.GetRole(c)
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
-	positions, total := services.ListPositions(page, pageSize)
+
+	queryParam := dto.PositionSearchParams{
+		Query: c.Query("q", ""),
+	}
+
+	positions, total := services.ListPositions(page, pageSize, queryParam)
 	var pageRange []int
 
 	for i := 0; i <= (total / pageSize); i++ {
@@ -257,6 +262,7 @@ func ListPositions(c *fiber.Ctx) error {
 		"page_range": pageRange,
 		"logged_in":  user_id != uuid.UUID{},
 		"is_admin":   role == models.ADMIN,
+		"q":          queryParam.Query,
 	})
 }
 
@@ -265,7 +271,11 @@ func ListPositionsPartial(c *fiber.Ctx) error {
 	role := web.GetRole(c)
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
-	positions, total := services.ListPositions(page, pageSize)
+	queryParam := dto.PositionSearchParams{
+		Query: c.Query("q", ""),
+	}
+
+	positions, total := services.ListPositions(page, pageSize, queryParam)
 	var pageRange []int
 
 	for i := 0; i <= (total / pageSize); i++ {
@@ -280,6 +290,7 @@ func ListPositionsPartial(c *fiber.Ctx) error {
 		"page_range": pageRange,
 		"logged_in":  user_id != uuid.UUID{},
 		"is_admin":   role == models.ADMIN,
+		"q":          queryParam.Query,
 	})
 }
 
