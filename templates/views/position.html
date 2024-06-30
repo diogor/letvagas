@@ -16,14 +16,22 @@
                 {% if not position.IsActive %}
                    <mark>Esta vaga não está mais ativa.</mark>
                 {% else %}
-                    <button class="button" hx-disabled-elt="this" hx-swap="outerHTML" hx-put="/positions/{{ position.ID }}/apply">Candidatar-se</button>
+                    {% if position.ExternalLink %}
+                        <a class="button" role="button" href="{{ position.ExternalLink }}">Candidatar-se</a>
+                    {% else %}
+                        <button class="button" hx-disabled-elt="this" hx-swap="outerHTML" hx-put="/positions/{{ position.ID }}/apply">Candidatar-se</button>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% else %}
             {% if not position.IsActive %}
                <mark>Esta vaga não está mais ativa.</mark>
             {% else %}
-                <a class="button" role="button" href="/login?next=/positions/{{ position.ID }}">Candidatar-se</a>
+                {% if position.ExternalLink %}
+                    <a class="button" role="button" href="{{ position.ExternalLink }}">Candidatar-se</a>
+                {% else %}
+                    <a class="button" role="button" href="/login?next=/positions/{{ position.ID }}">Candidatar-se</a>
+                {% endif %}
             {% endif %}
         {% endif %}
     <script>

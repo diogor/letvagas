@@ -7,17 +7,18 @@ import (
 )
 
 type CreatePositionRequest struct {
-	Company     string              `json:"company" binding:"required"`
-	Title       string              `json:"title" binding:"required"`
-	Level       models.Level        `json:"level" binding:"required"`
-	Type        models.PositionType `json:"type" binding:"required"`
-	Allocation  models.Allocation   `json:"allocation" binding:"required"`
-	Wage        string              `json:"wage"`
-	Contract    models.ContractType `json:"contract" binding:"required"`
-	Location    string              `json:"location"`
-	Description string              `json:"description"`
-	PCD         bool                `json:"pcd"`
-	PCDOnly     bool                `json:"pcd_only"`
+	Company      string              `json:"company" binding:"required"`
+	Title        string              `json:"title" binding:"required"`
+	Level        models.Level        `json:"level" binding:"required"`
+	Type         models.PositionType `json:"type" binding:"required"`
+	Allocation   models.Allocation   `json:"allocation" binding:"required"`
+	Wage         string              `json:"wage"`
+	Contract     models.ContractType `json:"contract" binding:"required"`
+	Location     string              `json:"location"`
+	Description  string              `json:"description"`
+	PCD          bool                `json:"pcd"`
+	PCDOnly      bool                `json:"pcd_only"`
+	ExternalLink string              `json:"external_link"`
 }
 
 type PositionResponse struct {

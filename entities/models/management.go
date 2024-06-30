@@ -76,21 +76,22 @@ func (ct Level) Value() (driver.Value, error) {
 
 type Position struct {
 	gorm.Model
-	ID          uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Company     string       `json:"company" gorm:"type:varchar(255);not null"`
-	Title       string       `json:"title" gorm:"type:varchar(255);not null"`
-	Level       Level        `json:"level" sql:"type:level('internship', 'junior', 'mid', 'senior', 'specialist');not null"`
-	Type        PositionType `json:"type" sql:"type:position_type('temporary', 'contract', 'long_term');not null"`
-	Allocation  Allocation   `json:"allocation" sql:"type:allocation('remote', 'on_site', 'hybrid');not null"`
-	Wage        *string      `json:"wage" gorm:"type:varchar(255)"`
-	Contract    ContractType `json:"contract" sql:"type:contract_type('clt', 'pj', 'service');not null"`
-	Location    string       `json:"location" gorm:"type:varchar(255)"`
-	Description string       `json:"description" gorm:"type:text"`
-	PCD         bool         `json:"pcd" gorm:"not null;default:false"`
-	PCDOnly     bool         `json:"pcd_only" gorm:"not null;default:false"`
-	CreatedBy   Profile      `json:"created_by" gorm:"foreignKey:CreatedByID"`
-	CreatedByID uuid.UUID    `json:"created_by_id" gorm:"type:uuid;not null"`
-	IsActive    bool         `json:"is_active" gorm:"not null;default:true"`
+	ID           uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	Company      string       `json:"company" gorm:"type:varchar(255);not null"`
+	Title        string       `json:"title" gorm:"type:varchar(255);not null"`
+	Level        Level        `json:"level" sql:"type:level('internship', 'junior', 'mid', 'senior', 'specialist');not null"`
+	Type         PositionType `json:"type" sql:"type:position_type('temporary', 'contract', 'long_term');not null"`
+	Allocation   Allocation   `json:"allocation" sql:"type:allocation('remote', 'on_site', 'hybrid');not null"`
+	Wage         *string      `json:"wage" gorm:"type:varchar(255)"`
+	Contract     ContractType `json:"contract" sql:"type:contract_type('clt', 'pj', 'service');not null"`
+	Location     string       `json:"location" gorm:"type:varchar(255)"`
+	Description  string       `json:"description" gorm:"type:text"`
+	PCD          bool         `json:"pcd" gorm:"not null;default:false"`
+	PCDOnly      bool         `json:"pcd_only" gorm:"not null;default:false"`
+	CreatedBy    Profile      `json:"created_by" gorm:"foreignKey:CreatedByID"`
+	CreatedByID  uuid.UUID    `json:"created_by_id" gorm:"type:uuid;not null"`
+	IsActive     bool         `json:"is_active" gorm:"not null;default:true"`
+	ExternalLink *string      `json:"external_link" gorm:"type:varchar(255)"`
 }
 
 func (p *Position) GetType() string {

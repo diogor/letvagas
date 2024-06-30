@@ -52,19 +52,20 @@ func CreatePosition(position dto.CreatePositionRequest, user_id uuid.UUID) error
 	profile := GetProfile(user_id)
 
 	new_position := models.Position{
-		Company:     position.Company,
-		Title:       position.Title,
-		Level:       position.Level,
-		Type:        position.Type,
-		Allocation:  position.Allocation,
-		Wage:        &position.Wage,
-		Contract:    position.Contract,
-		Location:    position.Location,
-		Description: position.Description,
-		PCD:         position.PCD,
-		PCDOnly:     position.PCDOnly,
-		IsActive:    true,
-		CreatedByID: profile.ID,
+		Company:      position.Company,
+		Title:        position.Title,
+		Level:        position.Level,
+		Type:         position.Type,
+		Allocation:   position.Allocation,
+		Wage:         &position.Wage,
+		Contract:     position.Contract,
+		Location:     position.Location,
+		Description:  position.Description,
+		PCD:          position.PCD,
+		PCDOnly:      position.PCDOnly,
+		IsActive:     true,
+		CreatedByID:  profile.ID,
+		ExternalLink: &position.ExternalLink,
 	}
 
 	result := database.DB.Create(&new_position)
