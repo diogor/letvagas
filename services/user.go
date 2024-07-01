@@ -105,3 +105,37 @@ func CreateApplication(profile_id uuid.UUID, position_id uuid.UUID) (uid uuid.UU
 
 	return new_application.ID, result.Error
 }
+
+func SaveProfileFile(profile_id uuid.UUID, name string, filePath *string, url *string) {
+	new_saved_file := &models.SavedFile{
+		ProfileId: profile_id,
+		Name:      name,
+		Path:      filePath,
+		Url:       url,
+	}
+
+	database.DB.Create(new_saved_file)
+}
+
+func ListProfileFiles(profile_id uuid.UUID) []dto.ProfileFile {
+	saved_files := []models.SavedFile{}
+
+	database.DB.Model(&models.SavedFile{}).Where("profile_id = ?", profile_id).Find(&saved_files)
+
+	response := []dto.ProfileFile{}
+
+	for _, file := range saved_files {
+		link := "/media/" + *file.Path
+
+		if file.Url != nil {
+			link = *file.Url
+		}
+
+		response = append(response, dto.ProfileFile{
+			Name: file.Name,
+			Link: link,
+		})
+	}
+
+	return response
+}

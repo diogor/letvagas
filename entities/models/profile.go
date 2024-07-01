@@ -139,3 +139,13 @@ func (e Experience) GetEndDate() string {
 	end_date, _ := e.EndDate.Value()
 	return end_date.(time.Time).Format("02/01/2006")
 }
+
+type SavedFile struct {
+	gorm.Model
+	ID        uuid.UUID `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	ProfileId uuid.UUID `json:"profile_id" gorm:"type:uuid;not null"`
+	Profile   Profile   `json:"profile" gorm:"foreignKey:ProfileId"`
+	Name      string    `json:"name" gorm:"type:varchar(255);not null"`
+	Url       *string   `json:"url" gorm:"type:varchar(255)"`
+	Path      *string   `json:"path" gorm:"type:varchar(255)"`
+}

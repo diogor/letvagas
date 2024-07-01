@@ -32,6 +32,40 @@ function toggleEndDate() {
             </article>
             <article>
                 <header>
+                    Documentos Adicionais:
+                </header>
+                <form hx-encoding="multipart/form-data">
+                    <div class="grid">
+                        <fieldset>
+                            <label for="name">Tipo:</label>
+                            <select name="name">
+                                <option value="Curriculum">Curriculum</option>
+                                <option value="Certificado">Certificado</option>
+                                <option value="Laudo">Laudo</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </fieldset>
+                        <fieldset>
+                            <label for="curriculum">Arquivo:</label>
+                            <input id="curriculum" type="file" name="file" hx-post="/upload-file" hx-encoding="multipart/form-data" hx-trigger="change">
+                        </fieldset>
+                    </div>
+                </form>
+                <div>
+                  {% if files %}
+                  <p>Arquivos enviados:</p>
+                  <ul>
+                    {% for file in files %}
+                      <li>{{ file.Name }}: <a href="{{ file.Link }}">{{ file.Link }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  {% else %}
+                  <p>Nenhum arquivo enviado</p>
+                  {% endif %}
+                </div>
+            </article>
+            <article>
+                <header>
                     Formacão:
                 </header>
                 <div id="educations">{% include "views/partials/educations.html" %}</div>

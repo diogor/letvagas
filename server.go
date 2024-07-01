@@ -27,6 +27,7 @@ func main() {
 	})
 
 	app.Static("/static", "./static")
+	app.Static("/media", "./uploads")
 	app.Get("/", controllers.Index)
 	app.Get("/admin", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.Admin)))
 	app.Get("/admin/profile-search", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchProfiles)))
@@ -40,6 +41,8 @@ func main() {
 	app.Post("/course", web.LoginRequired(controllers.CreateCourse))
 	app.Post("/experience", web.LoginRequired(controllers.CreateExperience))
 	app.Post("/answers", web.LoginRequired(controllers.CreateAnswer))
+
+	app.Post("/upload-file", web.LoginRequired(controllers.UploadProfileFile))
 
 	app.Post("/questions", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.CreateQuestion)))
 	app.Delete("/questions/:question_id", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.DeleteQuestion)))

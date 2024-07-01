@@ -27,3 +27,8 @@ type CreateUserRequest struct {
 	PCD          bool            `json:"pcd"`
 	PCDInfo      string          `json:"pcd_info"`
 }
+
+type ProfileFile struct {
+	Name string `json:"name"`
+	Link string `json:"link"`
+}

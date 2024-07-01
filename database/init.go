@@ -23,6 +23,6 @@ func InitDB() {
 		&models.User{}, &models.Profile{}, &models.Education{},
 		&models.Course{}, &models.Answer{},
 		&models.Course{}, &models.Experience{},
-		&models.Position{}, &models.Application{},
+		&models.Position{}, &models.Application{}, &models.SavedFile{},
 	)
 }
