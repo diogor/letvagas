@@ -57,7 +57,7 @@ func main() {
 	app.Get("/partials/admin/users", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.ListAllUsers)))
 	app.Get("/partials/admin/search-results", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.SearchResults)))
 
-	app.Post("/profile", web.LoginRequired(controllers.UpdateProfileGoal))
+	app.Post("/profile", web.LoginRequired(controllers.UpdateProfile))
 
 	app.Post("/positions", web.LoginRequired(controllers.CreatePosition))
 	app.Get("/positions", web.LoginRequired(controllers.CreatePosition))

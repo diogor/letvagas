@@ -28,7 +28,7 @@ function toggleEndDate() {
                 <header>
                     Objetivo profissional:
                 </header>
-                <textarea id="goal" name="goal" hx-post="/profile">{{ goal }}</textarea>
+                <textarea id="goal" name="goal" hx-post="/profile" hx-include="#wage_expectation">{{ goal }}</textarea>
             </article>
             <article>
                 <header>
@@ -116,6 +116,15 @@ function toggleEndDate() {
                 <div id="language_questions"
                      hx-get="/partials/questions/language"
                      hx-trigger="load"></div>
+            </article>
+            <article>
+                <header>
+                    Outras Informações:
+                </header>
+                <fieldset>
+                    <label for="wage_expectation">Pretenção salarial</label>
+                    <input type="text" name="wage_expectation" id="wage_expectation" hx-post="/profile" hx-include="#goal" value="{{ wage_expectation }}">
+                </fieldset>
             </article>
             <div class="container grid" style="justify-items: center;">
                 <a role="button" href="/" style="padding: 0.5rem 0.75rem">Salvar dados</a>

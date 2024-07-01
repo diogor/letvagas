@@ -62,12 +62,13 @@ func (o QuestionOptions) Value() (driver.Value, error) {
 
 type Profile struct {
 	gorm.Model
-	ID          uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Answers     []Answer     `json:"answers" gorm:"foreignKey:ProfileId"`
-	Educations  []Education  `json:"educations" gorm:"foreignKey:ProfileId"`
-	Courses     []Course     `json:"courses" gorm:"foreignKey:ProfileId"`
-	Experiences []Experience `json:"experiences" gorm:"foreignKey:ProfileId"`
-	Goal        *string      `json:"goal" gorm:"type:varchar(255)"`
+	ID              uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	Answers         []Answer     `json:"answers" gorm:"foreignKey:ProfileId"`
+	Educations      []Education  `json:"educations" gorm:"foreignKey:ProfileId"`
+	Courses         []Course     `json:"courses" gorm:"foreignKey:ProfileId"`
+	Experiences     []Experience `json:"experiences" gorm:"foreignKey:ProfileId"`
+	Goal            *string      `json:"goal" gorm:"type:varchar(255)"`
+	WageExpectation *string      `json:"wage_expectation" gorm:"type:varchar(255)"`
 }
 
 type Answer struct {

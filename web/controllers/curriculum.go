@@ -26,13 +26,14 @@ func Curriculum(c *fiber.Ctx) error {
 	files := services.ListProfileFiles(profile.ID)
 
 	return c.Render("views/curriculum", fiber.Map{
-		"educations":  educations,
-		"courses":     courses,
-		"experiences": experiences,
-		"goal":        profile.Goal,
-		"files":       files,
-		"logged_in":   true,
-		"is_admin":    web.GetRole(c) == models.ADMIN,
+		"educations":       educations,
+		"courses":          courses,
+		"experiences":      experiences,
+		"goal":             profile.Goal,
+		"wage_expectation": profile.WageExpectation,
+		"files":            files,
+		"logged_in":        true,
+		"is_admin":         web.GetRole(c) == models.ADMIN,
 	})
 }
 
@@ -59,16 +60,19 @@ func CreateAnswer(c *fiber.Ctx) error {
 
 }
 
-func UpdateProfileGoal(c *fiber.Ctx) error {
+func UpdateProfile(c *fiber.Ctx) error {
 	user_id, err := web.GetUserID(c)
 
 	if err != nil {
 		return c.Redirect("/login")
 	}
 
+	goal := c.FormValue("goal")
+	wage_expectation := c.FormValue("wage_expectation")
+
 	profile := services.GetProfile(user_id)
 
-	services.UpdateProfileGoal(profile.ID, c.FormValue("goal"))
+	services.UpdateProfile(profile.ID, &goal, &wage_expectation)
 	return c.SendStatus(204)
 
 }

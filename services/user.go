@@ -68,8 +68,16 @@ func GetProfile(user_id uuid.UUID) *models.Profile {
 	return &profile
 }
 
-func UpdateProfileGoal(profile_id uuid.UUID, goal string) {
-	database.DB.Model(&models.Profile{}).Where("id = ?", profile_id).Update("goal", goal)
+func UpdateProfile(profile_id uuid.UUID, goal *string, wage_expectation *string) {
+	query := database.DB.Model(&models.Profile{}).Where("id = ?", profile_id)
+
+	if goal != nil {
+		query.Update("goal", goal)
+	}
+
+	if wage_expectation != nil {
+		query.Update("wage_expectation", wage_expectation)
+	}
 }
 
 func GetUser(id string) *models.User {
