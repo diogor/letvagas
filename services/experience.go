@@ -23,7 +23,10 @@ func CreateExperience(profile_id uuid.UUID, experience *dto.CreateExperienceRequ
 		return err
 	}
 
+	uuidv7, _ := uuid.NewV7()
+
 	new_exp := models.Experience{
+		ID:                uuidv7,
 		Company:           experience.Company,
 		StartDate:         datatypes.Date(start_date),
 		EndDate:           datatypes.Date(end_date),

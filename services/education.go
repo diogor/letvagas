@@ -13,7 +13,10 @@ func CreateEducation(profile_id uuid.UUID, education *dto.CreateEducationRequest
 	profile := models.Profile{ID: profile_id}
 	database.DB.First(&profile)
 
+	uuidv7, _ := uuid.NewV7()
+
 	new_ed := models.Education{
+		ID:          uuidv7,
 		Type:        education.EducationType,
 		Institution: education.Institution,
 		Graduation:  &education.Graduation,
@@ -55,7 +58,10 @@ func CreateAnswer(profile_id uuid.UUID, answer *dto.CreateAnswerRequest) error {
 	profile := models.Profile{ID: profile_id}
 	database.DB.First(&profile)
 
+	uuidv7, _ := uuid.NewV7()
+
 	new_answer := models.Answer{
+		ID:         uuidv7,
 		QuestionId: answer.QuestionId,
 		Answer:     answer.Answer,
 		ProfileId:  profile.ID,

@@ -27,7 +27,11 @@ func CreateUser(user *dto.CreateUserRequest) (uuid.UUID, error) {
 		return uuid.Nil, err
 	}
 
+	uuidv7, _ := uuid.NewV7()
+	uuidv7Profile, _ := uuid.NewV7()
+
 	new_user := &models.User{
+		ID:           uuidv7,
 		Name:         user.Name,
 		SocialName:   &user.SocialName,
 		Password:     password,
@@ -51,7 +55,7 @@ func CreateUser(user *dto.CreateUserRequest) (uuid.UUID, error) {
 		Linkedin:     &user.Linkedin,
 		PCD:          user.PCD,
 		PCDInfo:      &user.PCDInfo,
-		Profile:      models.Profile{ID: uuid.New()},
+		Profile:      models.Profile{ID: uuidv7Profile},
 	}
 
 	result := database.DB.Create(new_user)
@@ -111,7 +115,10 @@ func CreateApplication(profile_id uuid.UUID, position_id uuid.UUID) (uid uuid.UU
 		return uuid.Nil, errors.New("Não aceita candidaturas no momento.")
 	}
 
+	uuidv7, _ := uuid.NewV7()
+
 	new_application := &models.Application{
+		ID:       uuidv7,
 		Profile:  models.Profile{ID: profile_id},
 		Position: position,
 	}

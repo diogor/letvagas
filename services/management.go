@@ -9,8 +9,10 @@ import (
 )
 
 func CreateQuestion(question string, options []string, question_type models.QuestionType) error {
+	uuidv7, _ := uuid.NewV7()
 
 	new_question := models.Question{
+		ID:       uuidv7,
 		Question: question,
 		Options:  options,
 		Type:     question_type,
@@ -51,7 +53,10 @@ func CreatePosition(position dto.CreatePositionRequest, user_id uuid.UUID) error
 
 	profile := GetProfile(user_id)
 
+	uuidv7, _ := uuid.NewV7()
+
 	new_position := models.Position{
+		ID:           uuidv7,
 		Company:      &position.Company,
 		CompanyField: &position.CompanyField,
 		Title:        &position.Title,
