@@ -379,3 +379,21 @@ func ListAllUsers(c *fiber.Ctx) error {
 		"page_range": pageRange,
 	})
 }
+
+func ListUsersForPosition(c *fiber.Ctx) error {
+	user_id, error := web.GetUserID(c)
+	role := web.GetRole(c)
+
+	if error != nil || role != models.ADMIN {
+		return c.Redirect("/login")
+	}
+
+	position_id := uuid.MustParse(c.Params("position_id"))
+	users := services.FindUsersForPosition(position_id)
+
+	return c.Render("views/admin/applications", fiber.Map{
+		"users":     users,
+		"logged_in": user_id != uuid.UUID{},
+		"is_admin":  role == models.ADMIN,
+	})
+}

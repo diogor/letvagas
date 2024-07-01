@@ -68,6 +68,12 @@ func GetProfile(user_id uuid.UUID) *models.Profile {
 	return &profile
 }
 
+func GetProfileById(profile_id uuid.UUID) *models.Profile {
+	profile := models.Profile{ID: profile_id}
+	database.DB.First(&profile)
+	return &profile
+}
+
 func UpdateProfile(profile_id uuid.UUID, goal *string, wage_expectation *string) {
 	query := database.DB.Model(&models.Profile{}).Where("id = ?", profile_id)
 

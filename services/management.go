@@ -187,6 +187,21 @@ func FindApplicationsByProfile(profile_id uuid.UUID) []dto.ApllicationListRespon
 
 }
 
+func FindUsersForPosition(position_id uuid.UUID) []models.User {
+	applications := []models.Application{}
+
+	database.DB.Where("position_id = ?", position_id).Find(&applications)
+	users := []models.User{}
+
+	for _, app := range applications {
+		user := models.User{}
+		database.DB.First(&user, "profile_id = ?", app.ProfileId)
+		users = append(users, user)
+	}
+
+	return users
+}
+
 func ListAllUsers(page, pageSize int) ([]models.User, int) {
 	users := []models.User{}
 	var total int64
