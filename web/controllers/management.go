@@ -197,12 +197,13 @@ func CreatePosition(c *fiber.Ctx) error {
 	created_by_id := user_id
 	position := dto.CreatePositionRequest{
 		Company:      c.FormValue("company"),
+		CompanyField: c.FormValue("company_field"),
 		Title:        c.FormValue("title"),
 		Type:         models.PositionType(c.FormValue("type")),
 		Allocation:   models.Allocation(c.FormValue("allocation")),
 		Level:        models.Level(c.FormValue("level")),
 		Wage:         c.FormValue("wage"),
-		Contract:     models.ContractType(c.FormValue("contract")),
+		Education:    c.FormValue("education"),
 		Location:     c.FormValue("location"),
 		Description:  c.FormValue("description"),
 		PCD:          c.FormValue("pcd") == "on",

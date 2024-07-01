@@ -9,7 +9,6 @@ import (
 
 type PositionType string
 type Allocation string
-type ContractType string
 type Level string
 
 const (
@@ -22,12 +21,6 @@ const (
 	REMOTE  Allocation = "remote"
 	ON_SITE Allocation = "on_site"
 	HYBRID  Allocation = "hybrid"
-)
-
-const (
-	CLT     ContractType = "clt"
-	PJ      ContractType = "pj"
-	SERVICE ContractType = "service"
 )
 
 const (
@@ -56,15 +49,6 @@ func (ct Allocation) Value() (driver.Value, error) {
 	return string(ct), nil
 }
 
-func (ct *ContractType) Scan(value interface{}) error {
-	*ct = ContractType(value.(string))
-	return nil
-}
-
-func (ct ContractType) Value() (driver.Value, error) {
-	return string(ct), nil
-}
-
 func (ct *Level) Scan(value interface{}) error {
 	*ct = Level(value.(string))
 	return nil
@@ -77,15 +61,16 @@ func (ct Level) Value() (driver.Value, error) {
 type Position struct {
 	gorm.Model
 	ID           uuid.UUID    `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Company      string       `json:"company" gorm:"type:varchar(255);not null"`
-	Title        string       `json:"title" gorm:"type:varchar(255);not null"`
+	Company      *string      `json:"company" gorm:"type:varchar(255)"`
+	CompanyField *string      `json:"company_field" gorm:"type:varchar(255)"`
+	Title        *string      `json:"title" gorm:"type:varchar(255)"`
 	Level        Level        `json:"level" sql:"type:level('internship', 'junior', 'mid', 'senior', 'specialist');not null"`
+	Education    *string      `json:"education" gorm:"type:varchar(255)"`
 	Type         PositionType `json:"type" sql:"type:position_type('temporary', 'contract', 'long_term');not null"`
 	Allocation   Allocation   `json:"allocation" sql:"type:allocation('remote', 'on_site', 'hybrid');not null"`
 	Wage         *string      `json:"wage" gorm:"type:varchar(255)"`
-	Contract     ContractType `json:"contract" sql:"type:contract_type('clt', 'pj', 'service');not null"`
-	Location     string       `json:"location" gorm:"type:varchar(255)"`
-	Description  string       `json:"description" gorm:"type:text"`
+	Location     *string      `json:"location" gorm:"type:varchar(255)"`
+	Description  *string      `json:"description" gorm:"type:text"`
 	PCD          bool         `json:"pcd" gorm:"not null;default:false"`
 	PCDOnly      bool         `json:"pcd_only" gorm:"not null;default:false"`
 	CreatedBy    Profile      `json:"created_by" gorm:"foreignKey:CreatedByID"`
@@ -132,19 +117,6 @@ func (p *Position) GetAllocation() string {
 		return "Presencial"
 	case HYBRID:
 		return "Híbrido"
-	default:
-		return ""
-	}
-}
-
-func (p *Position) GetContract() string {
-	switch p.Contract {
-	case CLT:
-		return "CLT"
-	case PJ:
-		return "PJ"
-	case SERVICE:
-		return "Prestação de Serviço"
 	default:
 		return ""
 	}

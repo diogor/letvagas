@@ -52,15 +52,16 @@ func CreatePosition(position dto.CreatePositionRequest, user_id uuid.UUID) error
 	profile := GetProfile(user_id)
 
 	new_position := models.Position{
-		Company:      position.Company,
-		Title:        position.Title,
+		Company:      &position.Company,
+		CompanyField: &position.CompanyField,
+		Title:        &position.Title,
 		Level:        position.Level,
+		Education:    &position.Education,
 		Type:         position.Type,
 		Allocation:   position.Allocation,
 		Wage:         &position.Wage,
-		Contract:     position.Contract,
-		Location:     position.Location,
-		Description:  position.Description,
+		Location:     &position.Location,
+		Description:  &position.Description,
 		PCD:          position.PCD,
 		PCDOnly:      position.PCDOnly,
 		IsActive:     true,
@@ -83,14 +84,14 @@ func GetPositionSummaryByID(position_id uuid.UUID) *dto.ListPositionResponse {
 	position := GetPositionByID(position_id)
 	return &dto.ListPositionResponse{
 		ID:         position.ID,
-		Title:      position.Title,
-		Company:    position.Company,
+		Title:      *position.Title,
+		Company:    *position.Company,
 		Level:      position.GetLevel(),
+		Education:  *position.Education,
 		Type:       position.GetType(),
 		Allocation: position.GetAllocation(),
 		Wage:       *position.Wage,
-		Contract:   position.GetContract(),
-		Location:   position.Location,
+		Location:   *position.Location,
 		IsActive:   position.IsActive,
 	}
 }
@@ -118,13 +119,12 @@ func ListPositions(page, pageSize int, searchParams dto.PositionSearchParams) ([
 	for i := 0; i < len(positions); i++ {
 		response = append(response, dto.ListPositionResponse{
 			ID:         positions[i].ID,
-			Title:      positions[i].Title,
-			Company:    positions[i].Company,
-			Location:   positions[i].Location,
+			Title:      *positions[i].Title,
+			Company:    *positions[i].Company,
+			Location:   *positions[i].Location,
 			Level:      positions[i].GetLevel(),
 			Type:       positions[i].GetType(),
 			Allocation: positions[i].GetAllocation(),
-			Contract:   positions[i].GetContract(),
 			Wage:       *positions[i].Wage,
 			PCD:        positions[i].PCD,
 			IsActive:   positions[i].IsActive,
@@ -158,23 +158,21 @@ func FindApplicationByProfileAndPosition(profile_id, position_id uuid.UUID) *mod
 func FindApplicationsByProfile(profile_id uuid.UUID) []dto.ApllicationListResponse {
 	application := []models.Application{}
 	response := []dto.ApllicationListResponse{}
-	database.DB.Set("gorm:auto_preload", true).Where("profile_id = ?", profile_id).Find(&application).Association("Position")
+	database.DB.Where("profile_id = ?", profile_id).Find(&application)
 
 	for _, app := range application {
-
-		position := GetPositionByID(app.Position.ID)
+		position := GetPositionByID(app.PositionId)
 
 		position_dto := dto.PositionResponse{
-			ID: app.Position.ID,
+			ID: app.PositionId,
 		}
 
-		position_dto.Title = position.Title
-		position_dto.Company = position.Company
-		position_dto.Location = position.Location
+		position_dto.Title = *position.Title
+		position_dto.Company = *position.Company
+		position_dto.Location = *position.Location
 		position_dto.Level = position.GetLevel()
 		position_dto.Type = position.GetType()
 		position_dto.Allocation = position.GetAllocation()
-		position_dto.Contract = position.GetContract()
 		position_dto.Wage = *position.Wage
 		position_dto.PCD = position.PCD
 

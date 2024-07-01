@@ -32,11 +32,25 @@
                         <input type="text" name="company" id="company">
                     </div>
                     <div>
+                        <label for="company_field">Ramo da empresa</label>
+                        <input type="text" name="company_field" id="company_field">
+                    </div>
+                    <div>
                         <label for="title">Nome da Vaga</label>
                         <input type="text" name="title" id="title">
                     </div>
                 </fieldset>
                 <fieldset class="grid">
+                    <div>
+                        <label for="education">Escolaridade</label>
+                        <select name="education" id="education">
+                            <option value="Fundamental">Ensino Fundamental</option>
+                            <option value="Médio">Ensino Médio</option>
+                            <option value="Superior">Ensino Superior</option>
+                            <option value="Pós-graduação">Pós Graduação</option>
+                            <option value="Doutorado">Doutorado</option>
+                        </select>
+                    </div>
                     <div>
                         <label for="level">Nível</label>
                         <select name="level" id="level">
@@ -56,7 +70,7 @@
                         </select>
                     </div>
                     <div>
-                        <label for="allocation">Alocação</label>
+                        <label for="allocation">Regime de Trabalho</label>
                         <select name="allocation" id="allocation">
                             <option value="remote">Remoto</option>
                             <option value="on_site">Presencial</option>
@@ -68,14 +82,6 @@
                     <div>
                         <label for="location">Localidade</label>
                         <input type="text" name="location" id="location">
-                    </div>
-                    <div>
-                        <label for="contract">Modalidade de contratação</label>
-                        <select name="contract" id="contract">
-                            <option value="clt">CLT</option>
-                            <option value="pj">PJ</option>
-                            <option value="service">Serviços</option>
-                        </select>
                     </div>
                     <div>
                         <label for="external_link">Link externo</label>

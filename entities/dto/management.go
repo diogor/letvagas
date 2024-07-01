@@ -8,12 +8,13 @@ import (
 
 type CreatePositionRequest struct {
 	Company      string              `json:"company" binding:"required"`
+	CompanyField string              `json:"company_field"`
 	Title        string              `json:"title" binding:"required"`
 	Level        models.Level        `json:"level" binding:"required"`
+	Education    string              `json:"education"`
 	Type         models.PositionType `json:"type" binding:"required"`
 	Allocation   models.Allocation   `json:"allocation" binding:"required"`
 	Wage         string              `json:"wage"`
-	Contract     models.ContractType `json:"contract" binding:"required"`
 	Location     string              `json:"location"`
 	Description  string              `json:"description"`
 	PCD          bool                `json:"pcd"`
@@ -26,7 +27,6 @@ type PositionResponse struct {
 	Level      string    `json:"level"`
 	Type       string    `json:"type"`
 	Allocation string    `json:"allocation"`
-	Contract   string    `json:"contract"`
 	ID         uuid.UUID `json:"id"`
 }
 
@@ -37,8 +37,8 @@ type ListPositionResponse struct {
 	Location   string    `json:"location"`
 	Level      string    `json:"level"`
 	Type       string    `json:"type"`
+	Education  string    `json:"education"`
 	Allocation string    `json:"allocation"`
-	Contract   string    `json:"contract"`
 	Wage       string    `json:"wage"`
 	PCD        bool      `json:"pcd"`
 	PCDOnly    bool      `json:"pcd_only"`

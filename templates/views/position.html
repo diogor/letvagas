@@ -7,6 +7,30 @@
     <main class="container">
         <article>
             <h2>{{ position.Title }}</h2>
+            {% if position.Company %}
+            <h3>{{ position.Company }}</h3>
+            {% endif %}
+            {% if position.CompanyField %}
+            <h3>{{ position.CompanyField }}</h3>
+            {% endif %}
+            {% if position.Location %}
+            <p>Localidade: {{ position.Location }}</p>
+            {% endif %}
+            {% if position.Allocation %}
+            <p>Regime de trabalho: {{ position.GetAllocation }}</p>
+            {% endif %}
+            {% if position.Type %}
+            <p>Tipo: {{ position.GetType }}</p>
+            {% endif %}
+            {% if position.Education %}
+            <p>Escolaridade: {{ position.Education }}</p>
+            {% endif %}
+            {% if position.Level %}
+            <p>Nível: {{ position.GetLevel }}</p>
+            {% endif %}
+            {% if position.Wage %}
+            <p>Salário: {{ position.Wage }}</p>
+            {% endif %}
             <div id="description"></div>
         </article>
         {% if logged_in %}

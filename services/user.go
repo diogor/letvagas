@@ -107,7 +107,7 @@ func CreateApplication(profile_id uuid.UUID, position_id uuid.UUID) (uid uuid.UU
 
 	new_application := &models.Application{
 		Profile:  models.Profile{ID: profile_id},
-		Position: models.Position{ID: position_id},
+		Position: position,
 	}
 	result := database.DB.Create(new_application)
 
