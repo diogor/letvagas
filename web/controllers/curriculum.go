@@ -13,17 +13,26 @@ import (
 
 func Curriculum(c *fiber.Ctx) error {
 	user_id, err := web.GetUserID(c)
+	var profile_id uuid.UUID
+	var profile models.Profile
 
 	if err != nil {
 		return c.Redirect("/login")
 	}
 
-	profile := services.GetProfile(user_id)
-	educations := services.ListEducations(profile.ID)
-	courses := services.ListCourses(profile.ID)
-	experiences := services.ListExperiences(profile.ID)
+	if c.Params("profile_id") != "" {
+		profile = *services.GetProfileById(uuid.MustParse(c.Params("profile_id")))
+		profile_id = uuid.MustParse(c.Params("profile_id"))
+	} else {
+		profile = *services.GetProfile(user_id)
+		profile_id = profile.ID
+	}
 
-	files := services.ListProfileFiles(profile.ID)
+	educations := services.ListEducations(profile_id)
+	courses := services.ListCourses(profile_id)
+	experiences := services.ListExperiences(profile_id)
+
+	files := services.ListProfileFiles(profile_id)
 
 	return c.Render("views/curriculum", fiber.Map{
 		"educations":       educations,
@@ -34,6 +43,7 @@ func Curriculum(c *fiber.Ctx) error {
 		"files":            files,
 		"logged_in":        true,
 		"is_admin":         web.GetRole(c) == models.ADMIN,
+		"profile_id":       profile_id,
 	})
 }
 

@@ -89,10 +89,15 @@ func ListQuestions(c *fiber.Ctx) error {
 	}
 
 	profile := services.GetProfile(user_id)
+	profile_id := profile.ID
+
+	if c.Params("profile_id") != "" {
+		profile_id = uuid.MustParse(c.Params("profile_id"))
+	}
 
 	question_type := c.Params("question_type")
 	return c.Render("views/partials/questions", fiber.Map{
-		"questions": services.ListQuestions(models.QuestionType(question_type), profile.ID),
-		"answers":   services.ListAnswers(profile.ID),
+		"questions": services.ListQuestions(models.QuestionType(question_type), profile_id),
+		"answers":   services.ListAnswers(profile_id),
 	})
 }

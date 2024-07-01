@@ -105,17 +105,29 @@ function toggleEndDate() {
                 <header>
                     Informática:
                 </header>
+                {% if is_admin %}
+                <div id="computing_questions"
+                     hx-get="/admin/partials/questions/computing/{{ profile_id }}"
+                     hx-trigger="load"></div>
+                {% else %}
                 <div id="computing_questions"
                      hx-get="/partials/questions/computing"
                      hx-trigger="load"></div>
+                {% endif %}
             </article>
             <article>
                 <header>
                     Idiomas:
                 </header>
+                {% if is_admin %}
+                <div id="language_questions"
+                     hx-get="/admin/partials/questions/language/{{ profile_id }}"
+                     hx-trigger="load"></div>
+                {% else %}
                 <div id="language_questions"
                      hx-get="/partials/questions/language"
                      hx-trigger="load"></div>
+                {% endif %}
             </article>
             <article>
                 <header>
