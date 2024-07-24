@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"github.com/google/uuid"
+	"letvagas/database"
 	"letvagas/entities/dto"
+	"letvagas/entities/models"
 	"letvagas/services"
 	"letvagas/web"
 
@@ -46,4 +49,30 @@ func ListCourses(c *fiber.Ctx) error {
 	return c.Render("views/partials/courses", fiber.Map{
 		"courses": courses,
 	})
+}
+
+func DeleteCourse(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	course_id := c.Params("course_id")
+	course := models.Course{ID: uuid.MustParse(course_id)}
+
+	database.DB.First(&course)
+
+	if course.ProfileId != profile.ID {
+		return c.Redirect("/login")
+	}
+
+	services.DeleteCourse(uuid.MustParse(course_id))
+
+	return c.Render("views/partials/courses", fiber.Map{
+		"courses": services.ListCourses(profile.ID),
+	})
+
 }

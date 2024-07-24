@@ -40,3 +40,7 @@ func ListCourses(profile_id uuid.UUID) []models.Course {
 
 	return courses
 }
+
+func DeleteCourse(course_id uuid.UUID) error {
+	return database.DB.Delete(&models.Course{}, "id = ?", course_id).Error
+}
