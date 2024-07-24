@@ -42,6 +42,7 @@ func main() {
 	app.Delete("/formation/:education_id", web.LoginRequired(controllers.DeleteEducation))
 	app.Post("/course", web.LoginRequired(controllers.CreateCourse))
 	app.Post("/experience", web.LoginRequired(controllers.CreateExperience))
+	app.Delete("/experience/:experience_id", web.LoginRequired(controllers.DeleteExperience))
 	app.Post("/answers", web.LoginRequired(controllers.CreateAnswer))
 
 	app.Post("/upload-file", web.LoginRequired(controllers.UploadProfileFile))
