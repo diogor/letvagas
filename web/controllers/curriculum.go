@@ -108,5 +108,42 @@ func UploadProfileFile(c *fiber.Ctx) error {
 	c.SaveFile(file, "./uploads/"+filename)
 
 	services.SaveProfileFile(profile.ID, name, &filename, nil)
-	return c.SendStatus(204)
+
+	files := services.ListProfileFiles(profile.ID)
+	return c.Render("views/partials/files", fiber.Map{
+		"files": files,
+	})
+}
+
+func ListProfileFiles(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	files := services.ListProfileFiles(profile.ID)
+
+	return c.Render("views/partials/files", fiber.Map{
+		"files": files,
+	})
+}
+
+func DeleteProfileFile(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	services.DeleteProfileFile(profile.ID, uuid.MustParse(c.Params("file_id")))
+
+	files := services.ListProfileFiles(profile.ID)
+	return c.Render("views/partials/files", fiber.Map{
+		"files": files,
+	})
 }

@@ -2,12 +2,11 @@ package services
 
 import (
 	"errors"
+	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 	"letvagas/database"
 	"letvagas/entities/dto"
 	"letvagas/entities/models"
-
-	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func hashPassword(password string) (string, error) {
@@ -153,10 +152,15 @@ func ListProfileFiles(profile_id uuid.UUID) []dto.ProfileFile {
 		}
 
 		response = append(response, dto.ProfileFile{
+			ID:   file.ID,
 			Name: file.Name,
 			Link: link,
 		})
 	}
 
 	return response
+}
+
+func DeleteProfileFile(profile_id uuid.UUID, file_id uuid.UUID) error {
+	return database.DB.Delete(&models.SavedFile{}, "profile_id = ? AND id = ?", profile_id, file_id).Error
 }

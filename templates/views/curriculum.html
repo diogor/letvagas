@@ -47,21 +47,12 @@ function toggleEndDate() {
                         </fieldset>
                         <fieldset>
                             <label for="curriculum">Arquivo:</label>
-                            <input id="curriculum" type="file" name="file" hx-post="/upload-file" hx-encoding="multipart/form-data" hx-trigger="change">
+                            <input id="curriculum" type="file" name="file" hx-post="/upload-file" hx-encoding="multipart/form-data" hx-trigger="change" hx-target="#file-list">
                         </fieldset>
                     </div>
                 </form>
-                <div>
-                  {% if files %}
-                  <p>Arquivos enviados:</p>
-                  <ul>
-                    {% for file in files %}
-                      <li>{{ file.Name }}: <a href="{{ file.Link }}">{{ file.Link }}</a></li>
-                    {% endfor %}
-                  </ul>
-                  {% else %}
-                  <p>Nenhum arquivo enviado</p>
-                  {% endif %}
+                <div id="file-list">
+                    {% include "views/partials/files.html" %}
                 </div>
             </article>
             <article>

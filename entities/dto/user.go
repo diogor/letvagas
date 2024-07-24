@@ -1,6 +1,9 @@
 package dto
 
-import "letvagas/entities/models"
+import (
+	"github.com/google/uuid"
+	"letvagas/entities/models"
+)
 
 type CreateUserRequest struct {
 	Name         string          `json:"name" binding:"required"`
@@ -29,6 +32,7 @@ type CreateUserRequest struct {
 }
 
 type ProfileFile struct {
-	Name string `json:"name"`
-	Link string `json:"link"`
+	ID   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+	Link string    `json:"link"`
 }
