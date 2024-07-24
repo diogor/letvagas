@@ -39,6 +39,7 @@ func main() {
 	app.Get("/admin/profile/:profile_id", web.LoginRequired(web.RoleRequired(models.ADMIN, controllers.Curriculum)))
 	app.Get("/logout", controllers.Logout)
 	app.Post("/formation", web.LoginRequired(controllers.CreateEducation))
+	app.Delete("/formation/:education_id", web.LoginRequired(controllers.DeleteEducation))
 	app.Post("/course", web.LoginRequired(controllers.CreateCourse))
 	app.Post("/experience", web.LoginRequired(controllers.CreateExperience))
 	app.Post("/answers", web.LoginRequired(controllers.CreateAnswer))

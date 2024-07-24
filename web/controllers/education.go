@@ -81,6 +81,31 @@ func DeleteEducation(c *fiber.Ctx) error {
 	})
 }
 
+func DeleteExperience(c *fiber.Ctx) error {
+	user_id, err := web.GetUserID(c)
+
+	if err != nil {
+		return c.Redirect("/login")
+	}
+
+	profile := services.GetProfile(user_id)
+
+	experience_id := c.Params("experience_id")
+	experience := models.Experience{ID: uuid.MustParse(experience_id)}
+
+	database.DB.First(&experience)
+
+	if experience.ProfileId != profile.ID {
+		return c.Redirect("/login")
+	}
+
+	services.RemoveExperience(uuid.MustParse(experience_id))
+
+	return c.Render("views/partials/experiences", fiber.Map{
+		"experiences": services.ListExperiences(profile.ID),
+	})
+}
+
 func ListQuestions(c *fiber.Ctx) error {
 	user_id, err := web.GetUserID(c)
 

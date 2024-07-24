@@ -53,3 +53,8 @@ func ListExperiences(profile_id uuid.UUID) []models.Experience {
 
 	return experiences
 }
+
+func RemoveExperience(experienceId uuid.UUID) error {
+	experience := models.Experience{ID: experienceId}
+	return database.DB.Delete(&experience).Error
+}
