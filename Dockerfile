@@ -1,26 +1,40 @@
-FROM golang:1.22-alpine as builder
+FROM php:8.2-fpm
 
-WORKDIR /app
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    libpq-dev
 
-COPY go.mod ./
-COPY go.sum ./
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN go mod download
+# Install PHP extensions
+RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd
 
-COPY . ./
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-ENV PORT 3000
-ENV DATABASE_URL postgresql://postgres:postgres@db:5432/letvagas
+# Set working directory
+WORKDIR /var/www/html
 
-RUN mkdir -p /build && go build -o /build/letvagas
-RUN cp -r /app/templates /build/
-RUN cp -r /app/static /build/
+# Copy existing application directory
+COPY . .
 
-FROM alpine
-COPY --from=builder /build/ /
+# Install dependencies
+RUN composer install
 
-WORKDIR /
+# Generate key
+RUN php artisan key:generate
 
-EXPOSE 3000
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/storage
 
-CMD [ "./letvagas" ]
+EXPOSE 8000
+
+CMD ["php", "artisan", "serve", "--host=0.0.0.0"]
